@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="/home/mauro/.android/build-cache/e5624537192569b793fe5edce2bd34699d819b7c/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="cddcd0fb93bc70e27325f2f715b2710332004ebb">
+        <dex dex="/home/mauro/workspace/Taller2/llevame-app/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_650b5636b26f942898d3336d1575d96691a31780/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/mauro/workspace/Taller2/llevame-app/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
+        <dex dex="/home/mauro/workspace/Taller2/llevame-app/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_767d99013bdd5f7a066bc6c5df300c2991b27998/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/mauro/Apps/AndroidStudio/extras/android/m2repository/com/android/support/support-annotations/26.0.0-alpha1/support-annotations-26.0.0-alpha1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="023ee503b631f69511e335a061ea008f8da60f40">
+        <dex dex="/home/mauro/workspace/Taller2/llevame-app/app/build/intermediates/transforms/dex/debug/folders/1000/10/support-annotations-26.0.0-alpha1_47ca1d215601d9be5fc8869ec7019412b74d6d21/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/mauro/.android/build-cache/7ec19b03be14ab88c3313d29299c590ff08a78d6/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="952944218ecedea1554a513dec0c14d570642843">
+        <dex dex="/home/mauro/workspace/Taller2/llevame-app/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_49d3540ebb529307e9b4d9f1f4431c457cc51f3f/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/mauro/.android/build-cache/33eb34e00e2207fe18a7702752aa472c26ca149d/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="fcd01fd11233459f546c437ec927e9b61bf7caf1">
+        <dex dex="/home/mauro/workspace/Taller2/llevame-app/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_5b755b41580c91fdbbce02e20175ce62f5efca2c/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/mauro/.android/build-cache/24abd6ac5a693315b4793b7d5c219766f1bb6c4e/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="6a022bf00ccd0948a8180c505e8e458bbddd43a6">
+        <dex dex="/home/mauro/workspace/Taller2/llevame-app/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_a7fd0cdffcefdbffc4faf1da81c0906059cea732/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/mauro/.android/build-cache/7d9c812341454dc07ef4d955873cc917d0e62024/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="18d31838aa4fcc768a8a0516e22cc13b94655d89">
+        <dex dex="/home/mauro/workspace/Taller2/llevame-app/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_f9b0989f387e0af83688e8b4e7d85c0a74c02262/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/mauro/.android/build-cache/667c92c436e2e7006681b6bedb6247d5ad8e95b9/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="/home/mauro/workspace/Taller2/llevame-app/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_581c3166700e29032ec269b24f630ecc3181b193/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/mauro/workspace/Taller2/llevame-app/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="86eeab4d2ddfb5c09fdcaa2dcb7b86c45c32c289">
+        <dex dex="/home/mauro/workspace/Taller2/llevame-app/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_b6c5d69dd4b01975f02251ccc3a12e804e4d8b9f/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/mauro/.android/build-cache/5c2b674cfa2c7522b92ef7db86b3bf5e18b1ea3e/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="2e92aa0163544a804a0b34f169ca61801770839a">
+        <dex dex="/home/mauro/workspace/Taller2/llevame-app/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_7074630dddfce6fa45f1da18df4dc240cd4283db/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/mauro/.android/build-cache/d69f11a8b5d27c62895921b1b33a5a5504f64cf5/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="9935891f23923f39d002087085d9696568a9f657">
+        <dex dex="/home/mauro/workspace/Taller2/llevame-app/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_63a64d96e17378336a9474cc51b922463697f43e/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/mauro/.android/build-cache/8c579b3608d6cce2c53286f439f10b62a718eeb8/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="c4f45092eee6cdf1a5dbd597b2b6819be652ce2e">
+        <dex dex="/home/mauro/workspace/Taller2/llevame-app/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_981ba1cbf2ae0395252c71e0bfa71e0b21320fd0/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/mauro/.android/build-cache/826c27ab102182e01d4307bea47c74004c40e3a2/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="47471eb19df288158b00b8d9cfa41bce7373f5cc">
+        <dex dex="/home/mauro/workspace/Taller2/llevame-app/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_1098660d5d3e652278b5096e1c91136304c9dac0/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/mauro/.android/build-cache/38cc5415611b1a05972b4987344e84aaeef69146/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="88246166d5afb106f532f6e6deae683c66b42c89">
+        <dex dex="/home/mauro/workspace/Taller2/llevame-app/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_ef9a6cc5de861713a760c56ca1f497d20c645171/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/mauro/.android/build-cache/cf335a82aad3b06411856ad09d9cbc7fedd3e389/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="8df0e365e40beb151bc42dee20817721a6cab7b0">
+        <dex dex="/home/mauro/workspace/Taller2/llevame-app/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_b9028bc1f135f50940257ccc8c5c4b06c4d0feb9/classes.dex" />
+    </item>
+
+</items>
