@@ -1,4 +1,4 @@
-package com.example.mauro.llevame_app_project;
+package llevame_app_project;
 
 import org.junit.Test;
 

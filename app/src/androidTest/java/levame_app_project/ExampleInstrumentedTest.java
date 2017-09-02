@@ -1,4 +1,4 @@
-package com.example.mauro.llevame_app_project;
+package levame_app_project;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
