@@ -45,6 +45,8 @@ import com.facebook.login.widget.ProfilePictureView;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.ShareDialog;
 
+import android.util.Log;
+
 import static android.Manifest.permission.READ_CONTACTS;
 
 /**
@@ -81,6 +83,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         LoginButton loginButton;
 
         FacebookSdk.sdkInitialize(getApplicationContext());
+        Log.i("FBSDK", "Inicialido el FB SDK"); //Log sin utilidad, para testear el logger.
+
         setContentView(R.layout.activity_login);
 
         loginButton = (LoginButton) findViewById(R.id.login_button);
