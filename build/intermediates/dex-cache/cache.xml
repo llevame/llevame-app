@@ -61,7 +61,7 @@
         jumboMode="true"
         optimize="true"
         revision="26.0.1"
-        sha1="a424eb3ceec53dc42fbabaeb3fefca66ec6295ae">
+        sha1="baf86b2d0b58919a498c7581d1d2abf8221cbd82">
         <dex dex="/home/mauro/workspace/Taller2/llevame-app/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_b6c5d69dd4b01975f02251ccc3a12e804e4d8b9f/classes.dex" />
     </item>
     <item
@@ -120,6 +120,15 @@
     </item>
     <item
         is-multidex="false"
+        jar="/home/mauro/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-android/1.2.0/6ee2953ccf51ce72b6d548c30c4633b99eb4f9dd/bolts-android-1.2.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="6ee2953ccf51ce72b6d548c30c4633b99eb4f9dd">
+        <dex dex="/home/mauro/workspace/Taller2/llevame-app/app/build/intermediates/pre-dexed/debug/bolts-android-1.2.0_c31bf279e6ebbbe2ee9995138bf30795bc93f274.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="/home/mauro/.android/build-cache/38cc5415611b1a05972b4987344e84aaeef69146/output/jars/classes.jar"
         jumboMode="false"
         optimize="true"
@@ -153,6 +162,15 @@
         revision="26.0.1"
         sha1="d115b0e9e1501135fe91254ba884fcbd83d374c0">
         <dex dex="/home/mauro/workspace/Taller2/llevame-app/app/build/intermediates/pre-dexed/androidTest/debug/classes_386bd5c8b7b4728a17a922e5e46a29edc68c9959.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/mauro/.android/build-cache/da3a93a36465bf38eb0bfe2524c3d125e3974619/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="152e1df65212df23a4b5dba0e819e63bca93192c">
+        <dex dex="/home/mauro/workspace/Taller2/llevame-app/app/build/intermediates/pre-dexed/debug/classes_af6d81afdc17ce6dd8fcbf7393267cdb5a70ebb8.jar" />
     </item>
     <item
         is-multidex="false"

@@ -1,4 +1,4 @@
-package levame_app_project;
+package com.llevame_app_project;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.example.mauro.llevame_app_project", appContext.getPackageName());
+        assertEquals("llevame_app_project", appContext.getPackageName());
     }
 }
