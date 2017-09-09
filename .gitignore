@@ -34,3 +34,6 @@ captures/
 
 # Intellij
 *.iml 
+
+#Workspace settings
+.idea/workspace.xml
