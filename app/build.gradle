@@ -28,4 +28,6 @@ dependencies {
     compile 'com.android.support:design:26.+'
     testCompile 'junit:junit:4.12'
     compile 'com.facebook.android:facebook-android-sdk:4.4.0'
+    //We should have 11.4
+    compile 'com.google.android.gms:play-services-maps:11.0.0'
 }
