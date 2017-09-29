@@ -36,16 +36,18 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
             android:name=".PassengerActivity"
+            android:exported="true"
             android:label="@string/title_activity_passenger"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:exported="true">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCY_FAP_83sN5vZBxmhGnAWsuOmBoX7QZs"/>
+            android:value="AIzaSyCY_FAP_83sN5vZBxmhGnAWsuOmBoX7QZs" />
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+
+        <activity android:name=".ProfileActivity"></activity>
     </application>
 
 </manifest>

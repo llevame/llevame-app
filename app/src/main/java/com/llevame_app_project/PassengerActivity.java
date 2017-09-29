@@ -1,5 +1,6 @@
 package com.llevame_app_project;
 import android.Manifest;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -63,7 +64,7 @@ public class PassengerActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            startActivity(new Intent(PassengerActivity.this, ProfileActivity.class));
         }
 
         return super.onOptionsItemSelected(item);
