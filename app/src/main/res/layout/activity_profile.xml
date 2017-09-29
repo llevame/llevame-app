@@ -6,6 +6,38 @@
     android:layout_height="match_parent"
     tools:context="com.llevame_app_project.ProfileActivity">
 
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="30dp"
+        android:layout_height="0dp"
+        app:layout_constraintLeft_toRightOf="@+id/textView_credit_card_numer"
+        app:layout_constraintTop_toTopOf="@+id/textView_credit_card_numer"
+        app:layout_constraintBottom_toBottomOf="@+id/textView_credit_card_numer"
+        android:layout_marginLeft="-2dp"
+        app:layout_constraintVertical_bias="0.0" />
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="30dp"
+        android:layout_height="0dp"
+        android:layout_marginLeft="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/text_view_email"
+        app:layout_constraintLeft_toRightOf="@+id/text_view_email"
+        app:layout_constraintTop_toTopOf="@+id/text_view_email"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="29dp"
+        android:layout_height="0dp"
+        android:layout_marginLeft="0dp"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toRightOf="@+id/text_view_name"
+        app:layout_constraintTop_toTopOf="@+id/text_view_name"
+        android:layout_marginTop="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/text_view_name"
+        android:layout_marginBottom="0dp"
+        app:layout_constraintVertical_bias="0.0" />
+
     <TextView
         android:id="@+id/text_view_name"
         android:layout_height="wrap_content"
@@ -27,7 +59,7 @@
         android:id="@+id/text_view_email"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:textSize="27dp"
+        android:textSize="25dp"
         android:text="albert@gmail.com"
         tools:layout_constraintTop_creator="1"
         android:layout_marginTop="122dp"
@@ -71,4 +103,5 @@
         tools:layout_constraintLeft_creator="1"
         android:layout_marginBottom="68dp"
         app:layout_constraintLeft_toLeftOf="parent" />
+
 </android.support.constraint.ConstraintLayout>
