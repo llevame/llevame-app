@@ -84,6 +84,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         super.onCreate(savedInstanceState);
         LoginButton loginButton;
 
+        getSupportActionBar().setTitle("Llevame");
+
         FacebookSdk.sdkInitialize(getApplicationContext());
 
         setContentView(R.layout.activity_login);

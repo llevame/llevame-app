@@ -45,6 +45,8 @@ public class PassengerActivity extends AppCompatActivity {
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
+        getSupportActionBar().setTitle("Llevame");
+
     }
 
 
