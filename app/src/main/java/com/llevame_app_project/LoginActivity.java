@@ -84,6 +84,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         super.onCreate(savedInstanceState);
         LoginButton loginButton;
 
+        getSupportActionBar().setTitle("Llevame");
+
         FacebookSdk.sdkInitialize(getApplicationContext());
 
         setContentView(R.layout.activity_login);
@@ -121,6 +123,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             @Override
             public void onSuccess(LoginResult loginResult) {
                 Log.i("FB_LOGIN", "Successfully logged in FB ");
+                startActivity(new Intent(LoginActivity.this, PassengerActivity.class));
             }
 
             @Override
