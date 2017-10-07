@@ -251,7 +251,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 focusView.requestFocus();
                 Toast.makeText(this.getBaseContext(),"Wrong password or email"
                                                 ,Toast.LENGTH_SHORT).show();
-
             }
         }
     }
