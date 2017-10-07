@@ -6,12 +6,14 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.view.View.OnClickListener;
-
+import android.widget.RadioGroup;
 public class RegistrationActivity extends AppCompatActivity {
+    boolean isPassenger;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,11 +23,18 @@ public class RegistrationActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Llevame - Registration");
 
+        isPassenger = true;
+        RadioGroup radiogroup;
+        radiogroup=(RadioGroup)findViewById(R.id.radioGroup);
+        radiogroup.check(R.id.passengerRadioButton);
+
         Button mNextStepButton = (Button) findViewById(R.id.next_step_button);
         mNextStepButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(RegistrationActivity.this, CardRegistrationActivity.class));
+                Intent intent = new Intent(RegistrationActivity.this, CardRegistrationActivity.class);
+                intent.putExtra("isPassenger", isPassenger);
+                startActivity(intent);
             }
         });
 
@@ -33,17 +42,18 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     public void onRadioButtonClicked(View view) {
-        // Is the button now checked?
         boolean checked = ((RadioButton) view).isChecked();
-
-        // Check which radio button was clicked
         switch(view.getId()) {
             case R.id.passengerRadioButton:
-                if (checked)
-                    break;
+                if (checked) {
+                    isPassenger = true;
+                }
+                break;
             case R.id.driverRadioButton:
-                if (checked)
-                    break;
+                if (checked) {
+                    isPassenger = false;
+                }
+                break;
         }
     }
 }
