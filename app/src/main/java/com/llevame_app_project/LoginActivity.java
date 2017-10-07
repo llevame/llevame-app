@@ -14,6 +14,7 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.content.Intent;
 
 import android.os.Build;
 import android.os.Bundle;
@@ -76,14 +77,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    private CallbackManager callbackManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         LoginButton loginButton;
 
+        getSupportActionBar().setTitle("Llevame");
+
         FacebookSdk.sdkInitialize(getApplicationContext());
-        Log.i("FBSDK", "Inicialido el FB SDK"); //Log sin utilidad, para testear el logger.
 
         setContentView(R.layout.activity_login);
 
@@ -115,26 +118,33 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
-        CallbackManager callbackManager = CallbackManager.Factory.create();
+        callbackManager = CallbackManager.Factory.create();
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                // App code
+                Log.i("FB_LOGIN", "Successfully logged in FB ");
+                startActivity(new Intent(LoginActivity.this, PassengerActivity.class));
             }
 
             @Override
             public void onCancel() {
-                // App code
+                Log.i("FB_LOGIN", "Cancelled login FB ");
             }
 
             @Override
             public void onError(FacebookException exception) {
-                // App code
+                Log.i("FB_LOGIN", "Error login FB");
             }
         });
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
     private void populateAutoComplete() {
