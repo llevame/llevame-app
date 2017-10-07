@@ -37,8 +37,6 @@ public class RegistrationActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
     }
 
     public void onRadioButtonClicked(View view) {

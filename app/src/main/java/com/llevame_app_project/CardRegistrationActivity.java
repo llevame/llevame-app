@@ -25,6 +25,15 @@ public class CardRegistrationActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
             });
+        }else{
+            mNextStepButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(CardRegistrationActivity.this,
+                           CarRegistrationActivity.class);
+                    startActivity(intent);
+                }
+            });
         }
 
     }
