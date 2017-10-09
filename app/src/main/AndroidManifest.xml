@@ -36,7 +36,6 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
             android:name=".PassengerActivity"
-            android:exported="true"
             android:label="@string/title_activity_passenger"
             android:theme="@style/AppTheme.NoActionBar" />
 
@@ -56,8 +55,8 @@
         <activity android:name=".CarRegistrationActivity" />
         <activity
             android:name=".DriverActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            />
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".CarSettingsActivity"></activity>
     </application>
 
 </manifest>

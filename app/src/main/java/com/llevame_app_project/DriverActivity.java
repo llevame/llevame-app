@@ -13,15 +13,15 @@ public class DriverActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driver);
-        getSupportActionBar().setTitle("Llevame - Driver");
+        //getSupportActionBar().setTitle("Llevame - Driver");
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+        //Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_driver, menu);
         return true;
     }
@@ -36,6 +36,8 @@ public class DriverActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.profile_settings) {
             startActivity(new Intent(DriverActivity.this, ProfileActivity.class));
+        }else if(id == R.id.car_settings){
+            startActivity(new Intent(DriverActivity.this, CarSettingsActivity.class));
         }
 
         return super.onOptionsItemSelected(item);
