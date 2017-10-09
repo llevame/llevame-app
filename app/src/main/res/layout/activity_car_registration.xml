@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.llevame_app_project.CarRegistrationActivity">
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Complete the fields and press finish"
+        android:textSize="20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/carModelText"
+        android:layout_width="225dp"
+        android:layout_height="43dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Car model"
+        android:layout_marginTop="25dp"
+        app:layout_constraintTop_toBottomOf="@+id/textView4"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="@+id/textView4" />
+
+    <EditText
+        android:id="@+id/patentText"
+        android:layout_width="122dp"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Patent"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/carModelText"
+        android:layout_marginLeft="1dp"
+        app:layout_constraintLeft_toLeftOf="@+id/carModelText" />
+
+    <Button
+        android:id="@+id/finish_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Finish"
+        android:layout_marginLeft="1dp"
+        app:layout_constraintLeft_toLeftOf="@+id/colorText"
+        android:layout_marginTop="22dp"
+        app:layout_constraintTop_toBottomOf="@+id/colorText" />
+
+    <EditText
+        android:id="@+id/colorText"
+        android:layout_width="125dp"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Color"
+        android:layout_marginLeft="-1dp"
+        app:layout_constraintLeft_toLeftOf="@+id/patentText"
+        android:layout_marginTop="5dp"
+        app:layout_constraintTop_toBottomOf="@+id/patentText" />
+
+    <EditText
+        android:id="@+id/yearText"
+        android:layout_width="121dp"
+        android:layout_height="41dp"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintLeft_toRightOf="@+id/patentText"
+        android:layout_marginLeft="24dp"
+        android:hint="year"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/carModelText" />
+
+    <CheckBox
+        android:id="@+id/acCheckBox"
+        android:layout_width="122dp"
+        android:layout_height="39dp"
+        android:text="A/C"
+        android:textSize="17dp"
+        android:layout_marginTop="6dp"
+        app:layout_constraintTop_toBottomOf="@+id/yearText"
+        app:layout_constraintLeft_toRightOf="@+id/colorText"
+        android:layout_marginLeft="21dp"
+        tools:layout_editor_absoluteY="160dp" />
+
+</android.support.constraint.ConstraintLayout>

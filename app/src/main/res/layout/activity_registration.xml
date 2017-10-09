@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.llevame_app_project.RegistrationActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
+
+        <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/radioGroup"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="21dp"
+            android:orientation="horizontal"
+            app:layout_constraintLeft_toLeftOf="@+id/textView"
+            app:layout_constraintTop_toBottomOf="@+id/textView"
+            tools:layout_constraintTop_creator="1"
+            tools:layout_margin="10dp">
+
+            <RadioButton
+                android:id="@+id/passengerRadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Passenger"
+                android:onClick="onRadioButtonClicked">
+
+            </RadioButton>
+
+            <RadioButton
+                android:id="@+id/driverRadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Driver"
+                android:onClick="onRadioButtonClicked">
+
+            </RadioButton>
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="92dp"
+            android:text="Register as:"
+            android:textSize="23sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <AutoCompleteTextView
+            android:id="@+id/email"
+            android:layout_width="258dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="34dp"
+            android:hint="@string/prompt_email"
+            android:inputType="textEmailAddress"
+            android:maxLines="1"
+            app:layout_constraintLeft_toLeftOf="@+id/radioGroup"
+            app:layout_constraintTop_toBottomOf="@+id/radioGroup"
+            tools:layout_editor_absoluteY="200dp"
+            android:layout_marginLeft="0dp" />
+
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="258dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="21dp"
+            android:ems="10"
+            android:hint="@string/prompt_password"
+            android:inputType="textPassword"
+            app:layout_constraintLeft_toLeftOf="@+id/email"
+            app:layout_constraintTop_toBottomOf="@+id/email"
+            tools:layout_editor_absoluteY="255dp"
+            android:layout_marginLeft="0dp" />
+
+        <Button
+            android:id="@+id/next_step_button"
+            android:layout_width="142dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="313dp"
+            android:text="Next step"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginLeft="26dp" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.design.widget.CoordinatorLayout>
