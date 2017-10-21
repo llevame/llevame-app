@@ -1,12 +1,13 @@
 package com.llevame_app_project;
 import android.os.AsyncTask;
 import retrofit2.http.GET;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 
 class AsyncLoginTask extends AsyncTask<String, String, String>{
-
     @Override
     protected void onPreExecute() {
-        //Setup precondition to execute some task
     }
 
     @Override
