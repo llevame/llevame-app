@@ -24,18 +24,18 @@ public class ApiTemporalTest {
             public void onResponse(Call<UserResponseData> call, Response<UserResponseData> response) {
                 System.out.println("Hola");
 
-                if(response.isSuccessful()) {
+                if (response.isSuccessful()) {
                     System.out.println("Soy: ");
                     System.out.println(response.body().getUserData().getLastname());
-                    assert(response.body().getUserData().getId() == "59def48f734d1d76fed802e0");
-                }else {
+                    assert (response.body().getUserData().getId() == "59def48f734d1d76fed802e0");
+                } else {
                     try {
                         System.out.println(response.errorBody().string());
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
-
+            }
             @Override
             public void onFailure(Call<UserResponseData> call, Throwable t) {
                 assert(false);
