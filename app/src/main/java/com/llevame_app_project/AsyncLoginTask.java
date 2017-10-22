@@ -1,9 +1,5 @@
 package com.llevame_app_project;
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.os.AsyncTask;
-import android.widget.Toast;
-import com.llevame_app_project.LoginActivity;
 class AsyncLoginTask extends AsyncTask<String, String, Boolean>{
 
     private LoginActivity loginActivity;
@@ -23,8 +19,8 @@ class AsyncLoginTask extends AsyncTask<String, String, Boolean>{
     }
 
     @Override
-    protected void onPostExecute(Boolean succesfullyConnection) {
-        if(!succesfullyConnection)
+    protected void onPostExecute(Boolean successfullyConnection) {
+        if(!successfullyConnection)
             loginActivity.loginFinishedWithWrongCredentials();
         loginActivity.loginFinishedSuccessfully("aToken");
     }
