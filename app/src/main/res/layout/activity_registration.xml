@@ -97,11 +97,23 @@
             android:id="@+id/next_step_button"
             android:layout_width="142dp"
             android:layout_height="60dp"
-            android:layout_marginTop="313dp"
+            android:layout_marginTop="382dp"
             android:text="Next step"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginLeft="26dp" />
+
+        <EditText
+            android:id="@+id/editText5"
+            android:layout_width="263dp"
+            android:layout_height="44dp"
+            android:ems="10"
+            android:hint="Full name"
+            android:inputType="textPersonName"
+            android:layout_marginTop="11dp"
+            app:layout_constraintTop_toBottomOf="@+id/editText"
+            android:layout_marginLeft="-10dp"
+            app:layout_constraintLeft_toLeftOf="@+id/editText" />
 
     </android.support.constraint.ConstraintLayout>
 
