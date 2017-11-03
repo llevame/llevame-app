@@ -19,8 +19,7 @@ public class LoginServicesTest {
     @Test
     public void thereIsAnErrorTryingToLoginANonExistentUser() throws InterruptedException {
         LoginServices userServices = ApiUtils.getUserServices();
-        //This user can't exist in our database, symbols are not allowed.
-        System.out.println("hola");
+        //This user doesn't exist in our database.
         userServices.getUser("123").enqueue(
             new Callback<LoginResponseData>() {
 
