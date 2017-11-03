@@ -24,10 +24,6 @@ public class DriverData extends UserData{
     @Expose
     private boolean carHasAc;
 
-    @SerializedName("music")
-    @Expose
-    private String music;
-
     public String getCarModel() {
         return carModel;
     }
@@ -58,13 +54,5 @@ public class DriverData extends UserData{
 
     public void setCarHasAc(boolean carHasAc) {
         this.carHasAc = carHasAc;
-    }
-
-    public String getMusic() {
-        return music;
-    }
-
-    public void setMusic(String music) {
-        this.music = music;
     }
 }

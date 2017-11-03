@@ -12,6 +12,9 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.view.View.OnClickListener;
 import android.widget.RadioGroup;
+import com.llevame_app_project.Data.PassengerData;
+import com.llevame_app_project.Data.DriverData;
+
 public class RegistrationActivity extends AppCompatActivity {
     boolean isPassenger;
 
@@ -33,7 +36,6 @@ public class RegistrationActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(RegistrationActivity.this, CardRegistrationActivity.class);
-                intent.putExtra("isPassenger", isPassenger);
                 startActivity(intent);
             }
         });
