@@ -20,7 +20,7 @@ public class LoginServicesTest {
     public void thereIsAnErrorTryingToLoginANonExistentUser() throws InterruptedException {
         LoginServices userServices = ApiUtils.getUserServices();
         //This user doesn't exist in our database.
-        userServices.getUser("123").enqueue(
+        userServices.getUser("123","aPassword").enqueue(
             new Callback<LoginResponseData>() {
 
                 @Override
