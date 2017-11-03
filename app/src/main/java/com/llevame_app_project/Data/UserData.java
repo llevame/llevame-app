@@ -4,12 +4,12 @@ import com.google.gson.annotations.SerializedName;
 
 public class UserData {
 
-    public String getNname() {
-        return nname;
+    public String getName() {
+        return name;
     }
 
-    public void setNname(String nname) {
-        this.nname = nname;
+    public void setName(String nname) {
+        this.name = name;
     }
 
     public String getLastName() {
@@ -30,7 +30,7 @@ public class UserData {
 
     @SerializedName("firstName")
     @Expose
-    private String nname;
+    private String name;
 
     @SerializedName("firstName")
     @Expose
