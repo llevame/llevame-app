@@ -8,6 +8,14 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class ErrorData {
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @SerializedName("description")
     @Expose
     private String description;

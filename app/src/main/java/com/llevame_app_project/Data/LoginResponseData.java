@@ -27,7 +27,7 @@ public class LoginResponseData {
         this.error = error;
     }
 
-    public LoginData getUserData() {
+    public LoginData getLoginData() {
         return loginData;
     }
 

@@ -8,6 +8,6 @@ import retrofit2.http.Path;
 
 public interface LoginServices {
     @GET("api/v1/account/{userName}")
-    Call<LoginResponseData> getUser(@Path("userName") String userName,
-                                    @Header("Password") String password);
+    Call<LoginResponseData> loginUser(@Path("userName") String userName,
+                                      @Header("Password") String password);
 }

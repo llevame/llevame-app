@@ -5,8 +5,6 @@ import org.junit.Test;
 import com.llevame_app_project.Data.*;
 import com.llevame_app_project.Data.Remote.LoginServices;
 
-import java.io.IOException;
-
 import retrofit2.Response;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -18,9 +16,9 @@ import static junit.framework.Assert.fail;
 public class LoginServicesTest {
     @Test
     public void thereIsAnErrorTryingToLoginANonExistentUser() throws InterruptedException {
-        LoginServices userServices = ApiUtils.getUserServices();
+        LoginServices userServices = ApiUtils.getLoginServices();
         //This user doesn't exist in our database.
-        userServices.getUser("123","aPassword").enqueue(
+        userServices.loginUser("123","aPassword").enqueue(
             new Callback<LoginResponseData>() {
 
                 @Override

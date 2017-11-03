@@ -20,6 +20,14 @@ public class LoginData {
     @Expose
     private String token;
 
+    public boolean isDriver() {
+        return isDriver;
+    }
+
+    public void setDriver(boolean driver) {
+        isDriver = driver;
+    }
+
     @SerializedName("isDriver")
     @Expose
     private boolean isDriver;

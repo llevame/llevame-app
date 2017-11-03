@@ -3,7 +3,7 @@ import com.llevame_app_project.Data.Remote.LoginServices;
 public class ApiUtils {
     public static final String BASE_URL = "https://safe-savannah-49286.herokuapp.com/";
 
-    public static LoginServices getUserServices() {
+    public static LoginServices getLoginServices() {
         return RetrofitClient.getClient(BASE_URL).create(LoginServices.class);
     }
 }

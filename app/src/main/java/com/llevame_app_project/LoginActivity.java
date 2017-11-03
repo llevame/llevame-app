@@ -140,6 +140,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+
+        AsyncLoginTask loginTask = new AsyncLoginTask(this);
+        loginTask.execute("aUser", "aPassword");
+
     }
 
     @Override
@@ -238,20 +242,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-            AsyncLoginTask loginTask = new AsyncLoginTask(this);
             this.showProgress(true);
-            loginTask.execute();
-            /*MockupServer server = new MockupServer();
-            if(server.attemptLogin(email,password)){
-                Log.i("LOGIN", "Successfully logged in our servers");
-                startActivity(new Intent(LoginActivity.this, PassengerActivity.class));
-            }else{
-                showProgress(false);
-                focusView = mEmailView;
-                focusView.requestFocus();
-                Toast.makeText(this.getBaseContext(),"Wrong password or email"
-                                                ,Toast.LENGTH_SHORT).show();
-            }*/
+            AsyncLoginTask loginTask = new AsyncLoginTask(this);
+            loginTask.execute(mEmailView.getText().toString(), mPasswordView.getText().toString());
         }
     }
 
@@ -345,13 +338,25 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         int IS_PRIMARY = 1;
     }
 
-    public void loginFinishedWithWrongCredentials(){
+    public void loginFinishedWithAnError(String description){
         this.showProgress(false);
-        Toast.makeText(this.getBaseContext(), "Wrong username or password", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this.getBaseContext(), description, Toast.LENGTH_SHORT).show();
     }
 
-    public void loginFinishedSuccessfully(String Token){
+    public void loginFinishedSuccessfully(String token, boolean isDriver){
         this.showProgress(false);
+        AppserverSession.createInstance(token);
+        Intent intent;
+        if(isDriver){
+            intent = new Intent(LoginActivity.this,
+                    DriverActivity.class);
+        }else{
+            intent = new Intent(LoginActivity.this,
+                    DriverActivity.class);
+        }
+        startActivity(intent);
+
+
     }
 }
 
