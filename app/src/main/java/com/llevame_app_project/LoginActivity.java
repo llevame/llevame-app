@@ -13,7 +13,6 @@ import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.content.Intent;
 
 import android.os.Build;
@@ -33,19 +32,13 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
-import com.facebook.login.widget.ProfilePictureView;
-import com.facebook.share.model.ShareLinkContent;
-import com.facebook.share.widget.ShareDialog;
-import com.llevame_app_project.MockupServer;
+
 import android.util.Log;
 import android.widget.Toast;
 import static android.Manifest.permission.READ_CONTACTS;
@@ -341,7 +334,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     public void loginFinishedSuccessfully(String token, boolean isDriver){
         this.showProgress(false);
-        AppserverSession.createInstance(token);
+        AppServerSession.saveToken(token);
+        AppServerSession.setIsDriver(isDriver);
         Intent intent;
         if(isDriver){
             intent = new Intent(LoginActivity.this,
@@ -351,8 +345,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     DriverActivity.class);
         }
         startActivity(intent);
-
-
     }
 }
 

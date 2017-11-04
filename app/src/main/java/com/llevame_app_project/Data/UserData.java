@@ -2,11 +2,23 @@ package com.llevame_app_project.Data;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 public class UserData {
 
     public String getName() {
         return name;
     }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    private String email;
 
     public void setName(String nname) {
         this.name = name;

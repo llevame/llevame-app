@@ -9,14 +9,18 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.view.View.OnClickListener;
 import android.widget.RadioGroup;
 import com.llevame_app_project.Data.PassengerData;
 import com.llevame_app_project.Data.DriverData;
+import com.llevame_app_project.Data.UserData;
 
 public class RegistrationActivity extends AppCompatActivity {
     boolean isPassenger;
+    private EditText mEmailView;
+    private EditText mPasswordView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,10 +39,14 @@ public class RegistrationActivity extends AppCompatActivity {
         mNextStepButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+                AppServerSession.setIsDriver(!isPassenger);
                 Intent intent = new Intent(RegistrationActivity.this, CardRegistrationActivity.class);
+                intent.putExtra("password",mPasswordView.getText());
                 startActivity(intent);
             }
         });
+
+        mPasswordView = (EditText) findViewById(R.id.password);
     }
 
     public void onRadioButtonClicked(View view) {
