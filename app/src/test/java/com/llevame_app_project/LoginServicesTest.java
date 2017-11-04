@@ -19,15 +19,15 @@ public class LoginServicesTest {
         LoginServices userServices = ApiUtils.getLoginServices();
         //This user doesn't exist in our database.
         userServices.loginUser("123","aPassword").enqueue(
-            new Callback<LoginResponseData>() {
+            new Callback<ResponseData>() {
 
                 @Override
-                public void onResponse(Call<LoginResponseData> call, Response<LoginResponseData> response) {
+                public void onResponse(Call<ResponseData> call, Response<ResponseData> response) {
                    assertFalse(response.body().getSuccess());
                 }
 
                 @Override
-                public void onFailure(Call<LoginResponseData> call, Throwable t) {
+                public void onFailure(Call<ResponseData> call, Throwable t) {
                     fail();
                 }
             }

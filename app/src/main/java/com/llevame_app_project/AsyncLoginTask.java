@@ -1,7 +1,7 @@
 package com.llevame_app_project;
 import android.os.AsyncTask;
 
-import com.llevame_app_project.Data.LoginResponseData;
+import com.llevame_app_project.Data.ResponseData;
 import com.llevame_app_project.Data.Remote.ApiUtils;
 
 import retrofit2.Call;
@@ -16,7 +16,7 @@ class AsyncLoginTask extends AsyncTask<String, String, Void>{
     private String userName;
     private String password;
     private boolean successfullyConnectionWithServer;
-    private LoginResponseData responseData;
+    private ResponseData responseData;
 
     public AsyncLoginTask(LoginActivity aLoginActivity){
         this.loginActivity = aLoginActivity;
@@ -31,17 +31,17 @@ class AsyncLoginTask extends AsyncTask<String, String, Void>{
     protected Void doInBackground(String... params) {
         successfullyConnectionWithServer = false;
         ApiUtils.getLoginServices().loginUser(params[0],params[1]).enqueue(
-                new Callback<LoginResponseData>() {
+                new Callback<ResponseData>() {
 
                     @Override
-                    public void onResponse(Call<LoginResponseData> call, Response<LoginResponseData> response) {
+                    public void onResponse(Call<ResponseData> call, Response<ResponseData> response) {
                         successfullyConnectionWithServer = true;
                         responseData = response.body();
 
                     }
 
                     @Override
-                    public void onFailure(Call<LoginResponseData> call, Throwable t) {
+                    public void onFailure(Call<ResponseData> call, Throwable t) {
                         successfullyConnectionWithServer = false;
                     }
                 }
