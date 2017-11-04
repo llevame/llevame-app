@@ -2,25 +2,22 @@ package com.llevame_app_project;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.view.View.OnClickListener;
 import android.widget.RadioGroup;
-import com.llevame_app_project.Data.PassengerData;
-import com.llevame_app_project.Data.DriverData;
-import com.llevame_app_project.Data.UserData;
+
+import com.llevame_app_project.Forms.FirstRegistrationForm;
 
 public class RegistrationActivity extends AppCompatActivity {
     boolean isPassenger;
     private EditText mEmailView;
     private EditText mPasswordView;
+    private FirstRegistrationForm firstForm = new FirstRegistrationForm();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,18 +32,23 @@ public class RegistrationActivity extends AppCompatActivity {
         radiogroup=(RadioGroup)findViewById(R.id.radioGroup);
         radiogroup.check(R.id.passengerRadioButton);
 
+        mPasswordView = (EditText) findViewById(R.id.textPassword);
+        mEmailView = (EditText) findViewById(R.id.textEmail);
+
         Button mNextStepButton = (Button) findViewById(R.id.next_step_button);
         mNextStepButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                AppServerSession.setIsDriver(!isPassenger);
                 Intent intent = new Intent(RegistrationActivity.this, CardRegistrationActivity.class);
-                intent.putExtra("password",mPasswordView.getText());
+                firstForm.isDriver = !isPassenger;
+                firstForm.email = mEmailView.getText().toString();
+                firstForm.password = mPasswordView.getText().toString();
+                intent.putExtra("firstForm", firstForm);
                 startActivity(intent);
             }
         });
 
-        mPasswordView = (EditText) findViewById(R.id.password);
+
     }
 
     public void onRadioButtonClicked(View view) {

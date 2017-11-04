@@ -81,7 +81,7 @@
             android:layout_marginLeft="0dp" />
 
         <EditText
-            android:id="@+id/passwordText"
+            android:id="@+id/textPassword"
             android:layout_width="258dp"
             android:layout_height="40dp"
             android:layout_marginTop="21dp"
@@ -99,9 +99,9 @@
             android:layout_height="60dp"
             android:text="Next step"
             android:layout_marginTop="46dp"
-            app:layout_constraintTop_toBottomOf="@+id/editText"
+            app:layout_constraintTop_toBottomOf="@+id/textPassword"
             android:layout_marginLeft="0dp"
-            app:layout_constraintLeft_toLeftOf="@+id/editText" />
+            app:layout_constraintLeft_toLeftOf="@+id/textPassword" />
 
     </android.support.constraint.ConstraintLayout>
 
