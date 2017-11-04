@@ -2,12 +2,40 @@ package com.llevame_app_project.Data;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
-
 public class UserData {
 
-    public String getName() {
-        return name;
+    @SerializedName("email")
+    @Expose
+    private String email;
+
+    @SerializedName("firstName")
+    @Expose
+    private String firstName;
+
+    @SerializedName("lastName")
+    @Expose
+    private String lastName;
+
+    @SerializedName("creditCardNumber")
+    @Expose
+    private String creditCardNumber;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    @SerializedName("password")
+    @Expose
+    private String password;
+
+
+
+    public String getFirstName() {
+        return firstName;
     }
 
     public String getEmail() {
@@ -18,10 +46,8 @@ public class UserData {
         this.email = email;
     }
 
-    private String email;
-
-    public void setName(String nname) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public String getLastName() {
@@ -40,27 +66,6 @@ public class UserData {
         this.creditCardNumber = creditCardNumber;
     }
 
-    @SerializedName("firstName")
-    @Expose
-    private String name;
 
-    @SerializedName("firstName")
-    @Expose
-    private String lastName;
 
-    @SerializedName("creditCardNumber")
-    @Expose
-    private String creditCardNumber;
-
-    public String getMusic() {
-        return music;
-    }
-
-    public void setMusic(String music) {
-        this.music = music;
-    }
-
-    @SerializedName("music")
-    @Expose
-    private String music;
 }

@@ -6,4 +6,8 @@ public class ApiUtils {
     public static LoginServices getLoginServices() {
         return RetrofitClient.getClient(BASE_URL).create(LoginServices.class);
     }
+
+    public static RegistrationServices getRegistrationServices() {
+        return RetrofitClient.getClient(BASE_URL).create(RegistrationServices.class);
+    }
 }
