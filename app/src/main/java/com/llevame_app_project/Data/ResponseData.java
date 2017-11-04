@@ -1,15 +1,16 @@
 package com.llevame_app_project.Data;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-public class UserResponseData {
 
+public class ResponseData {
     @SerializedName("error")
     @Expose
-    private Integer error;
+    private ErrorData error;
 
     @SerializedName("result")
     @Expose
-    private UserData userData;
+    private LoginData loginData;
 
     @SerializedName("statusCode")
     @Expose
@@ -18,20 +19,20 @@ public class UserResponseData {
     @Expose
     private Boolean success;
 
-    public Integer getError() {
+    public ErrorData getError() {
         return error;
     }
 
-    public void setError(Integer error) {
+    public void ErrorData(ErrorData error) {
         this.error = error;
     }
 
-    public UserData getUserData() {
-        return userData;
+    public LoginData getLoginData() {
+        return loginData;
     }
 
     public void setResult(UserData userData) {
-        this.userData = userData;
+        this.loginData = loginData;
     }
 
     public Integer getStatusCode() {
