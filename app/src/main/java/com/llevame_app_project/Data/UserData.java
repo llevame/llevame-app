@@ -32,6 +32,10 @@ public class UserData {
     @Expose
     private String password;
 
+    @SerializedName("isDriver")
+    @Expose
+    private boolean isDriver;
+
 
 
     public String getFirstName() {
@@ -67,5 +71,11 @@ public class UserData {
     }
 
 
+    public boolean isDriver() {
+        return isDriver;
+    }
 
+    public void setDriver(boolean driver) {
+        isDriver = driver;
+    }
 }

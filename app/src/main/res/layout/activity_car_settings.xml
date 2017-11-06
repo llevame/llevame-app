@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.llevame_app_project.CarSettingsActivity">
+    tools:context="com.llevame_app_project.Activities.CarSettingsActivity">
 
     <TextView
         android:id="@+id/carModelText"
