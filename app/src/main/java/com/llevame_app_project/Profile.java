@@ -1,15 +1,17 @@
 package com.llevame_app_project;
 
 import com.llevame_app_project.Data.PassengerData;
+import com.llevame_app_project.Data.PassengerResponseData;
 import com.llevame_app_project.Data.Remote.ApiUtils;
+import com.llevame_app_project.Data.UserData;
 
 import retrofit2.Response;
 
 public class Profile {
 
-    PassengerData passengerData;
+    UserData passengerData;
 
-    void updateDataFromServer() throws Exception{
+    public void updateDataFromServer() throws Exception{
 
         if(!AppServerSession.getCurrentSession().isDriver())
             updatePassengerData();
@@ -22,10 +24,10 @@ public class Profile {
                 new PassengerProfileUpdateThread();
         thread.start();
         thread.join();
-        Response<PassengerData> response = thread.getResponse();
+        Response<PassengerResponseData> response = thread.getResponse();
         if(!response.isSuccessful())
             throw new Exception(response.raw().message());
-        this.passengerData = response.body();
+        this.passengerData = response.body().getPassengerData();
     }
 
     private void updateDriverData(){

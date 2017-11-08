@@ -2,7 +2,9 @@ package com.llevame_app_project;
 
 import com.llevame_app_project.Data.LoginResponseData;
 import com.llevame_app_project.Data.PassengerData;
+import com.llevame_app_project.Data.PassengerResponseData;
 import com.llevame_app_project.Data.Remote.ApiUtils;
+import com.llevame_app_project.Data.UserData;
 
 import java.io.IOException;
 
@@ -14,15 +16,16 @@ import retrofit2.Response;
 
 public class PassengerProfileUpdateThread extends Thread {
 
-    private Response<PassengerData> response;
+    private Response<PassengerResponseData> response;
 
     @Override
     public void run() {
         AppServerSession session = AppServerSession.getCurrentSession();
-
+        String bearer = "Bearer ";
+        String bearerPlusToken =  bearer.concat(session.getToken());
         try {
             response = ApiUtils.getPassengerServices().getUser(
-                    session.getId()
+                    session.getId(), bearerPlusToken
             ).execute();
         } catch (IOException e) {
             e.printStackTrace();
@@ -30,7 +33,7 @@ public class PassengerProfileUpdateThread extends Thread {
     }
 
     //The response can be null.
-    public Response<PassengerData> getResponse(){
+    public Response<PassengerResponseData> getResponse(){
         return response;
     }
 }

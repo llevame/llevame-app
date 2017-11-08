@@ -3,6 +3,7 @@ import android.os.AsyncTask;
 
 import com.llevame_app_project.Activities.LoginActivity;
 import com.llevame_app_project.Data.LoginResponseData;
+import com.llevame_app_project.Data.PasswordData;
 import com.llevame_app_project.Data.Remote.ApiUtils;
 
 import retrofit2.Call;
@@ -29,13 +30,20 @@ public class AsyncLoginTask extends AsyncTask<String, String, Void>{
     @Override
     protected Void doInBackground(String... params) {
         successfullyConnectionWithServer = false;
-        ApiUtils.getLoginServices().loginUser(params[0],params[1]).enqueue(
+        PasswordData password = new PasswordData();
+        password.setPassword(params[1]);
+        userName = params[0];
+        ApiUtils.getLoginServices().loginUser(userName,password).enqueue(
                 new Callback<LoginResponseData>() {
 
                     @Override
                     public void onResponse(Call<LoginResponseData> call, Response<LoginResponseData> response) {
-                        successfullyConnectionWithServer = true;
-                        responseData = response.body();
+                        if(response.isSuccessful()) {
+                            successfullyConnectionWithServer = true;
+                            responseData = response.body();
+                        }else{
+                            successfullyConnectionWithServer = false;
+                        }
 
                     }
 
@@ -46,17 +54,20 @@ public class AsyncLoginTask extends AsyncTask<String, String, Void>{
                 }
         );
 
+
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        if(!successfullyConnectionWithServer)
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+        for(int i = 0; i < 3; i++) {
+            if (!successfullyConnectionWithServer)
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+        }
 
         return null;
     }

@@ -2,16 +2,36 @@ package com.llevame_app_project.Activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.TextView;
 
+import com.llevame_app_project.Profile;
 import com.llevame_app_project.R;
 
 public class ProfileActivity extends AppCompatActivity {
+
+    private TextView nameView;
+    private TextView emailView;
+    private TextView creditCardNumberView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-
         getSupportActionBar().setTitle("Llevame - Settings");
+        nameView = this.findViewById(R.id.text_view_name);
+        emailView = this.findViewById(R.id.text_view_email);
+        creditCardNumberView = this.findViewById(R.id.text_view_credit_card_number);
+        Profile profile = new Profile();
+        try {
+            profile.updateDataFromServer();
+            nameView.setText(profile.getFirstName().concat(profile.getLastName()));
+            emailView.setText(profile.getEmail());
+            creditCardNumberView.setText(profile.getCreditCardNumber());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+
     }
 }

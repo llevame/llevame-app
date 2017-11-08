@@ -5,12 +5,12 @@ import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class RetrofitClient {
+public class    RetrofitClient {
 
     private static Retrofit retrofit = null;
 
     private static final OkHttpClient okHttpClient = new OkHttpClient.Builder()
-            .readTimeout(1, TimeUnit.SECONDS)
+            .readTimeout(5, TimeUnit.SECONDS)
             .connectTimeout(1, TimeUnit.SECONDS)
             .build();
 

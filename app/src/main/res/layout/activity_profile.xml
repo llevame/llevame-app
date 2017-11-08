@@ -10,9 +10,9 @@
         android:id="@+id/button3"
         android:layout_width="37dp"
         android:layout_height="0dp"
-        app:layout_constraintLeft_toRightOf="@+id/textView_credit_card_numer"
-        app:layout_constraintTop_toTopOf="@+id/textView_credit_card_numer"
-        app:layout_constraintBottom_toBottomOf="@+id/textView_credit_card_numer"
+        app:layout_constraintLeft_toRightOf="@+id/text_view_credit_card_number"
+        app:layout_constraintTop_toTopOf="@+id/text_view_credit_card_number"
+        app:layout_constraintBottom_toBottomOf="@+id/text_view_credit_card_number"
         app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/edit"
         android:layout_marginLeft="2dp" />
@@ -71,7 +71,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/text_view_label_credit_card"
+        android:id="@+id/static_text"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:textSize="27dp"
@@ -84,7 +84,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView_credit_card_numer"
+        android:id="@+id/text_view_credit_card_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="404"
@@ -92,9 +92,9 @@
         tools:layout_constraintTop_creator="1"
         android:layout_marginStart="57dp"
         android:layout_marginTop="28dp"
-        app:layout_constraintTop_toBottomOf="@+id/text_view_label_credit_card"
+        app:layout_constraintTop_toBottomOf="@+id/static_text"
         tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="@+id/text_view_label_credit_card" />
+        app:layout_constraintLeft_toLeftOf="@+id/static_text" />
     <Button
         android:layout_width="114dp"
         android:layout_height="59dp"
