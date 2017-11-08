@@ -56,7 +56,8 @@ public class CardRegistrationActivity extends AppCompatActivity {
                             throw new Throwable(response.getError().getDescription());
                         }
 
-                        AppServerSession.createSession(false,response.getLoginData().getToken());
+                        AppServerSession.createSession(false,firstForm.email,
+                                                        response.getLoginData().getToken());
                         Intent intent = new Intent(CardRegistrationActivity.this,
                                 PassengerActivity.class);
                         startActivity(intent);

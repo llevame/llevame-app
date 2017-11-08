@@ -336,9 +336,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         Toast.makeText(this.getBaseContext(), description, Toast.LENGTH_SHORT).show();
     }
 
-    public void loginFinishedSuccessfully(String token, boolean isDriver){
+    public void loginFinishedSuccessfully(String token, String id,boolean isDriver){
         this.showProgress(false);
-        AppServerSession.createSession(isDriver,token);
+        AppServerSession.createSession(isDriver,id,token);
         Intent intent;
         if(isDriver){
             intent = new Intent(LoginActivity.this,

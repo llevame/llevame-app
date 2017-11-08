@@ -70,7 +70,7 @@ public class AsyncLoginTask extends AsyncTask<String, String, Void>{
         if(!responseData.getSuccess())
             loginActivity.loginFinishedWithAnError(responseData.getError().getDescription());
         else
-            loginActivity.loginFinishedSuccessfully(responseData.getLoginData().getToken(),
+            loginActivity.loginFinishedSuccessfully(responseData.getLoginData().getToken(),userName,
                     responseData.getLoginData().isDriver());
     }
 }

@@ -5,6 +5,7 @@ package com.llevame_app_project;
  */
 
 public class AppServerSession {
+    private String id;
     private String token;
     private Boolean isDriver;
     private static AppServerSession currentSession;
@@ -13,11 +14,12 @@ public class AppServerSession {
         return currentSession;
     }
 
-    public static void createSession(boolean isDriver, String token){
-        currentSession = new AppServerSession(isDriver,token);
+    public static void createSession(boolean isDriver, String id,String token){
+        currentSession = new AppServerSession(isDriver,id,token);
     }
 
-    private AppServerSession(boolean isDriver, String token){
+    private AppServerSession(boolean isDriver, String id,String token){
+        this.id = id;
         this.isDriver = isDriver;
         this.token = token;
     }
@@ -29,4 +31,11 @@ public class AppServerSession {
         return token;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 }
