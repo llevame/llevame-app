@@ -345,7 +345,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     DriverActivity.class);
         }else{
             intent = new Intent(LoginActivity.this,
-                    DriverActivity.class);
+                    PassengerActivity.class);
         }
         startActivity(intent);
     }
