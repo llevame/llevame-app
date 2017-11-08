@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.llevame_app_project.AppServerSession;
 import com.llevame_app_project.Data.LoginResponseData;
 import com.llevame_app_project.Forms.FirstRegistrationForm;
 import com.llevame_app_project.Forms.SecondRegistrationForm;
@@ -50,15 +51,14 @@ public class CardRegistrationActivity extends AppCompatActivity {
                     try {
 
                         LoginResponseData response = registrant.register(firstForm, secondForm);
-                        Intent intent = new Intent(CardRegistrationActivity.this,
-                                PassengerActivity.class);
 
                         if (!response.getSuccess()) {
                             throw new Throwable(response.getError().getDescription());
                         }
 
-
-
+                        AppServerSession.createSession(false,response.getLoginData().getToken());
+                        Intent intent = new Intent(CardRegistrationActivity.this,
+                                PassengerActivity.class);
                         startActivity(intent);
 
                     } catch (Throwable throwable) {

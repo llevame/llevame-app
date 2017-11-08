@@ -338,8 +338,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     public void loginFinishedSuccessfully(String token, boolean isDriver){
         this.showProgress(false);
-        AppServerSession.saveToken(token);
-        AppServerSession.setIsDriver(isDriver);
+        AppServerSession.createSession(isDriver,token);
         Intent intent;
         if(isDriver){
             intent = new Intent(LoginActivity.this,

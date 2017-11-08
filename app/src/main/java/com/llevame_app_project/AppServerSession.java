@@ -5,26 +5,28 @@ package com.llevame_app_project;
  */
 
 public class AppServerSession {
-    private static String token;
-    private static Boolean isDriver;
+    private String token;
+    private Boolean isDriver;
+    private static AppServerSession currentSession;
 
-    public static void saveToken(String aToken) {
-        token = aToken;
+    public static AppServerSession getCurrentSession(){
+        return currentSession;
     }
 
-    public static void setIsDriver(boolean pIsDriver){
-        isDriver = pIsDriver;
-    }
-    public static boolean thereIsAValidToken(){
-        return(token != null);
+    public static void createSession(boolean isDriver, String token){
+        currentSession = new AppServerSession(isDriver,token);
     }
 
+    private AppServerSession(boolean isDriver, String token){
+        this.isDriver = isDriver;
+        this.token = token;
+    }
+
+    public boolean isDriver(){
+        return isDriver;
+    }
     public String getToken(){
         return token;
-    }
-
-    public static boolean itIsADriverSession(){
-        return isDriver;
     }
 
 }
