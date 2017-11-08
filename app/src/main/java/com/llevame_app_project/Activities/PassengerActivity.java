@@ -1,5 +1,4 @@
-package com.llevame_app_project;
-import android.Manifest;
+package com.llevame_app_project.Activities;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -11,7 +10,9 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.support.v4.app.ActivityCompat;
+
+import com.llevame_app_project.R;
+import com.llevame_app_project.TravelFragment;
 
 public class PassengerActivity extends AppCompatActivity {
 

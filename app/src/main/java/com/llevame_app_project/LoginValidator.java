@@ -1,8 +1,8 @@
 package com.llevame_app_project;
 
-class LoginValidator {
+public class LoginValidator {
 
-    LoginValidator(){
+    public LoginValidator(){
 
     }
     /**Checks if the email contains an @ symbol*/

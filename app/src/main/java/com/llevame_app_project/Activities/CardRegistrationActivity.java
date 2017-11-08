@@ -1,4 +1,4 @@
-package com.llevame_app_project;
+package com.llevame_app_project.Activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -8,16 +8,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.llevame_app_project.Data.PassengerData;
-import com.llevame_app_project.Data.Remote.ApiUtils;
-import com.llevame_app_project.Data.Remote.RegistrationServices;
-import com.llevame_app_project.Data.ResponseData;
+import com.llevame_app_project.AppServerSession;
+import com.llevame_app_project.Data.LoginResponseData;
 import com.llevame_app_project.Forms.FirstRegistrationForm;
 import com.llevame_app_project.Forms.SecondRegistrationForm;
-
-import java.io.IOException;
-
-import retrofit2.Response;
+import com.llevame_app_project.R;
+import com.llevame_app_project.Registrant;
 
 public class CardRegistrationActivity extends AppCompatActivity {
 
@@ -26,6 +22,8 @@ public class CardRegistrationActivity extends AppCompatActivity {
     private EditText mFirstName;
     private EditText mLastName;
     private EditText mCreditCardNumber;
+    private Registrant registrant = new Registrant();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,48 +38,48 @@ public class CardRegistrationActivity extends AppCompatActivity {
         mNextStepButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent;
 
                 secondForm.firstName = mFirstName.getText().toString();
                 secondForm.lastName = mLastName.getText().toString();
                 secondForm.creditCardNumber = mCreditCardNumber.getText().toString();
 
                 if (firstForm.isDriver) {
-                    intent = new Intent(CardRegistrationActivity.this,
-                            CarRegistrationActivity.class);
-                    intent.putExtra("firstForm", firstForm);
-                    intent.putExtra("secondForm", secondForm);
-                    startActivity(intent);
+                    goToTheNextRegistrationActivity(firstForm, secondForm);
+
                 } else {
 
                     try {
-                        registerNewPassenger();
-                        intent = new Intent(CardRegistrationActivity.this,
+
+                        LoginResponseData response = registrant.register(firstForm, secondForm);
+
+                        if (!response.getSuccess()) {
+                            throw new Throwable(response.getError().getDescription());
+                        }
+
+                        AppServerSession.createSession(false,firstForm.email,
+                                                        response.getLoginData().getToken());
+                        Intent intent = new Intent(CardRegistrationActivity.this,
                                 PassengerActivity.class);
                         startActivity(intent);
-                    } catch (IOException e) {
+
+                    } catch (Throwable throwable) {
+
                         Toast.makeText(CardRegistrationActivity.this.getBaseContext(),
-                                            "Couldn't reach the server",
-                                            Toast.LENGTH_SHORT).show();
+                                throwable.getMessage(),
+                                Toast.LENGTH_SHORT).show();
                     }
                 }
             }
 
-            private void registerNewPassenger() throws IOException {
-                PassengerData passengerData = new PassengerData();
-                Response<ResponseData> response;
-
-                passengerData.setEmail(firstForm.email.toString());
-                passengerData.setCreditCardNumber(secondForm.creditCardNumber.toString());
-                passengerData.setFirstName(secondForm.firstName.toString());
-                passengerData.setLastName(secondForm.lastName.toString());
-                passengerData.setPassword(firstForm.password);
-                //TO DO: Check that everything went alright.
-                //Currently server notifies a problem when there isn't
-                response = ApiUtils.getRegistrationServices().registerUser(passengerData.getEmail(),
-                        passengerData).execute();
+            private void goToTheNextRegistrationActivity(FirstRegistrationForm firstForm,
+                                                      SecondRegistrationForm secondForm){
+                Intent intent;
+                intent = new Intent(CardRegistrationActivity.this,
+                        CarRegistrationActivity.class);
+                intent.putExtra("firstForm", firstForm);
+                intent.putExtra("secondForm", secondForm);
+                startActivity(intent);
             }
-
         });
     }
 }

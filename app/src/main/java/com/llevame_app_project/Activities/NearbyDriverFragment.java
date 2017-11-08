@@ -1,4 +1,4 @@
-package com.llevame_app_project;
+package com.llevame_app_project.Activities;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,6 +9,8 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
+import com.llevame_app_project.R;
+
 import android.support.v4.content.ContextCompat;
 import android.content.pm.PackageManager;
 import android.Manifest;

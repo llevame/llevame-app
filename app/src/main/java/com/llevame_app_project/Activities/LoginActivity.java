@@ -1,4 +1,4 @@
-package com.llevame_app_project;
+package com.llevame_app_project.Activities;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -38,6 +38,10 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.llevame_app_project.AppServerSession;
+import com.llevame_app_project.AsyncLoginTask;
+import com.llevame_app_project.LoginValidator;
+import com.llevame_app_project.R;
 
 import android.util.Log;
 import android.widget.Toast;
@@ -332,17 +336,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         Toast.makeText(this.getBaseContext(), description, Toast.LENGTH_SHORT).show();
     }
 
-    public void loginFinishedSuccessfully(String token, boolean isDriver){
+    public void loginFinishedSuccessfully(String token, String id,boolean isDriver){
         this.showProgress(false);
-        AppServerSession.saveToken(token);
-        AppServerSession.setIsDriver(isDriver);
+        AppServerSession.createSession(isDriver,id,token);
         Intent intent;
         if(isDriver){
             intent = new Intent(LoginActivity.this,
                     DriverActivity.class);
         }else{
             intent = new Intent(LoginActivity.this,
-                    DriverActivity.class);
+                    PassengerActivity.class);
         }
         startActivity(intent);
     }

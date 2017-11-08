@@ -1,4 +1,4 @@
-package com.llevame_app_project;
+package com.llevame_app_project.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +12,7 @@ import android.view.View.OnClickListener;
 import android.widget.RadioGroup;
 
 import com.llevame_app_project.Forms.FirstRegistrationForm;
+import com.llevame_app_project.R;
 
 public class RegistrationActivity extends AppCompatActivity {
     boolean isPassenger;
