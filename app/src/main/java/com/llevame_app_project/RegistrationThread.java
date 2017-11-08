@@ -15,8 +15,8 @@ import retrofit2.Response;
 
 public class RegistrationThread extends Thread {
 
-    PassengerData passengerToLogin;
-    Response response;
+    private PassengerData passengerToLogin;
+    private Response<LoginResponseData> response;
     RegistrationThread(PassengerData passenger){
         this.passengerToLogin = passenger;
     }
@@ -30,7 +30,7 @@ public class RegistrationThread extends Thread {
         }
     }
 
-    public Response getResponse(){
+    public Response<LoginResponseData> getResponse(){
         return response;
     }
 }

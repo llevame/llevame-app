@@ -37,28 +37,27 @@ public class CardRegistrationActivity extends AppCompatActivity {
         mNextStepButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent;
+
                 secondForm.firstName = mFirstName.getText().toString();
                 secondForm.lastName = mLastName.getText().toString();
                 secondForm.creditCardNumber = mCreditCardNumber.getText().toString();
 
                 if (firstForm.isDriver) {
-                    intent = new Intent(CardRegistrationActivity.this,
-                            CarRegistrationActivity.class);
-                    intent.putExtra("firstForm", firstForm);
-                    intent.putExtra("secondForm", secondForm);
-                    startActivity(intent);
+                    goToTheNextRegistrationActivity(firstForm, secondForm);
+
                 } else {
 
-                    LoginResponseData response;
                     try {
-                        response = registrant.register(firstForm, secondForm);
-                        intent = new Intent(CardRegistrationActivity.this,
+
+                        LoginResponseData response = registrant.register(firstForm, secondForm);
+                        Intent intent = new Intent(CardRegistrationActivity.this,
                                 PassengerActivity.class);
 
                         if (!response.getSuccess()) {
                             throw new Throwable(response.getError().getDescription());
                         }
+
+
 
                         startActivity(intent);
 
@@ -67,9 +66,18 @@ public class CardRegistrationActivity extends AppCompatActivity {
                         Toast.makeText(CardRegistrationActivity.this.getBaseContext(),
                                 throwable.getMessage(),
                                 Toast.LENGTH_SHORT).show();
-
                     }
                 }
+            }
+
+            private void goToTheNextRegistrationActivity(FirstRegistrationForm firstForm,
+                                                      SecondRegistrationForm secondForm){
+                Intent intent;
+                intent = new Intent(CardRegistrationActivity.this,
+                        CarRegistrationActivity.class);
+                intent.putExtra("firstForm", firstForm);
+                intent.putExtra("secondForm", secondForm);
+                startActivity(intent);
             }
         });
     }

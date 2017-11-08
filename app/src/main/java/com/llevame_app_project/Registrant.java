@@ -12,7 +12,7 @@ import static java.lang.Thread.sleep;
 
 public class Registrant {
 
-    RegistrationThread registrationThread;
+    private RegistrationThread registrationThread;
     private boolean finishedRegistration;
     private Throwable registeringError;
     private Response response;
@@ -35,13 +35,13 @@ public class Registrant {
     }
 
 
-    PassengerData createPassengerData(FirstRegistrationForm firstForm,
-                           SecondRegistrationForm secondForm){
+    private PassengerData createPassengerData(FirstRegistrationForm firstForm,
+                                              SecondRegistrationForm secondForm){
         PassengerData passengerData = new PassengerData();
-        passengerData.setEmail(firstForm.email.toString());
-        passengerData.setCreditCardNumber(secondForm.creditCardNumber.toString());
-        passengerData.setFirstName(secondForm.firstName.toString());
-        passengerData.setLastName(secondForm.lastName.toString());
+        passengerData.setEmail(firstForm.email);
+        passengerData.setCreditCardNumber(secondForm.creditCardNumber);
+        passengerData.setFirstName(secondForm.firstName);
+        passengerData.setLastName(secondForm.lastName);
         passengerData.setPassword(firstForm.password);
         passengerData.setDriver(false);
         return passengerData;
