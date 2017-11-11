@@ -1,0 +1,15 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.llevame_app_project.Activities.PassengerActivity">
+    <item
+        android:id="@+id/profile_settings"
+        android:orderInCategory="100"
+        android:title="Profile Settings"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/car_settings"
+        android:orderInCategory="100"
+        android:title="Car Settings"
+        app:showAsAction="never" />
+</menu>
