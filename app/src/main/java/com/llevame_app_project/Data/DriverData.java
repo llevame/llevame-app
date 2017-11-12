@@ -9,6 +9,10 @@ import com.google.gson.annotations.SerializedName;
 
 public class DriverData extends UserData{
 
+    public DriverData(){
+        this.setDriver(true);
+    }
+
     @SerializedName("car")
     @Expose
     CarData car;
@@ -20,5 +24,5 @@ public class DriverData extends UserData{
     public void setCar(CarData car) {
         this.car = car;
     }
-    
+
 }
