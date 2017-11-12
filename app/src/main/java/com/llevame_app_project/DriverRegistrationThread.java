@@ -1,6 +1,6 @@
 package com.llevame_app_project;
 
-import com.llevame_app_project.Data.LoginData;
+import com.llevame_app_project.Data.DriverData;
 import com.llevame_app_project.Data.LoginResponseData;
 import com.llevame_app_project.Data.PassengerData;
 import com.llevame_app_project.Data.Remote.ApiUtils;
@@ -10,21 +10,22 @@ import java.io.IOException;
 import retrofit2.Response;
 
 /**
- * Created by mauro on 08/11/17.
+ * Created by mauro on 11/11/17.
  */
 
-public class RegistrationThread extends Thread {
-
-    private PassengerData passengerToLogin;
+public class DriverRegistrationThread extends Thread{
+    private DriverData driverToBeRegistered;
     private Response<LoginResponseData> response;
-    RegistrationThread(PassengerData passenger){
-        this.passengerToLogin = passenger;
+
+    DriverRegistrationThread(DriverData driver){
+        this.driverToBeRegistered = driver;
     }
+
     @Override
     public void run() {
         try {
-            response = ApiUtils.getRegistrationServices().registerUser(passengerToLogin.getEmail(),
-                    passengerToLogin).execute();
+            response = ApiUtils.getRegistrationServices().registerUser(driverToBeRegistered.getEmail(),
+                    driverToBeRegistered).execute();
         } catch (IOException e) {
             e.printStackTrace();
         }
