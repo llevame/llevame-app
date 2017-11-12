@@ -4,17 +4,18 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Created by mauro on 08/11/17.
+ * Created by mauro on 11/11/17.
  */
 
-public class PassengerResponseData {
+public class DriverResponseData {
+
     @SerializedName("error")
     @Expose
     private ErrorData error;
 
     @SerializedName("result")
     @Expose
-    private PassengerData passengerData;
+    private DriverData driverData;
 
     @SerializedName("statusCode")
     @Expose
@@ -27,8 +28,16 @@ public class PassengerResponseData {
         return error;
     }
 
-    public void ErrorData(ErrorData error) {
+    public void setError(ErrorData error) {
         this.error = error;
+    }
+
+    public DriverData getDriverData() {
+        return driverData;
+    }
+
+    public void setDriverData(DriverData driverData) {
+        this.driverData = driverData;
     }
 
     public Integer getStatusCode() {
@@ -47,11 +56,4 @@ public class PassengerResponseData {
         this.success = success;
     }
 
-    public PassengerData getPassengerData() {
-        return passengerData;
-    }
-
-    public void setPassengerData(PassengerData passengerData) {
-        this.passengerData = passengerData;
-    }
 }
