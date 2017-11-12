@@ -1,4 +1,5 @@
 package com.llevame_app_project.Data.Remote;
+import com.llevame_app_project.Data.DriverData;
 import com.llevame_app_project.Data.LoginResponseData;
 import com.llevame_app_project.Data.PassengerData;
 
@@ -16,4 +17,8 @@ public interface RegistrationServices {
     @POST("api/v1/account/{userName}")
     Call<LoginResponseData> registerUser(@Path("userName") String userName,
                                          @Body PassengerData passengerData);
+
+    @POST("api/v1/account/{userName}")
+    Call<LoginResponseData> registerUser(@Path("userName") String userName,
+                                         @Body DriverData driverData);
 }
