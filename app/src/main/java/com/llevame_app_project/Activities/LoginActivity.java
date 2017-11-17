@@ -38,10 +38,10 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
-import com.llevame_app_project.AppServerSession;
-import com.llevame_app_project.AsyncLoginTask;
-import com.llevame_app_project.LoginValidator;
+import com.llevame_app_project.UserManagement.LoggedUser.AppServerSession;
 import com.llevame_app_project.R;
+import com.llevame_app_project.UserManagement.Login.AsyncLoginTask;
+import com.llevame_app_project.UserManagement.Login.LoginValidator;
 
 import android.util.Log;
 import android.widget.Toast;

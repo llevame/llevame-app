@@ -1,4 +1,4 @@
-package com.llevame_app_project;
+package com.llevame_app_project.Activities;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

@@ -1,22 +1,15 @@
-package com.llevame_app_project;
+package com.llevame_app_project.UserManagement.Login;
 
-import com.llevame_app_project.Data.LoginResponseData;
-import com.llevame_app_project.Data.PassengerData;
-import com.llevame_app_project.Data.PassengerResponseData;
+import com.llevame_app_project.UserManagement.LoggedUser.AppServerSession;
+import com.llevame_app_project.Data.DriverResponseData;
 import com.llevame_app_project.Data.Remote.ApiUtils;
-import com.llevame_app_project.Data.UserData;
 
 import java.io.IOException;
 
 import retrofit2.Response;
 
-/**
- * Created by mauro on 08/11/17.
- */
-
-public class PassengerProfileUpdateThread extends Thread {
-
-    private Response<PassengerResponseData> response;
+public class DriverProfileUpdateThread extends Thread {
+    private Response<DriverResponseData> response;
 
     @Override
     public void run() {
@@ -24,7 +17,7 @@ public class PassengerProfileUpdateThread extends Thread {
         String bearer = "Bearer ";
         String bearerPlusToken =  bearer.concat(session.getToken());
         try {
-            response = ApiUtils.getPassengerServices().getUser(
+            response = ApiUtils.getDriverServices().getUser(
                     session.getId(), bearerPlusToken
             ).execute();
         } catch (IOException e) {
@@ -33,7 +26,7 @@ public class PassengerProfileUpdateThread extends Thread {
     }
 
     //The response can be null.
-    public Response<PassengerResponseData> getResponse(){
+    public Response<DriverResponseData> getResponse(){
         return response;
     }
 }

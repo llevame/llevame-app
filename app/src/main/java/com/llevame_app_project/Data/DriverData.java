@@ -8,51 +8,21 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class DriverData extends UserData{
-    @SerializedName("carModel")
+
+    public DriverData(){
+        this.setDriver(true);
+    }
+
+    @SerializedName("car")
     @Expose
-    private String carModel;
+    CarData car;
 
-    @SerializedName("carColor")
-    @Expose
-    private String carColor;
-
-    @SerializedName("carPatent")
-    @Expose
-    private String carPatent;
-
-    @SerializedName("carHasAC")
-    @Expose
-    private boolean carHasAc;
-
-    public String getCarModel() {
-        return carModel;
+    public CarData getCar() {
+        return car;
     }
 
-    public void setCarModel(String carModel) {
-        this.carModel = carModel;
+    public void setCar(CarData car) {
+        this.car = car;
     }
 
-    public String getCarColor() {
-        return carColor;
-    }
-
-    public void setCarColor(String carColor) {
-        this.carColor = carColor;
-    }
-
-    public String getCarPatent() {
-        return carPatent;
-    }
-
-    public void setCarPatent(String carPatent) {
-        this.carPatent = carPatent;
-    }
-
-    public boolean isCarHasAc() {
-        return carHasAc;
-    }
-
-    public void setCarHasAc(boolean carHasAc) {
-        this.carHasAc = carHasAc;
-    }
 }

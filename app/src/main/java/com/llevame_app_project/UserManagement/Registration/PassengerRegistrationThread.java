@@ -1,6 +1,5 @@
-package com.llevame_app_project;
+package com.llevame_app_project.UserManagement.Registration;
 
-import com.llevame_app_project.Data.LoginData;
 import com.llevame_app_project.Data.LoginResponseData;
 import com.llevame_app_project.Data.PassengerData;
 import com.llevame_app_project.Data.Remote.ApiUtils;
@@ -13,18 +12,19 @@ import retrofit2.Response;
  * Created by mauro on 08/11/17.
  */
 
-public class RegistrationThread extends Thread {
+public class PassengerRegistrationThread extends Thread {
 
-    private PassengerData passengerToLogin;
+    private PassengerData passengerToBeRegistered;
     private Response<LoginResponseData> response;
-    RegistrationThread(PassengerData passenger){
-        this.passengerToLogin = passenger;
+    PassengerRegistrationThread(PassengerData passenger){
+        this.passengerToBeRegistered = passenger;
     }
+
     @Override
     public void run() {
         try {
-            response = ApiUtils.getRegistrationServices().registerUser(passengerToLogin.getEmail(),
-                    passengerToLogin).execute();
+            response = ApiUtils.getRegistrationServices().registerUser(passengerToBeRegistered.getEmail(),
+                    passengerToBeRegistered).execute();
         } catch (IOException e) {
             e.printStackTrace();
         }

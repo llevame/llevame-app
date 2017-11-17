@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/carModelText"
+        android:id="@+id/textModel"
         android:layout_width="225dp"
         android:layout_height="43dp"
         android:ems="10"
@@ -30,16 +30,16 @@
         app:layout_constraintLeft_toLeftOf="@+id/textView4" />
 
     <EditText
-        android:id="@+id/patentText"
+        android:id="@+id/textPatent"
         android:layout_width="122dp"
         android:layout_height="40dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:hint="Patent"
         android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/carModelText"
+        app:layout_constraintTop_toBottomOf="@+id/textModel"
         android:layout_marginLeft="1dp"
-        app:layout_constraintLeft_toLeftOf="@+id/carModelText" />
+        app:layout_constraintLeft_toLeftOf="@+id/textModel" />
 
     <Button
         android:id="@+id/finish_button"
@@ -47,44 +47,43 @@
         android:layout_height="wrap_content"
         android:text="Finish"
         android:layout_marginLeft="1dp"
-        app:layout_constraintLeft_toLeftOf="@+id/colorText"
+        app:layout_constraintLeft_toLeftOf="@+id/textColor"
         android:layout_marginTop="22dp"
-        app:layout_constraintTop_toBottomOf="@+id/colorText" />
+        app:layout_constraintTop_toBottomOf="@+id/textColor" />
 
     <EditText
-        android:id="@+id/colorText"
+        android:id="@+id/textColor"
         android:layout_width="125dp"
         android:layout_height="40dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:hint="Color"
         android:layout_marginLeft="-1dp"
-        app:layout_constraintLeft_toLeftOf="@+id/patentText"
+        app:layout_constraintLeft_toLeftOf="@+id/textPatent"
         android:layout_marginTop="5dp"
-        app:layout_constraintTop_toBottomOf="@+id/patentText" />
+        app:layout_constraintTop_toBottomOf="@+id/textPatent" />
 
     <EditText
-        android:id="@+id/yearText"
+        android:id="@+id/textYear"
         android:layout_width="121dp"
         android:layout_height="41dp"
         android:ems="10"
         android:inputType="number"
-        app:layout_constraintLeft_toRightOf="@+id/patentText"
+        app:layout_constraintLeft_toRightOf="@+id/textPatent"
         android:layout_marginLeft="24dp"
         android:hint="year"
         android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/carModelText" />
+        app:layout_constraintTop_toBottomOf="@+id/textModel" />
 
     <CheckBox
-        android:id="@+id/acCheckBox"
+        android:id="@+id/checkBoxAc"
         android:layout_width="122dp"
         android:layout_height="39dp"
+        android:layout_marginLeft="21dp"
+        android:layout_marginTop="6dp"
         android:text="A/C"
         android:textSize="17dp"
-        android:layout_marginTop="6dp"
-        app:layout_constraintTop_toBottomOf="@+id/yearText"
-        app:layout_constraintLeft_toRightOf="@+id/colorText"
-        android:layout_marginLeft="21dp"
-        tools:layout_editor_absoluteY="160dp" />
+        app:layout_constraintLeft_toRightOf="@+id/textColor"
+        app:layout_constraintTop_toBottomOf="@+id/textYear" />
 
 </android.support.constraint.ConstraintLayout>
