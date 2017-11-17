@@ -1,12 +1,11 @@
-package com.llevame_app_project;
+package com.llevame_app_project.UserManagement.LoggedUser;
 
 import com.llevame_app_project.Data.CarData;
 import com.llevame_app_project.Data.DriverData;
 import com.llevame_app_project.Data.DriverResponseData;
 import com.llevame_app_project.Data.PassengerData;
 import com.llevame_app_project.Data.PassengerResponseData;
-import com.llevame_app_project.Data.Remote.ApiUtils;
-import com.llevame_app_project.Data.UserData;
+import com.llevame_app_project.UserManagement.Login.DriverProfileUpdateThread;
 
 import retrofit2.Response;
 

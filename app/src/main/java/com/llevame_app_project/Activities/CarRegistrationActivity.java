@@ -9,13 +9,13 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.llevame_app_project.AppServerSession;
+import com.llevame_app_project.UserManagement.LoggedUser.AppServerSession;
 import com.llevame_app_project.Data.CarData;
 import com.llevame_app_project.Data.LoginResponseData;
 import com.llevame_app_project.Forms.FirstRegistrationForm;
 import com.llevame_app_project.Forms.SecondRegistrationForm;
 import com.llevame_app_project.R;
-import com.llevame_app_project.Registrant;
+import com.llevame_app_project.UserManagement.Registration.Registrant;
 
 public class CarRegistrationActivity extends AppCompatActivity {
 

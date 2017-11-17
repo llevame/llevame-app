@@ -1,4 +1,4 @@
-package com.llevame_app_project;
+package com.llevame_app_project.UserManagement.Registration;
 
 import com.llevame_app_project.Data.DriverData;
 import com.llevame_app_project.Data.LoginResponseData;

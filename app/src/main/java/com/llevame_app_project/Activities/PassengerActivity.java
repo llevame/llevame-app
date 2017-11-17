@@ -12,7 +12,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.llevame_app_project.R;
-import com.llevame_app_project.TravelFragment;
 
 public class PassengerActivity extends AppCompatActivity {
 

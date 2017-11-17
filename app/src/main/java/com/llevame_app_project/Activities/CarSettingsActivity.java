@@ -2,11 +2,10 @@ package com.llevame_app_project.Activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-import com.llevame_app_project.Profile;
+import com.llevame_app_project.UserManagement.LoggedUser.Profile;
 import com.llevame_app_project.R;
 
 public class CarSettingsActivity extends AppCompatActivity {

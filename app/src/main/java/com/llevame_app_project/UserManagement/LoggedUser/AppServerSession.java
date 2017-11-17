@@ -1,4 +1,4 @@
-package com.llevame_app_project;
+package com.llevame_app_project.UserManagement.LoggedUser;
 
 /**
  * Created by mauro on 03/11/17.
