@@ -3,6 +3,44 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class UserData {
+
+
+    @SerializedName("email")
+    @Expose
+    private String email;
+
+    @SerializedName("firstName")
+    @Expose
+    private String firstName;
+
+    @SerializedName("lastName")
+    @Expose
+    private String lastName;
+
+    @SerializedName("creditCardNumber")
+    @Expose
+    private String creditCardNumber;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    @SerializedName("password")
+    @Expose
+    private String password;
+
+    @SerializedName("isDriver")
+    @Expose
+    private boolean isDriver;
+
+    @SerializedName("position")
+    @Expose
+    private PositionData position;
+
     public String getEmail() {
         return email;
     }
@@ -43,35 +81,11 @@ public class UserData {
         isDriver = driver;
     }
 
-    @SerializedName("email")
-    @Expose
-    private String email;
-
-    @SerializedName("firstName")
-    @Expose
-    private String firstName;
-
-    @SerializedName("lastName")
-    @Expose
-    private String lastName;
-
-    @SerializedName("creditCardNumber")
-    @Expose
-    private String creditCardNumber;
-
-    public String getPassword() {
-        return password;
+    public PositionData getPosition() {
+        return position;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPosition(PositionData position) {
+        this.position = position;
     }
-
-    @SerializedName("password")
-    @Expose
-    private String password;
-
-    @SerializedName("isDriver")
-    @Expose
-    private boolean isDriver;
 }
