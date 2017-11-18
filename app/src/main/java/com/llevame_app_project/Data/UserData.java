@@ -37,9 +37,9 @@ public class UserData {
     @Expose
     private boolean isDriver;
 
-    @SerializedName("position")
+    @SerializedName("location")
     @Expose
-    private PositionData position;
+    private LocationData location;
 
     public String getEmail() {
         return email;
@@ -81,11 +81,11 @@ public class UserData {
         isDriver = driver;
     }
 
-    public PositionData getPosition() {
-        return position;
+    public LocationData getLocation() {
+        return location;
     }
 
-    public void setPosition(PositionData position) {
-        this.position = position;
+    public void setLocation(LocationData location) {
+        this.location = location;
     }
 }

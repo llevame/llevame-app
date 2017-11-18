@@ -3,7 +3,7 @@ package com.llevame_app_project.Data;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class PositionData {
+public class LocationData {
 
 
     @SerializedName("latitude")
