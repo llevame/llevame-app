@@ -3,6 +3,15 @@ import android.annotation.SuppressLint;
 import android.location.Location;
 import android.util.Log;
 
+import com.llevame_app_project.Data.LocationData;
+import com.llevame_app_project.Data.LocationForServerData;
+import com.llevame_app_project.Data.PatchResponseData;
+import com.llevame_app_project.Data.Remote.ApiUtils;
+import com.llevame_app_project.Data.Remote.UserPatchServices;
+import com.llevame_app_project.UserManagement.LoggedUser.AppServerSession;
+
+import java.io.IOException;
+
 public class LocationOnServerUpdater extends Thread {
 
 
@@ -26,11 +35,29 @@ public class LocationOnServerUpdater extends Thread {
 
     @Override
     public void run(){
+        UserPatchServices service = ApiUtils.getUserPatchServices();
         //noinspection InfiniteLoopStatement
         while(true){
-            if(lastKnownLocation != null){
+            if(lastKnownLocation != null && AppServerSession.getCurrentSession() != null){
+                AppServerSession session = AppServerSession.getCurrentSession();
+                String bearer = "Bearer ";
+                String bearerPlusToken =  bearer.concat(session.getToken());
+                LocationForServerData locationData;
                 synchronized (lock) {
-                    Log.i("LocationUpdater:", "Updating gps to:" + lastKnownLocation);
+                     locationData = new LocationForServerData(lastKnownLocation);
+                }
+                PatchResponseData response;
+                Log.i("LocationUpdater:", "Sending location to server:" + lastKnownLocation);
+                try {
+                    response = service.notifyLocation(bearerPlusToken,
+                            locationData).execute().body();
+                    if(response.getSuccess() != true){
+                        String statusCode = response.getStatusCode().toString();
+                        Log.e("LocationUpdater:", "connection failed, error: " +
+                                statusCode);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
             }
             try {

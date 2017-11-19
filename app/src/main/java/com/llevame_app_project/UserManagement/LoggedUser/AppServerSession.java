@@ -1,9 +1,5 @@
 package com.llevame_app_project.UserManagement.LoggedUser;
 
-/**
- * Created by mauro on 03/11/17.
- */
-
 public class AppServerSession {
     private String id;
     private String token;
