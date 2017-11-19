@@ -30,7 +30,7 @@ public class LocationOnServerUpdater extends Thread {
 
     }
 
-    Location lastKnownLocation;
+    private Location lastKnownLocation;
     private final Object lock = new Object();
 
     @Override
@@ -38,7 +38,7 @@ public class LocationOnServerUpdater extends Thread {
         UserPatchServices service = ApiUtils.getUserPatchServices();
         //noinspection InfiniteLoopStatement
         while(true){
-            if(lastKnownLocation != null && AppServerSession.getCurrentSession() != null){
+            if(lastKnownLocation != null && AppServerSession.isCreated()){
                 AppServerSession session = AppServerSession.getCurrentSession();
                 String bearer = "Bearer ";
                 String bearerPlusToken =  bearer.concat(session.getToken());

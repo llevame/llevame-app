@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.llevame_app_project.UserManagement.LoggedUser.AppServerSession;
 import com.llevame_app_project.UserManagement.LoggedUser.Profile;
 import com.llevame_app_project.R;
 
@@ -39,6 +40,7 @@ public class ProfileActivity extends AppCompatActivity {
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                AppServerSession.destroySession();
                 startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
             }
         });

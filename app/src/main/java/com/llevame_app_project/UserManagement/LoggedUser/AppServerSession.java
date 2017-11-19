@@ -5,6 +5,7 @@ public class AppServerSession {
     private String token;
     private Boolean isDriver;
     private static AppServerSession currentSession;
+    private static boolean isCreated;
 
     public static AppServerSession getCurrentSession(){
         return currentSession;
@@ -12,8 +13,17 @@ public class AppServerSession {
 
     public static void createSession(boolean isDriver, String id,String token){
         currentSession = new AppServerSession(isDriver,id,token);
+        isCreated = true;
     }
 
+    public static boolean isCreated(){
+        return isCreated;
+    }
+
+    public static void destroySession(){
+        isCreated = false;
+        currentSession = null;
+    }
     private AppServerSession(boolean isDriver, String id,String token){
         this.id = id;
         this.isDriver = isDriver;
