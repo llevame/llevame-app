@@ -3,8 +3,6 @@ import android.annotation.SuppressLint;
 import android.location.Location;
 import android.util.Log;
 
-import com.google.android.gms.location.LocationServices;
-
 public class LocationOnServerUpdater extends Thread {
 
 
