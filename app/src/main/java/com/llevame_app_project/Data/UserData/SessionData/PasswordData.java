@@ -1,11 +1,7 @@
-package com.llevame_app_project.Data;
+package com.llevame_app_project.Data.UserData.SessionData;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
-/**
- * Created by mauro on 08/11/17.
- */
 
 public class PasswordData {
     @SerializedName("password")

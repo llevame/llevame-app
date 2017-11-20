@@ -1,12 +1,8 @@
 package com.llevame_app_project.Data.Remote;
 
 
-import android.location.Location;
-
-import com.llevame_app_project.Data.LocationData;
-import com.llevame_app_project.Data.LocationForServerData;
-import com.llevame_app_project.Data.LoginResponseData;
-import com.llevame_app_project.Data.PatchResponseData;
+import com.llevame_app_project.Data.UserData.LocationData.LocationForServerData;
+import com.llevame_app_project.Data.UserData.PatchResponseData;
 
 import retrofit2.Call;
 import retrofit2.http.Body;

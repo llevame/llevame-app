@@ -1,7 +1,6 @@
 package com.llevame_app_project.Data.Remote;
 
-import com.llevame_app_project.Data.DriverResponseData;
-import com.llevame_app_project.Data.PassengerResponseData;
+import com.llevame_app_project.Data.UserData.DriverData.DriverResponseData;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

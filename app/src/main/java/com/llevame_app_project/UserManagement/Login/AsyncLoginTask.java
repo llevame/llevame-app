@@ -3,8 +3,8 @@ package com.llevame_app_project.UserManagement.Login;
 import android.os.AsyncTask;
 
 import com.llevame_app_project.Activities.LoginActivity;
-import com.llevame_app_project.Data.LoginResponseData;
-import com.llevame_app_project.Data.PasswordData;
+import com.llevame_app_project.Data.UserData.SessionData.LoginResponseData;
+import com.llevame_app_project.Data.UserData.SessionData.PasswordData;
 import com.llevame_app_project.Data.Remote.ApiUtils;
 
 import retrofit2.Call;

@@ -37,6 +37,11 @@ public class AppServerSession {
         return token;
     }
 
+    public String getBearerToken(){
+        String bearer = "Bearer ";
+        String bearerPlusToken =  bearer.concat(token);
+        return bearerPlusToken;
+    }
     public String getId() {
         return id;
     }

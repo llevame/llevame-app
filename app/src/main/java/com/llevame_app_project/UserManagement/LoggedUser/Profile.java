@@ -1,10 +1,10 @@
 package com.llevame_app_project.UserManagement.LoggedUser;
 
-import com.llevame_app_project.Data.CarData;
-import com.llevame_app_project.Data.DriverData;
-import com.llevame_app_project.Data.DriverResponseData;
-import com.llevame_app_project.Data.PassengerData;
-import com.llevame_app_project.Data.PassengerResponseData;
+import com.llevame_app_project.Data.UserData.DriverData.CarData;
+import com.llevame_app_project.Data.UserData.DriverData.DriverData;
+import com.llevame_app_project.Data.UserData.DriverData.DriverResponseData;
+import com.llevame_app_project.Data.UserData.PassengerData.PassengerData;
+import com.llevame_app_project.Data.UserData.PassengerData.PassengerResponseData;
 import com.llevame_app_project.UserManagement.Login.DriverProfileUpdateThread;
 
 import retrofit2.Response;

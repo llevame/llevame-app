@@ -1,6 +1,7 @@
-package com.llevame_app_project.Data;
+package com.llevame_app_project.Data.UserData;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.llevame_app_project.Data.UserData.LocationData.LocationData;
 
 public class UserData {
 

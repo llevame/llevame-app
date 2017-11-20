@@ -2,10 +2,8 @@ package com.llevame_app_project.UserManagement.LocationService;
 import android.annotation.SuppressLint;
 import android.location.Location;
 import android.util.Log;
-
-import com.llevame_app_project.Data.LocationData;
-import com.llevame_app_project.Data.LocationForServerData;
-import com.llevame_app_project.Data.PatchResponseData;
+import com.llevame_app_project.Data.UserData.LocationData.LocationForServerData;
+import com.llevame_app_project.Data.UserData.PatchResponseData;
 import com.llevame_app_project.Data.Remote.ApiUtils;
 import com.llevame_app_project.Data.Remote.UserPatchServices;
 import com.llevame_app_project.UserManagement.LoggedUser.AppServerSession;

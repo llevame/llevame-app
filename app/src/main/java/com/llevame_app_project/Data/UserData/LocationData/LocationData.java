@@ -1,4 +1,4 @@
-package com.llevame_app_project.Data;
+package com.llevame_app_project.Data.UserData.LocationData;
 
 import android.location.Location;
 

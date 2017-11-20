@@ -1,7 +1,7 @@
 package com.llevame_app_project.UserManagement.Login;
 
 import com.llevame_app_project.UserManagement.LoggedUser.AppServerSession;
-import com.llevame_app_project.Data.DriverResponseData;
+import com.llevame_app_project.Data.UserData.DriverData.DriverResponseData;
 import com.llevame_app_project.Data.Remote.ApiUtils;
 
 import java.io.IOException;

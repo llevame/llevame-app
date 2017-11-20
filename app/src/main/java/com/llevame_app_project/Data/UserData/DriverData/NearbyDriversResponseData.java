@@ -1,13 +1,13 @@
-package com.llevame_app_project.Data;
+package com.llevame_app_project.Data.UserData.DriverData;
+
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.llevame_app_project.Data.ErrorData;
 
-/**
- * Created by mauro on 11/11/17.
- */
+import java.util.List;
 
-public class DriverResponseData {
+public class NearbyDriversResponseData {
 
     @SerializedName("error")
     @Expose
@@ -15,7 +15,7 @@ public class DriverResponseData {
 
     @SerializedName("result")
     @Expose
-    private DriverData driverData;
+    private List<DriverData> nearbyDrivers;
 
     @SerializedName("statusCode")
     @Expose
@@ -32,12 +32,12 @@ public class DriverResponseData {
         this.error = error;
     }
 
-    public DriverData getDriverData() {
-        return driverData;
+    public List<DriverData> getNearbyDrivers() {
+        return nearbyDrivers;
     }
 
-    public void setDriverData(DriverData driverData) {
-        this.driverData = driverData;
+    public void setNearbyDrivers(List<DriverData> nearbyDrivers) {
+        this.nearbyDrivers = nearbyDrivers;
     }
 
     public Integer getStatusCode() {
@@ -55,5 +55,4 @@ public class DriverResponseData {
     public void setSuccess(Boolean success) {
         this.success = success;
     }
-
 }

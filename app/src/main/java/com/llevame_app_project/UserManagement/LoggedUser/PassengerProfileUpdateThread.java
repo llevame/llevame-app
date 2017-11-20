@@ -1,8 +1,7 @@
 package com.llevame_app_project.UserManagement.LoggedUser;
 
-import com.llevame_app_project.Data.PassengerResponseData;
+import com.llevame_app_project.Data.UserData.PassengerData.PassengerResponseData;
 import com.llevame_app_project.Data.Remote.ApiUtils;
-import com.llevame_app_project.UserManagement.LoggedUser.AppServerSession;
 
 import java.io.IOException;
 

@@ -1,4 +1,4 @@
-package com.llevame_app_project.Data;
+package com.llevame_app_project.Data.UserData.SessionData;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
