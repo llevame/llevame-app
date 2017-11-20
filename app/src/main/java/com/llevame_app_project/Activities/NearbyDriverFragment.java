@@ -14,6 +14,8 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -63,6 +65,10 @@ public class NearbyDriverFragment extends Fragment {
             @Override
             public void onMapReady(GoogleMap googleMap) {
 
+                BitmapDescriptor icon =
+                        BitmapDescriptorFactory.fromResource(
+                                R.drawable.motorcycle
+                        );
                 for (DriverData driver : nearbyDrivers) {
 
                     Log.i("UpdatingMap:", "Driver:" + driver.getLastName());
@@ -74,6 +80,7 @@ public class NearbyDriverFragment extends Fragment {
                             .position(position)
                             .title(driver.getFirstName() + " " + driver.getLastName())
                             .snippet(makeDriverSnippet(driver))
+                            .icon(icon)
                     );
                 }
             }
