@@ -13,7 +13,9 @@ import android.view.MenuItem;
 
 import com.llevame_app_project.R;
 
-public class PassengerActivity extends AppCompatActivity {
+import java.sql.Driver;
+
+public class PassengerActivity extends AppCompatActivity{
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -29,6 +31,10 @@ public class PassengerActivity extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+    private NearbyDriverFragment nearbyDriverFragment;
+    private TravelFragment travelFragment;
+    private DriverSelectedListener driverSelectedListener = new DriverSelectedListener(this);
+    private String selectedDriver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +50,9 @@ public class PassengerActivity extends AppCompatActivity {
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         getSupportActionBar().setTitle("Llevame");
-
+        nearbyDriverFragment = new NearbyDriverFragment();
+        travelFragment = new TravelFragment();
+        nearbyDriverFragment.setObserver(driverSelectedListener);
     }
 
 
@@ -69,7 +77,12 @@ public class PassengerActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-    
+
+    public void onDriverSelected() {
+        this.selectedDriver = nearbyDriverFragment.getSelectedDriverUsername();
+        mViewPager.setCurrentItem(2);
+    }
+
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
@@ -84,9 +97,9 @@ public class PassengerActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             Fragment fragmentToShow;
             if(position == 0)
-                fragmentToShow = new NearbyDriverFragment();
+                fragmentToShow = nearbyDriverFragment;
             else
-                fragmentToShow = new TravelFragment();
+                fragmentToShow = travelFragment;
             return fragmentToShow;
         }
 

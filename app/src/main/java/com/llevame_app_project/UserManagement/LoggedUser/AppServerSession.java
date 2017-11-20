@@ -1,5 +1,7 @@
 package com.llevame_app_project.UserManagement.LoggedUser;
 
+import android.util.Log;
+
 public class AppServerSession {
     private String id;
     private String token;
@@ -28,6 +30,7 @@ public class AppServerSession {
         this.id = id;
         this.isDriver = isDriver;
         this.token = token;
+        Log.d("AppToken:", token);
     }
 
     public boolean isDriver(){
