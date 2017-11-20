@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -38,14 +39,17 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.llevame_app_project.UserManagement.LocationService.LocationUpdaterService;
 import com.llevame_app_project.UserManagement.LoggedUser.AppServerSession;
 import com.llevame_app_project.R;
 import com.llevame_app_project.UserManagement.Login.AsyncLoginTask;
 import com.llevame_app_project.UserManagement.Login.LoginValidator;
+import com.llevame_app_project.UserManagement.NotifyFirebaseTokenThread;
 
 import android.util.Log;
 import android.widget.Toast;
+
 import static android.Manifest.permission.READ_CONTACTS;
 import static java.lang.Thread.sleep;
 
@@ -223,7 +227,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mPasswordView.setError(getString(R.string.error_field_required));
             focusView = mPasswordView;
             cancel = true;
-        } else if(!loginValidator.isPasswordValid(password)) {
+        } else if (!loginValidator.isPasswordValid(password)) {
             mPasswordView.setError(getString(R.string.error_incorrect_password));
             focusView = mPasswordView;
             cancel = true;
@@ -238,7 +242,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // perform the user login attempt.
             this.showProgress(true);
             AsyncLoginTask loginTask = new AsyncLoginTask(this);
-            loginTask.execute(mEmailView.getText().toString(), mPasswordView.getText().toString());
+            loginTask.executeOnExecutor(
+                    AsyncTask.THREAD_POOL_EXECUTOR,
+                    mEmailView.getText().toString(), mPasswordView.getText().toString());
         }
     }
 
@@ -332,23 +338,30 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         int IS_PRIMARY = 1;
     }
 
-    public void loginFinishedWithAnError(String description){
+    public void loginFinishedWithAnError(String description) {
         this.showProgress(false);
         Toast.makeText(this.getBaseContext(), description, Toast.LENGTH_SHORT).show();
     }
 
-    public void loginFinishedSuccessfully(String token, String id,boolean isDriver){
-        this.showProgress(false);
-        AppServerSession.createSession(isDriver,id,token);
+    public void loginFinishedSuccessfully(String token, String id, boolean isDriver) {
+        AppServerSession.createSession(isDriver, id, token);
         Intent intent;
-        if(isDriver){
+        this.showProgress(false);
+        if (isDriver) {
             intent = new Intent(LoginActivity.this,
                     DriverActivity.class);
-        }else{
+        } else {
             intent = new Intent(LoginActivity.this,
                     PassengerActivity.class);
         }
+        startNotifyFirebaseTokenTask();
         startActivity(intent);
+    }
+
+    public void startNotifyFirebaseTokenTask(){
+        String token = FirebaseInstanceId.getInstance().getToken();
+        NotifyFirebaseTokenThread thread = new NotifyFirebaseTokenThread(token);
+        thread.start();
     }
 }
 
