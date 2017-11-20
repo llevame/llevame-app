@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
@@ -29,11 +30,14 @@ import com.llevame_app_project.UserManagement.LoggedUser.AppServerSession;
 import android.support.v4.content.ContextCompat;
 import android.content.pm.PackageManager;
 import android.Manifest;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -57,7 +61,25 @@ public class NearbyDriverFragment extends Fragment {
         }
     }
 
+    private class DriverMarkerListener implements GoogleMap.OnInfoWindowClickListener{
+
+        @Override
+        public void onInfoWindowClick(Marker marker) {
+            selectedDriverUsername =(String) marker.getTag();
+            Log.i("Marker:", "Selected: " + selectedDriverUsername);
+            if(observer != null)
+                observer.notifyObserver();
+        }
+
+    }
+
     View rootView;
+    private String selectedDriverUsername;
+    private AppListenerInterface observer;
+
+    public void setObserver(AppListenerInterface observer){
+        this.observer = observer;
+    }
 
     public void updateMapWith(final List<DriverData> nearbyDrivers){
 
@@ -76,12 +98,13 @@ public class NearbyDriverFragment extends Fragment {
                     LatLng position = new LatLng(driver.getLocation().getLatitude(),
                             driver.getLocation().getLongitude());
 
-                    googleMap.addMarker(new MarkerOptions()
+                    Marker marker = googleMap.addMarker(new MarkerOptions()
                             .position(position)
                             .title(driver.getFirstName() + " " + driver.getLastName())
                             .snippet(makeDriverSnippet(driver))
                             .icon(icon)
                     );
+                    marker.setTag(driver.getEmail());
                 }
             }
 
@@ -106,7 +129,6 @@ public class NearbyDriverFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_nearby_driver, container, false);
-
         mMapView = rootView.findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
 
@@ -128,6 +150,7 @@ public class NearbyDriverFragment extends Fragment {
                     googleMap.setMyLocationEnabled(true);
                 }
                 setMapMarkerInfoLayout(googleMap);
+                googleMap.setOnInfoWindowClickListener(new DriverMarkerListener());
             }
         });
 
@@ -160,9 +183,9 @@ public class NearbyDriverFragment extends Fragment {
         mMapView.onLowMemory();
     }
 
+
     void setMapMarkerInfoLayout(GoogleMap googleMap){
         googleMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
-
             @Override
             public View getInfoWindow(Marker arg0) {
                 return null;
@@ -186,11 +209,19 @@ public class NearbyDriverFragment extends Fragment {
                 snippet.setText(marker.getSnippet());
                 snippet.setTextSize(22);
 
+                Button selectDriver  = new Button(rootView.getContext());
+                selectDriver.setText("Select");
+
                 info.addView(title);
                 info.addView(snippet);
-
+                info.addView(selectDriver);
                 return info;
             }
         });
     }
+
+    public String getSelectedDriverUsername(){
+        return selectedDriverUsername;
+    }
+
 }

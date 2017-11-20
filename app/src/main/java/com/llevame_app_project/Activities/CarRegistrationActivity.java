@@ -79,7 +79,7 @@ public class CarRegistrationActivity extends AppCompatActivity {
                thread.start();
             }
 
-            public CarData createCarData(){
+            private CarData createCarData(){
                 CarData carData = new CarData();
                 carData.setColor(mColor.getText().toString());
                 carData.setHasAc(cAc.isChecked());
