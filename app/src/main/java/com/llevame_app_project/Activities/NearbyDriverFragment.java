@@ -1,9 +1,12 @@
 package com.llevame_app_project.Activities;
 
 import android.app.Service;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +14,9 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.llevame_app_project.Data.Remote.ApiUtils;
 import com.llevame_app_project.Data.Remote.PassengerServices;
 import com.llevame_app_project.Data.UserData.DriverData.DriverData;
@@ -21,6 +27,8 @@ import com.llevame_app_project.UserManagement.LoggedUser.AppServerSession;
 import android.support.v4.content.ContextCompat;
 import android.content.pm.PackageManager;
 import android.Manifest;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.util.Iterator;
 import java.util.List;
@@ -47,11 +55,38 @@ public class NearbyDriverFragment extends Fragment {
         }
     }
 
+    View rootView;
 
-    public void updateMapWith(List<DriverData> nearbyDrivers){
-        for (DriverData driver : nearbyDrivers) {
-            Log.i("UpdatingMap:", "Driver:" + driver.getLastName());
-        }
+    public void updateMapWith(final List<DriverData> nearbyDrivers){
+
+        mMapView.getMapAsync(new OnMapReadyCallback() {
+            @Override
+            public void onMapReady(GoogleMap googleMap) {
+
+                for (DriverData driver : nearbyDrivers) {
+
+                    Log.i("UpdatingMap:", "Driver:" + driver.getLastName());
+
+                    LatLng position = new LatLng(driver.getLocation().getLatitude(),
+                            driver.getLocation().getLongitude());
+
+                    googleMap.addMarker(new MarkerOptions()
+                            .position(position)
+                            .title(driver.getFirstName() + " " + driver.getLastName())
+                            .snippet(makeDriverSnippet(driver))
+                    );
+                }
+            }
+
+            String makeDriverSnippet(DriverData driver){
+                return(
+                    driver.getCar().getModel() + "\n" +
+                    driver.getCar().getPatent() + "\n" +
+                    driver.getCar().getYear() + "\n" +
+                    driver.getCar().getColor()
+                    );
+            }
+        });
     }
 
     public void updateMap(){
@@ -63,7 +98,7 @@ public class NearbyDriverFragment extends Fragment {
     MapView mMapView;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_nearby_driver, container, false);
+        rootView = inflater.inflate(R.layout.fragment_nearby_driver, container, false);
 
         mMapView = rootView.findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
@@ -76,7 +111,6 @@ public class NearbyDriverFragment extends Fragment {
             e.printStackTrace();
         }
 
-
         mMapView.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(GoogleMap googleMap) {
@@ -86,8 +120,10 @@ public class NearbyDriverFragment extends Fragment {
                         == PackageManager.PERMISSION_GRANTED) {
                     googleMap.setMyLocationEnabled(true);
                 }
+                setMapMarkerInfoLayout(googleMap);
             }
         });
+
 
         updateMap();
         return rootView;
@@ -115,5 +151,39 @@ public class NearbyDriverFragment extends Fragment {
     public void onLowMemory() {
         super.onLowMemory();
         mMapView.onLowMemory();
+    }
+
+    void setMapMarkerInfoLayout(GoogleMap googleMap){
+        googleMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+
+            @Override
+            public View getInfoWindow(Marker arg0) {
+                return null;
+            }
+
+            @Override
+            public View getInfoContents(Marker marker) {
+
+                LinearLayout info = new LinearLayout(rootView.getContext());
+                info.setOrientation(LinearLayout.VERTICAL);
+
+                TextView title = new TextView(rootView.getContext());
+                title.setTextColor(Color.BLACK);
+                title.setGravity(Gravity.CENTER);
+                title.setTypeface(null, Typeface.BOLD);
+                title.setText(marker.getTitle());
+                title.setTextSize(26);
+
+                TextView snippet = new TextView(rootView.getContext());
+                snippet.setTextColor(Color.GRAY);
+                snippet.setText(marker.getSnippet());
+                snippet.setTextSize(22);
+
+                info.addView(title);
+                info.addView(snippet);
+
+                return info;
+            }
+        });
     }
 }
