@@ -9,12 +9,14 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.llevame_app_project.UserManagement.LoggedUser.AppServerSession;
 import com.llevame_app_project.Data.UserData.DriverData.CarData;
 import com.llevame_app_project.Data.UserData.SessionData.LoginResponseData;
 import com.llevame_app_project.Forms.FirstRegistrationForm;
 import com.llevame_app_project.Forms.SecondRegistrationForm;
 import com.llevame_app_project.R;
+import com.llevame_app_project.UserManagement.NotifyFirebaseTokenThread;
 import com.llevame_app_project.UserManagement.Registration.Registrant;
 
 public class CarRegistrationActivity extends AppCompatActivity {
@@ -58,6 +60,7 @@ public class CarRegistrationActivity extends AppCompatActivity {
 
                     AppServerSession.createSession(true,firstForm.email,
                             response.getLoginData().getToken());
+                    startNotifyFirebaseTokenTask();
 
                     Intent intent = new Intent(CarRegistrationActivity.this,
                             DriverActivity.class);
@@ -70,6 +73,12 @@ public class CarRegistrationActivity extends AppCompatActivity {
                 }
             }
 
+            private void startNotifyFirebaseTokenTask(){
+               String token = FirebaseInstanceId.getInstance().getToken();
+               NotifyFirebaseTokenThread thread = new NotifyFirebaseTokenThread(token);
+               thread.start();
+            }
+
             public CarData createCarData(){
                 CarData carData = new CarData();
                 carData.setColor(mColor.getText().toString());
@@ -78,6 +87,7 @@ public class CarRegistrationActivity extends AppCompatActivity {
                 carData.setPatent(mPatent.getText().toString());
                 carData.setYear(Integer.parseInt(mYear.getText().toString()));
                 return carData;
+
             }
         }
 

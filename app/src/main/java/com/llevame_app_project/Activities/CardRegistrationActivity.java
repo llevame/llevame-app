@@ -8,11 +8,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.llevame_app_project.UserManagement.LoggedUser.AppServerSession;
 import com.llevame_app_project.Data.UserData.SessionData.LoginResponseData;
 import com.llevame_app_project.Forms.FirstRegistrationForm;
 import com.llevame_app_project.Forms.SecondRegistrationForm;
 import com.llevame_app_project.R;
+import com.llevame_app_project.UserManagement.NotifyFirebaseTokenThread;
 import com.llevame_app_project.UserManagement.Registration.Registrant;
 
 public class CardRegistrationActivity extends AppCompatActivity {
@@ -55,9 +57,9 @@ public class CardRegistrationActivity extends AppCompatActivity {
                         if (!response.getSuccess()) {
                             throw new Throwable(response.getError().getDescription());
                         }
-
                         AppServerSession.createSession(false,firstForm.email,
                                                         response.getLoginData().getToken());
+                        startNotifyFirebaseTokenTask();
                         Intent intent = new Intent(CardRegistrationActivity.this,
                                 PassengerActivity.class);
                         startActivity(intent);
@@ -71,6 +73,11 @@ public class CardRegistrationActivity extends AppCompatActivity {
                 }
             }
 
+            private void startNotifyFirebaseTokenTask(){
+                String token = FirebaseInstanceId.getInstance().getToken();
+                NotifyFirebaseTokenThread thread = new NotifyFirebaseTokenThread(token);
+                thread.start();
+            }
             private void goToTheNextRegistrationActivity(FirstRegistrationForm firstForm,
                                                       SecondRegistrationForm secondForm){
                 Intent intent;

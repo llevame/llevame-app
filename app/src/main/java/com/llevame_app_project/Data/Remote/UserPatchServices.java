@@ -1,6 +1,7 @@
 package com.llevame_app_project.Data.Remote;
 
 
+import com.llevame_app_project.Data.UserData.FirebaseData.FirebaseTokenData;
 import com.llevame_app_project.Data.UserData.LocationData.LocationForServerData;
 import com.llevame_app_project.Data.UserData.PatchResponseData;
 
@@ -13,4 +14,9 @@ public interface UserPatchServices {
     @PATCH("api/v1/account/me")
     Call<PatchResponseData> notifyLocation(@Header("Authorization") String BearerPlusToken,
                                            @Body LocationForServerData location);
+
+    @PATCH("api/v1/account/me")
+    Call<PatchResponseData> notifyFirebaseToken(@Header("Authorization") String BearerPlusToken,
+                                           @Body FirebaseTokenData deviceId);
+
 }

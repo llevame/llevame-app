@@ -1,5 +1,7 @@
 package com.llevame_app_project.UserManagement.Login;
 
+import android.util.Log;
+
 import com.llevame_app_project.UserManagement.LoggedUser.AppServerSession;
 import com.llevame_app_project.Data.UserData.DriverData.DriverResponseData;
 import com.llevame_app_project.Data.Remote.ApiUtils;
@@ -20,6 +22,7 @@ public class DriverProfileUpdateThread extends Thread {
             response = ApiUtils.getDriverServices().getUser(
                     session.getId(), bearerPlusToken
             ).execute();
+            Log.i("ID: ", "Sent to server");
         } catch (IOException e) {
             e.printStackTrace();
         }
