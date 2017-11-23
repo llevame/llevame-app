@@ -2,6 +2,8 @@ package com.llevame_app_project.Activities;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -10,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -18,9 +19,24 @@ import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
+import com.llevame_app_project.Data.Remote.ApiUtils;
+import com.llevame_app_project.Data.Remote.PassengerServices;
+import com.llevame_app_project.Data.UserData.LocationData.LocationData;
+import com.llevame_app_project.Data.UserData.LocationData.TentativeTripData;
+import com.llevame_app_project.Data.UserData.LocationData.TentativeTripDataResponse;
+import com.llevame_app_project.Data.UserData.LocationData.TentativeTripStartEndData;
+import com.llevame_app_project.Data.UserData.SessionData.LoginResponseData;
 import com.llevame_app_project.R;
+import com.llevame_app_project.UserManagement.LoggedUser.AppServerSession;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -45,9 +61,45 @@ public class TravelFragment extends Fragment {
                         .title("destiny"));
                 destinyPlaced=true;
                 destinyLatLng = latLng;
+                updateMapWithTrip();
+            }
+        }
+    }
+
+    private void updateMapWithTrip(){
+        PassengerServices service = ApiUtils.getPassengerServices();
+        TentativeTripStartEndData startEnd = new TentativeTripStartEndData(originLatLng,
+                destinyLatLng);
+        service.getTentativeTrips(AppServerSession.getCurrentSession().getBearerToken(),
+                startEnd).enqueue(new Callback<TentativeTripDataResponse>() {
+
+            @Override
+            public void onResponse(Call<TentativeTripDataResponse> call, Response<TentativeTripDataResponse> response) {
+                if(response.isSuccessful()){
+                    TentativeTripData trips = response.body().getTentativeTripData();
+                    List<LocationData> mainTrip = trips.getTravels().get(0);
+                    PolylineOptions tripPolyLine = createPolyLineFrom(mainTrip);
+                    currentGoogleMap.addPolyline(tripPolyLine);
+                }
             }
 
-        }
+            private PolylineOptions createPolyLineFrom(List<LocationData> mainTrip) {
+                PolylineOptions polyline = new PolylineOptions();
+                for (LocationData location: mainTrip){
+                    polyline.add(
+                            new LatLng(location.getLatitude(),
+                                    location.getLongitude())
+                    );
+                }
+                polyline.color(Color.GREEN);
+                return polyline;
+            }
+
+            @Override
+            public void onFailure(Call<TentativeTripDataResponse> call, Throwable t) {
+
+            }
+        });
     }
 
     private boolean originPlaced = false;
