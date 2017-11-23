@@ -1,5 +1,6 @@
 package com.llevame_app_project.Activities;
 import android.content.Intent;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -17,6 +18,7 @@ import java.sql.Driver;
 
 public class PassengerActivity extends AppCompatActivity{
 
+    static final int  NUM_PAGE_NEARBY_DRIVER = 0;
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -26,6 +28,30 @@ public class PassengerActivity extends AppCompatActivity{
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
+
+    private class PageChangeListener implements OnPageChangeListener{
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            if(position == NUM_PAGE_NEARBY_DRIVER){
+                travelFragment.setCurrentPosition(
+                        nearbyDriverFragment.getCameraPosition()
+                );
+            }
+        }
+
+        public void onPageSelected(int position) {
+            if(position == NUM_PAGE_NEARBY_DRIVER){
+                travelFragment.setCurrentPosition(
+                        nearbyDriverFragment.getCameraPosition()
+                );
+            }
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int state) {
+
+        }
+    }
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -48,7 +74,7 @@ public class PassengerActivity extends AppCompatActivity{
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
-
+        mViewPager.addOnPageChangeListener(new PageChangeListener());
         getSupportActionBar().setTitle("Llevame");
         nearbyDriverFragment = new NearbyDriverFragment();
         travelFragment = new TravelFragment();
@@ -96,10 +122,11 @@ public class PassengerActivity extends AppCompatActivity{
         @Override
         public Fragment getItem(int position) {
             Fragment fragmentToShow;
-            if(position == 0)
+            if(position == NUM_PAGE_NEARBY_DRIVER)
                 fragmentToShow = nearbyDriverFragment;
-            else
+            else {
                 fragmentToShow = travelFragment;
+            }
             return fragmentToShow;
         }
 

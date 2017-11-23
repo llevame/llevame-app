@@ -1,6 +1,7 @@
 package com.llevame_app_project.Activities;
 
 import android.app.Service;
+import android.graphics.Camera;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -76,7 +78,7 @@ public class NearbyDriverFragment extends Fragment {
     View rootView;
     private String selectedDriverUsername;
     private AppListenerInterface observer;
-
+    private GoogleMap currentGoogleMap;
     public void setObserver(AppListenerInterface observer){
         this.observer = observer;
     }
@@ -86,7 +88,7 @@ public class NearbyDriverFragment extends Fragment {
         mMapView.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(GoogleMap googleMap) {
-
+                currentGoogleMap = googleMap;
                 BitmapDescriptor icon =
                         BitmapDescriptorFactory.fromResource(
                                 R.drawable.motorcycle
@@ -224,4 +226,9 @@ public class NearbyDriverFragment extends Fragment {
         return selectedDriverUsername;
     }
 
+    public CameraPosition getCameraPosition(){
+        if(currentGoogleMap == null)
+            return null;
+        return currentGoogleMap.getCameraPosition();
+    }
 }
