@@ -3,7 +3,7 @@ import android.annotation.SuppressLint;
 import android.location.Location;
 import android.util.Log;
 import com.llevame_app_project.Data.UserData.LocationData.LocationForServerData;
-import com.llevame_app_project.Data.UserData.PatchResponseData;
+import com.llevame_app_project.Data.UserData.ResponseData;
 import com.llevame_app_project.Data.Remote.ApiUtils;
 import com.llevame_app_project.Data.Remote.UserPatchServices;
 import com.llevame_app_project.UserManagement.LoggedUser.AppServerSession;
@@ -44,7 +44,7 @@ public class LocationOnServerUpdater extends Thread {
                 synchronized (lock) {
                      locationData = new LocationForServerData(lastKnownLocation);
                 }
-                PatchResponseData response;
+                ResponseData response;
                 Log.i("LocationUpdater:", "Sending location to server:" + lastKnownLocation);
                 try {
                     response = service.notifyLocation(bearerPlusToken,
