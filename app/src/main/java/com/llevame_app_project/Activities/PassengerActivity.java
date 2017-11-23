@@ -32,25 +32,16 @@ public class PassengerActivity extends AppCompatActivity{
     private class PageChangeListener implements OnPageChangeListener{
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            if(position == NUM_PAGE_NEARBY_DRIVER){
-                travelFragment.setCurrentPosition(
-                        nearbyDriverFragment.getCameraPosition()
-                );
-            }else{
-                nearbyDriverFragment.setCurrentPosition(
-                        travelFragment.getCameraPosition()
-                );
-            }
         }
 
         public void onPageSelected(int position) {
             if(position == NUM_PAGE_NEARBY_DRIVER){
-                travelFragment.setCurrentPosition(
-                        nearbyDriverFragment.getCameraPosition()
-                );
-            }else{
                 nearbyDriverFragment.setCurrentPosition(
                         travelFragment.getCameraPosition()
+                );
+            }else{
+                travelFragment.setCurrentPosition(
+                        nearbyDriverFragment.getCameraPosition()
                 );
             }
         }
