@@ -17,6 +17,9 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.llevame_app_project.R;
 
 /**
@@ -24,10 +27,33 @@ import com.llevame_app_project.R;
  */
 public class TravelFragment extends Fragment {
 
-    public TravelFragment() {
-    }
     private MapView mMapView;
     private GoogleMap currentGoogleMap;
+
+    private class MapClickListener implements GoogleMap.OnMapClickListener{
+        @Override
+        public void onMapClick(LatLng latLng) {
+            if(!originPlaced) {
+                currentGoogleMap.addMarker(new MarkerOptions()
+                        .position(latLng)
+                        .title("origin"));
+                originPlaced=true;
+                originLatLng = latLng;
+            }else if(!destinyPlaced){
+                currentGoogleMap.addMarker(new MarkerOptions()
+                        .position(latLng)
+                        .title("destiny"));
+                destinyPlaced=true;
+                destinyLatLng = latLng;
+            }
+
+        }
+    }
+
+    private boolean originPlaced = false;
+    private boolean destinyPlaced = false;
+    private LatLng originLatLng;
+    private LatLng destinyLatLng;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,6 +87,7 @@ public class TravelFragment extends Fragment {
                         == PackageManager.PERMISSION_GRANTED) {
                     googleMap.setMyLocationEnabled(true);
                 }
+                googleMap.setOnMapClickListener(new MapClickListener());
             }
         });
     }
