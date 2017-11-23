@@ -36,6 +36,10 @@ public class PassengerActivity extends AppCompatActivity{
                 travelFragment.setCurrentPosition(
                         nearbyDriverFragment.getCameraPosition()
                 );
+            }else{
+                nearbyDriverFragment.setCurrentPosition(
+                        travelFragment.getCameraPosition()
+                );
             }
         }
 
@@ -43,6 +47,10 @@ public class PassengerActivity extends AppCompatActivity{
             if(position == NUM_PAGE_NEARBY_DRIVER){
                 travelFragment.setCurrentPosition(
                         nearbyDriverFragment.getCameraPosition()
+                );
+            }else{
+                nearbyDriverFragment.setCurrentPosition(
+                        travelFragment.getCameraPosition()
                 );
             }
         }

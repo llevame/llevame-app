@@ -11,6 +11,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -230,5 +232,13 @@ public class NearbyDriverFragment extends Fragment {
         if(currentGoogleMap == null)
             return null;
         return currentGoogleMap.getCameraPosition();
+    }
+
+
+    public void setCurrentPosition(CameraPosition cameraPosition){
+        if(currentGoogleMap != null)
+            currentGoogleMap.moveCamera(
+                    CameraUpdateFactory.newCameraPosition(cameraPosition)
+            );
     }
 }

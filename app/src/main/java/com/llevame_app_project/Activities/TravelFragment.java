@@ -49,12 +49,6 @@ public class TravelFragment extends Fragment {
         return rootView;
     }
 
-    public void setCurrentPosition(CameraPosition cameraPosition){
-        if(currentGoogleMap != null)
-            currentGoogleMap.moveCamera(
-                    CameraUpdateFactory.newCameraPosition(cameraPosition)
-            );
-    }
 
     private void setMapConfig(){
         mMapView.getMapAsync(new OnMapReadyCallback() {
@@ -70,4 +64,20 @@ public class TravelFragment extends Fragment {
             }
         });
     }
+
+    public CameraPosition getCameraPosition(){
+        if(currentGoogleMap == null)
+            return null;
+        return currentGoogleMap.getCameraPosition();
+    }
+
+
+    public void setCurrentPosition(CameraPosition cameraPosition){
+        if(currentGoogleMap != null && cameraPosition != null)
+            currentGoogleMap.moveCamera(
+                    CameraUpdateFactory.newCameraPosition(cameraPosition)
+            );
+    }
+
+
 }
