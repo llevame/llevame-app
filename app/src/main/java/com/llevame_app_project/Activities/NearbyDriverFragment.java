@@ -1,6 +1,5 @@
 package com.llevame_app_project.Activities;
 
-import android.app.Service;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -10,13 +9,15 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -34,10 +35,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.util.Iterator;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -76,7 +74,7 @@ public class NearbyDriverFragment extends Fragment {
     View rootView;
     private String selectedDriverUsername;
     private AppListenerInterface observer;
-
+    private GoogleMap currentGoogleMap;
     public void setObserver(AppListenerInterface observer){
         this.observer = observer;
     }
@@ -86,7 +84,7 @@ public class NearbyDriverFragment extends Fragment {
         mMapView.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(GoogleMap googleMap) {
-
+                currentGoogleMap = googleMap;
                 BitmapDescriptor icon =
                         BitmapDescriptorFactory.fromResource(
                                 R.drawable.motorcycle
@@ -130,10 +128,8 @@ public class NearbyDriverFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_nearby_driver, container, false);
         mMapView = rootView.findViewById(R.id.mapView);
+
         mMapView.onCreate(savedInstanceState);
-
-        mMapView.onResume(); // needed to get the map to display immediately
-
         try {
             MapsInitializer.initialize(getActivity().getApplicationContext());
         } catch (Exception e) {
@@ -153,22 +149,19 @@ public class NearbyDriverFragment extends Fragment {
                 googleMap.setOnInfoWindowClickListener(new DriverMarkerListener());
             }
         });
-
-
         updateMap();
+        mMapView.onResume();
         return rootView;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        mMapView.onResume();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        mMapView.onPause();
     }
 
     @Override
@@ -224,4 +217,29 @@ public class NearbyDriverFragment extends Fragment {
         return selectedDriverUsername;
     }
 
+    public CameraPosition getCameraPosition(){
+        if(currentGoogleMap == null)
+            return null;
+        return currentGoogleMap.getCameraPosition();
+    }
+
+
+    public void setCurrentPosition(CameraPosition cameraPosition){
+        if(currentGoogleMap != null)
+            currentGoogleMap.moveCamera(
+                    CameraUpdateFactory.newCameraPosition(cameraPosition)
+            );
+    }
+
+    public void resumeMap(){
+        if(mMapView != null) {
+            mMapView.onResume();
+        }
+    }
+
+    public void stopMap(){
+        if(mMapView != null) {
+            mMapView.onStop();
+        }
+    }
 }

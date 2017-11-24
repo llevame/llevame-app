@@ -1,5 +1,6 @@
 package com.llevame_app_project.Activities;
 import android.content.Intent;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -11,12 +12,16 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.android.gms.maps.model.CameraPosition;
 import com.llevame_app_project.R;
 
-import java.sql.Driver;
+/*TO DO: Work around to fix google map crash
+
+ */
 
 public class PassengerActivity extends AppCompatActivity{
 
+    static final int  NUM_PAGE_NEARBY_DRIVER = 0;
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -27,6 +32,37 @@ public class PassengerActivity extends AppCompatActivity{
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
+    private class PageChangeListener implements OnPageChangeListener{
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        }
+        /*
+        Stop and resume, part of a workaround to fix
+        googlemap crash with two running at the same time.
+        Issue post of google maps:
+        https://issuetracker.google.com/issues/35822688#c34
+        */
+        public void onPageSelected(int position) {
+            CameraPosition camPosition;
+            if(position == NUM_PAGE_NEARBY_DRIVER){
+                travelFragment.stopMap();
+                nearbyDriverFragment.resumeMap();
+                camPosition = travelFragment.getCameraPosition();
+                nearbyDriverFragment.setCurrentPosition(camPosition);
+            }else{
+                travelFragment.resumeMap();
+                nearbyDriverFragment.stopMap();
+                camPosition = nearbyDriverFragment.getCameraPosition();
+                travelFragment.setCurrentPosition(camPosition);
+            }
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int state) {
+
+        }
+    }
+
     /**
      * The {@link ViewPager} that will host the section contents.
      */
@@ -35,6 +71,8 @@ public class PassengerActivity extends AppCompatActivity{
     private TravelFragment travelFragment;
     private DriverSelectedListener driverSelectedListener = new DriverSelectedListener(this);
     private String selectedDriver;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,10 +86,10 @@ public class PassengerActivity extends AppCompatActivity{
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
-
+        mViewPager.addOnPageChangeListener(new PageChangeListener());
         getSupportActionBar().setTitle("Llevame");
-        nearbyDriverFragment = new NearbyDriverFragment();
         travelFragment = new TravelFragment();
+        nearbyDriverFragment = new NearbyDriverFragment();
         nearbyDriverFragment.setObserver(driverSelectedListener);
     }
 
@@ -80,7 +118,9 @@ public class PassengerActivity extends AppCompatActivity{
 
     public void onDriverSelected() {
         this.selectedDriver = nearbyDriverFragment.getSelectedDriverUsername();
-        mViewPager.setCurrentItem(2);
+        //nearbyDriverFragment.stopMap();
+        //travelFragment.resumeMap();
+        mViewPager.setCurrentItem(1);
     }
 
     /**
@@ -96,10 +136,11 @@ public class PassengerActivity extends AppCompatActivity{
         @Override
         public Fragment getItem(int position) {
             Fragment fragmentToShow;
-            if(position == 0)
+            if(position == NUM_PAGE_NEARBY_DRIVER)
                 fragmentToShow = nearbyDriverFragment;
-            else
+            else {
                 fragmentToShow = travelFragment;
+            }
             return fragmentToShow;
         }
 

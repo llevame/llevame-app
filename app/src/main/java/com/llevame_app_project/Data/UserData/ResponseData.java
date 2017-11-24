@@ -5,7 +5,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.llevame_app_project.Data.ErrorData;
 
-public class PatchResponseData {
+public class ResponseData {
 
     @SerializedName("error")
     @Expose
