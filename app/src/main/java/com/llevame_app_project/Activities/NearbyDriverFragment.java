@@ -1,7 +1,5 @@
 package com.llevame_app_project.Activities;
 
-import android.app.Service;
-import android.graphics.Camera;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -14,7 +12,6 @@ import android.view.ViewGroup;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
@@ -38,10 +35,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.util.Iterator;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -134,10 +128,8 @@ public class NearbyDriverFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_nearby_driver, container, false);
         mMapView = rootView.findViewById(R.id.mapView);
+
         mMapView.onCreate(savedInstanceState);
-
-        mMapView.onResume(); // needed to get the map to display immediately
-
         try {
             MapsInitializer.initialize(getActivity().getApplicationContext());
         } catch (Exception e) {
@@ -157,22 +149,19 @@ public class NearbyDriverFragment extends Fragment {
                 googleMap.setOnInfoWindowClickListener(new DriverMarkerListener());
             }
         });
-
-
         updateMap();
+        mMapView.onResume();
         return rootView;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        mMapView.onResume();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        mMapView.onPause();
     }
 
     @Override
@@ -240,5 +229,17 @@ public class NearbyDriverFragment extends Fragment {
             currentGoogleMap.moveCamera(
                     CameraUpdateFactory.newCameraPosition(cameraPosition)
             );
+    }
+
+    public void resumeMap(){
+        if(mMapView != null) {
+            mMapView.onResume();
+        }
+    }
+
+    public void stopMap(){
+        if(mMapView != null) {
+            mMapView.onStop();
+        }
     }
 }

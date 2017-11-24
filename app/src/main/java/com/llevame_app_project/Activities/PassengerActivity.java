@@ -12,9 +12,12 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.android.gms.maps.model.CameraPosition;
 import com.llevame_app_project.R;
 
-import java.sql.Driver;
+/*TO DO: Work around to fix google map crash
+
+ */
 
 public class PassengerActivity extends AppCompatActivity{
 
@@ -33,16 +36,24 @@ public class PassengerActivity extends AppCompatActivity{
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
         }
-
+        /*
+        Stop and resume, part of a workaround to fix
+        googlemap crash with two running at the same time.
+        Issue post of google maps:
+        https://issuetracker.google.com/issues/35822688#c34
+        */
         public void onPageSelected(int position) {
+            CameraPosition camPosition;
             if(position == NUM_PAGE_NEARBY_DRIVER){
-                nearbyDriverFragment.setCurrentPosition(
-                        travelFragment.getCameraPosition()
-                );
+                travelFragment.stopMap();
+                nearbyDriverFragment.resumeMap();
+                camPosition = travelFragment.getCameraPosition();
+                nearbyDriverFragment.setCurrentPosition(camPosition);
             }else{
-                travelFragment.setCurrentPosition(
-                        nearbyDriverFragment.getCameraPosition()
-                );
+                travelFragment.resumeMap();
+                nearbyDriverFragment.stopMap();
+                camPosition = nearbyDriverFragment.getCameraPosition();
+                travelFragment.setCurrentPosition(camPosition);
             }
         }
 
@@ -61,6 +72,8 @@ public class PassengerActivity extends AppCompatActivity{
     private DriverSelectedListener driverSelectedListener = new DriverSelectedListener(this);
     private String selectedDriver;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,8 +88,8 @@ public class PassengerActivity extends AppCompatActivity{
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.addOnPageChangeListener(new PageChangeListener());
         getSupportActionBar().setTitle("Llevame");
-        nearbyDriverFragment = new NearbyDriverFragment();
         travelFragment = new TravelFragment();
+        nearbyDriverFragment = new NearbyDriverFragment();
         nearbyDriverFragment.setObserver(driverSelectedListener);
     }
 
@@ -105,7 +118,9 @@ public class PassengerActivity extends AppCompatActivity{
 
     public void onDriverSelected() {
         this.selectedDriver = nearbyDriverFragment.getSelectedDriverUsername();
-        mViewPager.setCurrentItem(2);
+        //nearbyDriverFragment.stopMap();
+        //travelFragment.resumeMap();
+        mViewPager.setCurrentItem(1);
     }
 
     /**

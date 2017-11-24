@@ -3,10 +3,10 @@ package com.llevame_app_project.Activities;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +20,6 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.llevame_app_project.Data.Remote.ApiUtils;
 import com.llevame_app_project.Data.Remote.PassengerServices;
@@ -28,10 +27,10 @@ import com.llevame_app_project.Data.UserData.LocationData.LocationData;
 import com.llevame_app_project.Data.UserData.LocationData.TentativeTripData;
 import com.llevame_app_project.Data.UserData.LocationData.TentativeTripDataResponse;
 import com.llevame_app_project.Data.UserData.LocationData.TentativeTripStartEndData;
-import com.llevame_app_project.Data.UserData.SessionData.LoginResponseData;
 import com.llevame_app_project.R;
 import com.llevame_app_project.UserManagement.LoggedUser.AppServerSession;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -76,23 +75,8 @@ public class TravelFragment extends Fragment {
             @Override
             public void onResponse(Call<TentativeTripDataResponse> call, Response<TentativeTripDataResponse> response) {
                 if(response.isSuccessful()){
-                    TentativeTripData trips = response.body().getTentativeTripData();
-                    List<LocationData> mainTrip = trips.getTravels().get(0);
-                    PolylineOptions tripPolyLine = createPolyLineFrom(mainTrip);
-                    currentGoogleMap.addPolyline(tripPolyLine);
+                    updateFragmentWith(response.body().getTentativeTripData());
                 }
-            }
-
-            private PolylineOptions createPolyLineFrom(List<LocationData> mainTrip) {
-                PolylineOptions polyline = new PolylineOptions();
-                for (LocationData location: mainTrip){
-                    polyline.add(
-                            new LatLng(location.getLatitude(),
-                                    location.getLongitude())
-                    );
-                }
-                polyline.color(Color.GREEN);
-                return polyline;
             }
 
             @Override
@@ -102,10 +86,34 @@ public class TravelFragment extends Fragment {
         });
     }
 
+    ArrayList<PolylineOptions> trips = new ArrayList<PolylineOptions>();
     private boolean originPlaced = false;
     private boolean destinyPlaced = false;
     private LatLng originLatLng;
     private LatLng destinyLatLng;
+
+    private PolylineOptions createPolyLineFrom(List<LocationData> mainTrip) {
+        PolylineOptions polyline = new PolylineOptions();
+        for (LocationData location: mainTrip){
+            polyline.add(
+                    new LatLng(location.getLatitude(),
+                            location.getLongitude())
+            );
+        }
+        polyline.color(Color.GREEN);
+        return polyline;
+    }
+
+    private void updateFragmentWith(TentativeTripData response){
+        trips.clear();
+        for(List<LocationData> trip: response.getTravels()){
+            trips.add(createPolyLineFrom(trip));
+        }
+        currentGoogleMap.addPolyline(trips.get(0));
+    }
+
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -115,15 +123,13 @@ public class TravelFragment extends Fragment {
         textView.setText("Soy la vista con el viaje a hacer");
         mMapView = rootView.findViewById(R.id.mapViewTravel);
         mMapView.onCreate(savedInstanceState);
-        mMapView.onResume();
-
         try {
             MapsInitializer.initialize(getActivity().getApplicationContext());
             setMapConfig();
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        mMapView.onPause();
         return rootView;
     }
 
@@ -158,5 +164,31 @@ public class TravelFragment extends Fragment {
             );
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mMapView.onDestroy();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+    }
+
+    public void resumeMap(){
+        mMapView.onResume();
+    }
+
+    public void stopMap(){
+        if(mMapView != null) {
+            mMapView.onStop();
+        }
+    }
 
 }
