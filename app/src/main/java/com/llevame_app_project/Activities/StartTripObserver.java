@@ -1,14 +1,14 @@
 package com.llevame_app_project.Activities;
 
 
-public class DriverSelectedListener implements AppListenerInterface {
+public class StartTripObserver implements AppObserver {
 
     PassengerActivity activity;
-    DriverSelectedListener(PassengerActivity activity){
+    StartTripObserver(PassengerActivity activity){
         this.activity = activity;
     }
     @Override
     public void notifyObserver() {
-        activity.onDriverSelected();
+        activity.onStartTrip();
     }
 }

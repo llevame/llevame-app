@@ -55,7 +55,7 @@ public class TravelFragment extends Fragment {
     private boolean destinyPlaced = false;
     private LatLng originLatLng;
     private LatLng destinyLatLng;
-    private AppListenerInterface observer;
+    private AppObserver observer;
 
     private class MapClickListener implements GoogleMap.OnMapClickListener{
         @Override
@@ -264,7 +264,7 @@ public class TravelFragment extends Fragment {
         }
     }
 
-    public void setObserver(AppListenerInterface observer){
+    public void setObserver(AppObserver observer){
         this.observer = observer;
     }
 

@@ -1,6 +1,5 @@
 package com.llevame_app_project.Activities;
 import android.content.Intent;
-import android.location.Location;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -99,8 +98,8 @@ public class PassengerActivity extends AppCompatActivity{
     private ViewPager mViewPager;
     private NearbyDriverFragment nearbyDriverFragment;
     private TravelFragment travelFragment;
-    private DriverSelectedListener driverSelectedListener = new DriverSelectedListener(this);
-    private StartTripListener startTripListener = new StartTripListener(this);
+    private DriverSelectedObserver driverSelectedListener = new DriverSelectedObserver(this);
+    private StartTripObserver startTripListener = new StartTripObserver(this);
     private String selectedDriver;
     private String tripId;
 
@@ -169,6 +168,9 @@ public class PassengerActivity extends AppCompatActivity{
         }
     }
 
+    public void onFirebaseNotification(){
+
+    }
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.

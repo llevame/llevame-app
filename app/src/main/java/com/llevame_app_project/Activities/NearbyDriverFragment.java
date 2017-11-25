@@ -73,9 +73,9 @@ public class NearbyDriverFragment extends Fragment {
 
     View rootView;
     private String selectedDriverUsername;
-    private AppListenerInterface observer;
+    private AppObserver observer;
     private GoogleMap currentGoogleMap;
-    public void setObserver(AppListenerInterface observer){
+    public void setObserver(AppObserver observer){
         this.observer = observer;
     }
 
