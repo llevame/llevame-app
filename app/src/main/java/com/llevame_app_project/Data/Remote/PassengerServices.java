@@ -4,6 +4,7 @@ import com.llevame_app_project.Data.UserData.DriverData.NearbyDriversResponseDat
 import com.llevame_app_project.Data.UserData.LocationData.TentativeTripDataResponse;
 import com.llevame_app_project.Data.UserData.LocationData.TentativeTripStartEndData;
 import com.llevame_app_project.Data.UserData.LocationData.TripIdData;
+import com.llevame_app_project.Data.UserData.LocationData.TripIdResponseData;
 import com.llevame_app_project.Data.UserData.LocationData.TripToCreateData;
 import com.llevame_app_project.Data.UserData.PassengerData.PassengerResponseData;
 
@@ -28,7 +29,7 @@ public interface PassengerServices {
             @Body TentativeTripStartEndData startEnd);
 
     @POST("api/v1/trips")
-    Call<TripIdData> requestToStartATrip(
+    Call<TripIdResponseData> requestToStartATrip(
             @Header("Authorization") String BearerPlusToken,
             @Body TripToCreateData trip);
 }
