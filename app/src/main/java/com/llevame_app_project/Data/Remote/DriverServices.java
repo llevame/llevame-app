@@ -1,6 +1,7 @@
 package com.llevame_app_project.Data.Remote;
 
 import com.llevame_app_project.Data.UserData.DriverData.DriverResponseData;
+import com.llevame_app_project.Data.UserData.LocationData.TripResponseData;
 import com.llevame_app_project.Data.UserData.LocationData.TripStatusData;
 
 import retrofit2.Call;
@@ -14,6 +15,6 @@ public interface DriverServices {
                                      @Header("Authorization") String BearerPlusToken);
 
     @GET("api/v1/trips/{tripId}")
-    Call<TripStatusData> getTripStatus(@Path("id") String id,
-                                       @Header("Authorization") String BearerPlusToken);
+    Call<TripResponseData> getTripStatus(@Path("tripId") String tripId,
+                                         @Header("Authorization") String BearerPlusToken);
 }
