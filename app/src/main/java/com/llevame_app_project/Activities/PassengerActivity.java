@@ -167,10 +167,6 @@ public class PassengerActivity extends AppCompatActivity{
                     .enqueue(new StartTripCallback());
         }
     }
-
-    public void onFirebaseNotification(){
-
-    }
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.

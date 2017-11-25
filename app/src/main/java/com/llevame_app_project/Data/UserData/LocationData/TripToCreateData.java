@@ -15,6 +15,10 @@ public class TripToCreateData {
         this.trip = trip;
     }
 
+    public TripToCreateData(){
+
+    }
+
     @SerializedName("driver")
     @Expose
     String driverUsername;

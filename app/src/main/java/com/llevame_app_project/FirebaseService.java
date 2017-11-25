@@ -3,6 +3,7 @@ package com.llevame_app_project;
 
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -27,13 +28,12 @@ public class FirebaseService extends FirebaseMessagingService {
         if(remoteMessage.getData() != null){
             Map<String, String> data = remoteMessage.getData();
             boolean isEmpty = data.isEmpty();
-            //if(data.containsKey("tripId")){
-                String tripId = data.get("tripId");
+            if(data.containsKey("trip")){
                 Intent intent = new Intent("Trip");
-                intent.putExtra("tripId","unaId");
+                intent.putExtra("tripId",data.get("trip"));
+                Log.d("Trip","id: " +  data.get("trip"));
                 broadcaster.sendBroadcast(intent);
-
-           // }
+            }
 
         }
     }
