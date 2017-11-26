@@ -91,18 +91,20 @@ public class NearbyDriverFragment extends Fragment {
                         );
                 for (DriverData driver : nearbyDrivers) {
 
-                    Log.i("UpdatingMap:", "Driver:" + driver.getLastName());
+                    if(driver.getLocation() != null) {
+                        Log.i("UpdatingMap:", "Driver:" + driver.getLastName());
 
-                    LatLng position = new LatLng(driver.getLocation().getLatitude(),
-                            driver.getLocation().getLongitude());
+                        LatLng position = new LatLng(driver.getLocation().getLatitude(),
+                                driver.getLocation().getLongitude());
 
-                    Marker marker = googleMap.addMarker(new MarkerOptions()
-                            .position(position)
-                            .title(driver.getFirstName() + " " + driver.getLastName())
-                            .snippet(makeDriverSnippet(driver))
-                            .icon(icon)
-                    );
-                    marker.setTag(driver.getEmail());
+                        Marker marker = googleMap.addMarker(new MarkerOptions()
+                                .position(position)
+                                .title(driver.getFirstName() + " " + driver.getLastName())
+                                .snippet(makeDriverSnippet(driver))
+                                .icon(icon)
+                        );
+                        marker.setTag(driver.getEmail());
+                    }
                 }
             }
 
