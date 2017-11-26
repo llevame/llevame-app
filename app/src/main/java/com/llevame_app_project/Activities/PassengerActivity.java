@@ -1,5 +1,9 @@
 package com.llevame_app_project.Activities;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -103,6 +107,15 @@ public class PassengerActivity extends AppCompatActivity{
     private String selectedDriver;
     private String tripId;
 
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if(intent.getStringExtra("type").equals("2"))
+                Toast.makeText(getApplicationContext(),
+                        "The driver has accepted to make the trip",
+                        Toast.LENGTH_LONG).show();
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,6 +135,8 @@ public class PassengerActivity extends AppCompatActivity{
         travelFragment.setObserver(startTripListener);
         nearbyDriverFragment = new NearbyDriverFragment();
         nearbyDriverFragment.setObserver(driverSelectedListener);
+        LocalBroadcastManager.getInstance(this).registerReceiver((mMessageReceiver),
+                new IntentFilter("Trip"));
     }
 
 

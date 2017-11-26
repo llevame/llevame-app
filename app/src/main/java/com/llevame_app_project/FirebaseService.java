@@ -28,9 +28,11 @@ public class FirebaseService extends FirebaseMessagingService {
         if(remoteMessage.getData() != null){
             Map<String, String> data = remoteMessage.getData();
             boolean isEmpty = data.isEmpty();
-            if(data.containsKey("tripId")){
+            if(data.containsKey("type") && data.containsKey("tripId")){
                 Intent intent = new Intent("Trip");
+                intent.putExtra("type",data.get("type"));
                 intent.putExtra("tripId",data.get("tripId"));
+                Log.d("Trip","Type: " +  data.get("type"));
                 Log.d("Trip","id: " +  data.get("tripId"));
                 broadcaster.sendBroadcast(intent);
             }

@@ -20,7 +20,7 @@ public interface DriverServices {
     Call<TripResponseData> getTripStatus(@Path("tripId") String tripId,
                                          @Header("Authorization") String BearerPlusToken);
 
-    @PATCH("api/v1/trips/{tripId}")
+    @PATCH("api/v1/trips/{tripId}/status")
     Call<TripResponseData> patchTripStatus(@Path("tripId") String tripId,
                                            @Header("Authorization") String BearerPlusToken,
                                            @Body StatusData status);

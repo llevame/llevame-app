@@ -84,6 +84,20 @@ public class DriverActivity extends AppCompatActivity {
 
         }
     }
+
+    private class TripAcceptedCallback implements Callback<TripResponseData>{
+
+        @Override
+        public void onResponse(Call<TripResponseData> call, Response<TripResponseData> response) {
+
+        }
+
+        @Override
+        public void onFailure(Call<TripResponseData> call, Throwable t) {
+
+        }
+    }
+
     private class MapReadyCallback implements OnMapReadyCallback{
 
         @Override
@@ -106,7 +120,8 @@ public class DriverActivity extends AppCompatActivity {
             String tripId = (String) marker.getTag();
             StatusData status = new StatusData(ACCEPTED);
             String bearerToken = AppServerSession.getCurrentSession().getBearerToken();
-            service.patchTripStatus(tripId, bearerToken,status);
+            service.patchTripStatus(tripId, bearerToken,status).
+                    enqueue(new TripAcceptedCallback());
         }
     }
 
@@ -155,7 +170,7 @@ public class DriverActivity extends AppCompatActivity {
         mMapView.onResume();
     }
 
-    private void onFirebaseNotification(String tripId) {
+    private void onNewTrip(String tripId) {
         Toast.makeText(getApplicationContext(), "Someone wants to travel with you!",
                 Toast.LENGTH_LONG).show();
         String bearerToken = AppServerSession.getCurrentSession().getBearerToken();
@@ -190,7 +205,8 @@ public class DriverActivity extends AppCompatActivity {
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            onFirebaseNotification(intent.getStringExtra("tripId"));
+            if (intent.getStringExtra("type").equals("1"))
+                onNewTrip(intent.getStringExtra("tripId"));
         }
     };
 
