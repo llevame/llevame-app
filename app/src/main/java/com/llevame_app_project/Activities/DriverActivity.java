@@ -97,6 +97,7 @@ public class DriverActivity extends AppCompatActivity {
             }
             googleMap = pGoogleMap;
             setMapMarkerInfoLayout(googleMap);
+            googleMap.setOnInfoWindowClickListener(new AcceptTripListener());
         }
 
     }
