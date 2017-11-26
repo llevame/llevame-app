@@ -1,14 +1,17 @@
 package com.llevame_app_project.Activities;
 
+import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Binder;
 import android.os.IBinder;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,7 +20,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.llevame_app_project.Data.Remote.ApiUtils;
@@ -38,13 +46,17 @@ import retrofit2.Response;
 
 public class DriverActivity extends AppCompatActivity {
 
+    private MapView mMapView;
+    private GoogleMap googleMap;
+
     private class TripStatusCallback implements Callback<TripResponseData> {
 
         @Override
         public void onResponse(Call<TripResponseData> call, Response<TripResponseData>
                 response) {
-            if(response.isSuccessful()) {
+            if(response.isSuccessful() && response.body().getSuccess()) {
                 List<LocationData> trip = response.body().getTripStatus().getTrip();
+                googleMap.addPolyline(createPolyLineFrom(trip));
             }
         }
 
@@ -52,6 +64,18 @@ public class DriverActivity extends AppCompatActivity {
         public void onFailure(Call<TripResponseData> call, Throwable t) {
 
         }
+    }
+    private class MapReadyCallback implements OnMapReadyCallback{
+
+        @Override
+        public void onMapReady(GoogleMap pGoogleMap) {
+            if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION)
+                    == PackageManager.PERMISSION_GRANTED) {
+                pGoogleMap.setMyLocationEnabled(true);
+            }
+            googleMap = pGoogleMap;
+        }
+
     }
 
     private PolylineOptions createPolyLineFrom(List<LocationData> mainTrip) {
@@ -76,6 +100,15 @@ public class DriverActivity extends AppCompatActivity {
         setContentView(R.layout.activity_driver);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
+        mMapView = findViewById(R.id.driverMapView);
+        mMapView.onCreate(savedInstanceState);
+        try {
+            MapsInitializer.initialize(getApplicationContext());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        mMapView.getMapAsync(new MapReadyCallback());
+        mMapView.onResume();
     }
 
     private void onFirebaseNotification(String tripId) {
@@ -113,7 +146,6 @@ public class DriverActivity extends AppCompatActivity {
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-
             onFirebaseNotification(intent.getStringExtra("tripId"));
         }
     };
