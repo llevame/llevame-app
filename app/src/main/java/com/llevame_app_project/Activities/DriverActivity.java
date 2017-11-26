@@ -2,16 +2,12 @@ package com.llevame_app_project.Activities;
 
 import android.Manifest;
 import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.os.Binder;
-import android.os.IBinder;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
@@ -33,15 +29,12 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
-import com.google.firebase.messaging.FirebaseMessagingService;
 import com.llevame_app_project.Data.Remote.ApiUtils;
 import com.llevame_app_project.Data.Remote.DriverServices;
-import com.llevame_app_project.Data.Remote.PassengerServices;
 import com.llevame_app_project.Data.UserData.LocationData.LocationData;
+import com.llevame_app_project.Data.UserData.LocationData.StatusData;
 import com.llevame_app_project.Data.UserData.LocationData.TripResponseData;
-import com.llevame_app_project.Data.UserData.LocationData.TripStatusData;
 import com.llevame_app_project.FirebaseService;
 import com.llevame_app_project.R;
 import com.llevame_app_project.UserManagement.LoggedUser.AppServerSession;
@@ -52,9 +45,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.llevame_app_project.Data.UserData.LocationData.StatusData.ACCEPTED;
+
+
 public class DriverActivity extends AppCompatActivity {
 
     private GoogleMap googleMap;
+    private int amountOfPolylines = 0;
 
     private class TripStatusCallback implements Callback<TripResponseData> {
 
@@ -105,18 +102,35 @@ public class DriverActivity extends AppCompatActivity {
     private class AcceptTripListener implements GoogleMap.OnInfoWindowClickListener{
         @Override
         public void onInfoWindowClick(Marker marker) {
+            DriverServices service = ApiUtils.getDriverServices();
             String tripId = (String) marker.getTag();
+            StatusData status = new StatusData(ACCEPTED);
+            String bearerToken = AppServerSession.getCurrentSession().getBearerToken();
+            service.patchTripStatus(tripId, bearerToken,status);
         }
     }
+
+    private int getColorNumber(int i){
+        switch (i){
+            case 1:  return(Color.GREEN);
+            case 2:  return(Color.BLUE);
+            case 3:  return(Color.YELLOW);
+            case 4:  return(Color.MAGENTA);
+            case 5:  return(Color.CYAN);
+        }
+        return Color.GREEN;
+    }
+
     private PolylineOptions createPolyLineFrom(List<LocationData> mainTrip) {
         PolylineOptions polyline = new PolylineOptions();
+        amountOfPolylines++;
         for (LocationData location: mainTrip){
             polyline.add(
                     new LatLng(location.getLatitude(),
                             location.getLongitude())
             );
         }
-        polyline.color(Color.GREEN);
+        polyline.color(getColorNumber(amountOfPolylines));
         return polyline;
     }
 

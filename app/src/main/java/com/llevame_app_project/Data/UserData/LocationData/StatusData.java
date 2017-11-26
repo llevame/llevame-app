@@ -8,11 +8,11 @@ import com.google.gson.annotations.SerializedName;
 
 public class StatusData {
 
-    static final int CREATED = 0;
-    static final int ACCEPTED = 1;
-    static final int STARTED = 2;
-    static final int ENDED = 3;
-    static final int CANCELLED = 4;
+    public static final int CREATED = 0;
+    public static final int ACCEPTED = 1;
+    public static final int STARTED = 2;
+    public static final int ENDED = 3;
+    public static final int CANCELLED = 4;
 
     public StatusData(int status){
         this.status = status;

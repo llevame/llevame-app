@@ -34,7 +34,6 @@ public class FirebaseService extends FirebaseMessagingService {
                 Log.d("Trip","id: " +  data.get("tripId"));
                 broadcaster.sendBroadcast(intent);
             }
-
         }
     }
 }
