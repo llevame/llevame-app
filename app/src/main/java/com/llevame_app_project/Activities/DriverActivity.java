@@ -9,6 +9,7 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Binder;
 import android.os.IBinder;
 import android.support.v4.content.ContextCompat;
@@ -16,8 +17,13 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.GoogleMap;
@@ -25,6 +31,8 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -46,7 +54,6 @@ import retrofit2.Response;
 
 public class DriverActivity extends AppCompatActivity {
 
-    private MapView mMapView;
     private GoogleMap googleMap;
 
     private class TripStatusCallback implements Callback<TripResponseData> {
@@ -57,6 +64,14 @@ public class DriverActivity extends AppCompatActivity {
             if(response.isSuccessful() && response.body().getSuccess()) {
                 List<LocationData> trip = response.body().getTripStatus().getTrip();
                 googleMap.addPolyline(createPolyLineFrom(trip));
+                MarkerOptions origin = new MarkerOptions();
+                origin.title("Starting point");
+                origin.snippet("Passenger: \n " + response.body().
+                        getTripStatus().getPassenger());
+                LatLng originPosition = new LatLng(trip.get(0).getLatitude(),
+                        trip.get(0).getLongitude());
+                origin.position(originPosition);
+                googleMap.addMarker(origin);
             }
         }
 
@@ -74,10 +89,17 @@ public class DriverActivity extends AppCompatActivity {
                 pGoogleMap.setMyLocationEnabled(true);
             }
             googleMap = pGoogleMap;
+            setMapMarkerInfoLayout(googleMap);
         }
 
     }
 
+    private class StartTripListener implements GoogleMap.OnInfoWindowClickListener{
+        @Override
+        public void onInfoWindowClick(Marker marker) {
+            
+        }
+    }
     private PolylineOptions createPolyLineFrom(List<LocationData> mainTrip) {
         PolylineOptions polyline = new PolylineOptions();
         for (LocationData location: mainTrip){
@@ -100,7 +122,7 @@ public class DriverActivity extends AppCompatActivity {
         setContentView(R.layout.activity_driver);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
-        mMapView = findViewById(R.id.driverMapView);
+        MapView mMapView = findViewById(R.id.driverMapView);
         mMapView.onCreate(savedInstanceState);
         try {
             MapsInitializer.initialize(getApplicationContext());
@@ -149,4 +171,40 @@ public class DriverActivity extends AppCompatActivity {
             onFirebaseNotification(intent.getStringExtra("tripId"));
         }
     };
+
+    void setMapMarkerInfoLayout(GoogleMap googleMap){
+        googleMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+            @Override
+            public View getInfoWindow(Marker arg0) {
+                return null;
+            }
+
+            @Override
+            public View getInfoContents(Marker marker) {
+
+                LinearLayout info = new LinearLayout(getBaseContext());
+                info.setOrientation(LinearLayout.VERTICAL);
+
+                TextView title = new TextView(getBaseContext());
+                title.setTextColor(Color.BLACK);
+                title.setGravity(Gravity.CENTER);
+                title.setTypeface(null, Typeface.BOLD);
+                title.setText(marker.getTitle());
+                title.setTextSize(26);
+
+                TextView snippet = new TextView(getBaseContext());
+                snippet.setTextColor(Color.GRAY);
+                snippet.setText(marker.getSnippet());
+                snippet.setTextSize(22);
+
+                Button selectTrip  = new Button(getBaseContext());
+                selectTrip.setText("Accept trip");
+
+                info.addView(title);
+                info.addView(snippet);
+                info.addView(selectTrip);
+                return info;
+            }
+        });
+    }
 }
