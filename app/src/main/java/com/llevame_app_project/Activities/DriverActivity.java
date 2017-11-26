@@ -61,18 +61,25 @@ public class DriverActivity extends AppCompatActivity {
         @Override
         public void onResponse(Call<TripResponseData> call, Response<TripResponseData>
                 response) {
-            if(response.isSuccessful() && response.body().getSuccess()) {
+            if (response.isSuccessful() && response.body().getSuccess()) {
                 List<LocationData> trip = response.body().getTripStatus().getTrip();
                 googleMap.addPolyline(createPolyLineFrom(trip));
-                MarkerOptions origin = new MarkerOptions();
-                origin.title("Starting point");
-                origin.snippet("Passenger: \n " + response.body().
-                        getTripStatus().getPassenger());
-                LatLng originPosition = new LatLng(trip.get(0).getLatitude(),
-                        trip.get(0).getLongitude());
-                origin.position(originPosition);
-                googleMap.addMarker(origin);
+                String userName = response.body().getTripStatus().getPassenger();
+                Marker marker =
+                        googleMap.addMarker(createTripOriginMarker(trip,userName));
+                marker.setTag(response.body().getTripStatus().getId());
             }
+        }
+
+        private MarkerOptions createTripOriginMarker(List<LocationData> trip,
+                                                     String pasenger){
+            MarkerOptions origin = new MarkerOptions();
+            origin.title("Starting point");
+            origin.snippet("Passenger: \n " + pasenger);
+            LatLng originPosition = new LatLng(trip.get(0).getLatitude(),
+                    trip.get(0).getLongitude());
+            origin.position(originPosition);
+            return origin;
         }
 
         @Override
@@ -94,10 +101,10 @@ public class DriverActivity extends AppCompatActivity {
 
     }
 
-    private class StartTripListener implements GoogleMap.OnInfoWindowClickListener{
+    private class AcceptTripListener implements GoogleMap.OnInfoWindowClickListener{
         @Override
         public void onInfoWindowClick(Marker marker) {
-            
+            String tripId = (String) marker.getTag();
         }
     }
     private PolylineOptions createPolyLineFrom(List<LocationData> mainTrip) {
