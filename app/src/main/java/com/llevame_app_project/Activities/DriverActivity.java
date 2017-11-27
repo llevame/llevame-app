@@ -29,16 +29,19 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.llevame_app_project.Data.Remote.ApiUtils;
 import com.llevame_app_project.Data.Remote.DriverServices;
 import com.llevame_app_project.Data.UserData.LocationData.LocationData;
 import com.llevame_app_project.Data.UserData.LocationData.StatusData;
+import com.llevame_app_project.Data.UserData.LocationData.TripIdResponseData;
 import com.llevame_app_project.Data.UserData.LocationData.TripResponseData;
 import com.llevame_app_project.FirebaseService;
 import com.llevame_app_project.R;
 import com.llevame_app_project.UserManagement.LoggedUser.AppServerSession;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -52,6 +55,11 @@ public class DriverActivity extends AppCompatActivity {
 
     private GoogleMap googleMap;
     private int amountOfPolylines = 0;
+    ArrayList<Polyline> tripsPolyline = new ArrayList<>();
+    ArrayList<Marker> tripsMarkers = new ArrayList<>();
+    private boolean keepsAcceptingTrips = true;
+
+
 
     private class TripStatusCallback implements Callback<TripResponseData> {
 
@@ -60,11 +68,18 @@ public class DriverActivity extends AppCompatActivity {
                 response) {
             if (response.isSuccessful() && response.body().getSuccess()) {
                 List<LocationData> trip = response.body().getTripStatus().getTrip();
-                googleMap.addPolyline(createPolyLineFrom(trip));
+                Polyline thisTripPolyline;
                 String userName = response.body().getTripStatus().getPassenger();
+                String tripId = response.body().getTripStatus().getId();
+
+                thisTripPolyline = googleMap.addPolyline(createPolyLineFrom(trip));
+                thisTripPolyline.setTag(tripId);
+                tripsPolyline.add(thisTripPolyline);
+
                 Marker marker =
                         googleMap.addMarker(createTripOriginMarker(trip,userName));
-                marker.setTag(response.body().getTripStatus().getId());
+                marker.setTag(tripId);
+                tripsMarkers.add(marker);
             }
         }
 
@@ -85,18 +100,50 @@ public class DriverActivity extends AppCompatActivity {
         }
     }
 
-    private class TripAcceptedCallback implements Callback<TripResponseData>{
+    private class TripAcceptedCallback implements Callback<TripIdResponseData>{
 
         @Override
-        public void onResponse(Call<TripResponseData> call, Response<TripResponseData> response) {
+        public void onResponse(Call<TripIdResponseData> call, Response<TripIdResponseData> response) {
+            String tripId = response.body().getTripCreationData().getTripId();
+            updatePolylines(tripId);
+            updateMarkers(tripId);
+            keepsAcceptingTrips = false;
+        }
 
+        private void updatePolylines(String tripId){
+            ArrayList<Polyline> newTripsPolyline = new ArrayList();
+            for(Polyline polyline: tripsPolyline){
+                String polyId = (String) polyline.getTag();
+                if(!polyId.equals(tripId)){
+                    polyline.remove();
+                }else{
+                    newTripsPolyline.add(polyline);
+                }
+            }
+            tripsPolyline = newTripsPolyline;
+        }
+
+        private void updateMarkers(String tripId){
+
+            ArrayList<Marker> newTripsMarkers = new ArrayList();
+            for(Marker marker: tripsMarkers){
+                String markerId = (String) marker.getTag();
+                if(!markerId.equals(tripId)){
+                    marker.remove();
+                }else{
+                    newTripsMarkers.add(marker);
+                }
+            }
+            tripsMarkers = newTripsMarkers;
+            setMapMarkerInfoLayoutAccepted(googleMap);
         }
 
         @Override
-        public void onFailure(Call<TripResponseData> call, Throwable t) {
+        public void onFailure(Call<TripIdResponseData> call, Throwable t) {
 
         }
     }
+
 
     private class MapReadyCallback implements OnMapReadyCallback{
 
@@ -205,7 +252,7 @@ public class DriverActivity extends AppCompatActivity {
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (intent.getStringExtra("type").equals("1"))
+            if (intent.getStringExtra("type").equals("1") && keepsAcceptingTrips)
                 onNewTrip(intent.getStringExtra("tripId"));
         }
     };
@@ -241,6 +288,37 @@ public class DriverActivity extends AppCompatActivity {
                 info.addView(title);
                 info.addView(snippet);
                 info.addView(selectTrip);
+                return info;
+            }
+        });
+    }
+    void setMapMarkerInfoLayoutAccepted(GoogleMap googleMap){
+        googleMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+            @Override
+            public View getInfoWindow(Marker arg0) {
+                return null;
+            }
+
+            @Override
+            public View getInfoContents(Marker marker) {
+
+                LinearLayout info = new LinearLayout(getBaseContext());
+                info.setOrientation(LinearLayout.VERTICAL);
+
+                TextView title = new TextView(getBaseContext());
+                title.setTextColor(Color.BLACK);
+                title.setGravity(Gravity.CENTER);
+                title.setTypeface(null, Typeface.BOLD);
+                title.setText(marker.getTitle());
+                title.setTextSize(26);
+
+                TextView snippet = new TextView(getBaseContext());
+                snippet.setTextColor(Color.GRAY);
+                snippet.setText(marker.getSnippet());
+                snippet.setTextSize(22);
+
+                info.addView(title);
+                info.addView(snippet);
                 return info;
             }
         });

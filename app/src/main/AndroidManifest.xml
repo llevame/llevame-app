@@ -57,20 +57,22 @@
         <activity
             android:name=".Activities.DriverActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Activities.CarSettingsActivity"></activity>
-        <service android:name=".UserManagement.LocationService.LocationUpdaterService"/>
-        <service
-            android:name=".FirebaseService">
+        <activity android:name=".Activities.CarSettingsActivity" />
+
+        <service android:name=".UserManagement.LocationService.LocationUpdaterService" />
+        <service android:name=".FirebaseService">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/motorcycle" />
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/colorAccent" />
+
     </application>
 
 </manifest>
