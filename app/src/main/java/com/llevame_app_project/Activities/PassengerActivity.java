@@ -15,6 +15,8 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.model.CameraPosition;
@@ -37,6 +39,16 @@ import retrofit2.Response;
  */
 
 public class PassengerActivity extends AppCompatActivity{
+
+    private class StartChatButtonListener implements ImageButton.OnClickListener{
+
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(PassengerActivity.this,
+                    ChatActivity.class);
+            startActivity(intent);
+        }
+    }
 
     static final int  NUM_PAGE_NEARBY_DRIVER = 0;
     /**
@@ -135,6 +147,8 @@ public class PassengerActivity extends AppCompatActivity{
         nearbyDriverFragment.setObserver(driverSelectedListener);
         LocalBroadcastManager.getInstance(this).registerReceiver((mMessageReceiver),
                 new IntentFilter("Trip"));
+        ImageButton openChatButton = findViewById(R.id.open_chat);
+        openChatButton.setOnClickListener(new StartChatButtonListener());
     }
 
 

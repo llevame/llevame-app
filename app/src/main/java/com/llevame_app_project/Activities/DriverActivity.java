@@ -324,8 +324,8 @@ public class DriverActivity extends AppCompatActivity {
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (intent.getStringExtra("type").equals("1") && keepsAcceptingTrips)
-                onNewTrip(intent.getStringExtra("tripId"));
+        if (intent.getStringExtra("type").equals("1") && keepsAcceptingTrips)
+            onNewTrip(intent.getStringExtra("tripId"));
         }
     };
 

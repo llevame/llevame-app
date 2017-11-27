@@ -28,23 +28,49 @@ public class ChatActivity extends AppCompatActivity {
 
 
     private class SendMessageListener implements ImageButton.OnClickListener{
-        private int i = 1;
+
         @Override
         public void onClick(View v) {
-
-            String username = AppServerSession.getCurrentSession().getId();
-            dbRef.child("DriverMessage").setValue(input.getText().toString());
-            i++;
+            if( AppServerSession.getCurrentSession().isDriver())
+                dbRef.child("DriverMessage").setValue(input.getText().toString());
+            else
+                dbRef.child("PassengerMessage").setValue(input.getText().toString());
             input.setText("");
         }
     }
 
     private class ReceiveMessageListener implements ValueEventListener{
 
+        String lastDriverMessage;
+        String lastPassengerMessage;
+
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
-            String message = dataSnapshot.child("DriverMessage").getValue(String.class);
-            messageList.add("Me: "+message);
+
+            String newDriverMessage =
+                    dataSnapshot.child("DriverMessage").getValue(String.class);
+
+            if(newDriverMessage != null){
+                if(lastDriverMessage == null ||
+                        !newDriverMessage.equals(lastDriverMessage)){
+                    messageList.add("Driver: "+newDriverMessage);
+                    lastDriverMessage = newDriverMessage;
+                }
+            }
+
+            String newPassengerMessage =
+                    dataSnapshot.child("PassengerMessage").getValue(String.class);
+
+            if(newPassengerMessage != null){
+                if(lastPassengerMessage == null ||
+                        !newPassengerMessage.equals(lastPassengerMessage)){
+
+                    messageList.add("Passenger: "+newPassengerMessage);
+                    lastPassengerMessage = newPassengerMessage;
+                }
+            }
+
+
             adapter.notifyDataSetChanged();
             messageListView.setSelection(messageList.size()-1);
         }
@@ -74,7 +100,7 @@ public class ChatActivity extends AppCompatActivity {
         dbRef.addValueEventListener(new ReceiveMessageListener());
         messageListView = findViewById(R.id.list_of_messages);
         adapter=new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1,
+                R.layout.message_layout,
                 messageList);
         messageListView.setAdapter(adapter);
     }
