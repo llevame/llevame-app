@@ -26,10 +26,27 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <com.google.android.gms.maps.MapView
-        android:id="@+id/driverMapView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:ignore="RtlHardcoded,RtlSymmetry" />
 
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.gms.maps.MapView
+            android:id="@+id/driverMapView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:ignore="RtlHardcoded,RtlSymmetry"
+        />
+
+        <Button
+            android:id="@+id/button_start_trip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:textSize="24sp"
+            android:text="Start trip"
+            android:visibility="gone"/>
+    </RelativeLayout>
 </LinearLayout>

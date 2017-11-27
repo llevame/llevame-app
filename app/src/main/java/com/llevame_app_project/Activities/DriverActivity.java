@@ -49,6 +49,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.llevame_app_project.Data.UserData.LocationData.StatusData.ACCEPTED;
+import static com.llevame_app_project.Data.UserData.LocationData.StatusData.STARTED;
 
 
 public class DriverActivity extends AppCompatActivity {
@@ -58,7 +59,8 @@ public class DriverActivity extends AppCompatActivity {
     ArrayList<Polyline> tripsPolyline = new ArrayList<>();
     ArrayList<Marker> tripsMarkers = new ArrayList<>();
     private boolean keepsAcceptingTrips = true;
-
+    private String acceptedTripId;
+    private Button startTripButton;
 
 
     private class TripStatusCallback implements Callback<TripResponseData> {
@@ -108,6 +110,8 @@ public class DriverActivity extends AppCompatActivity {
             updatePolylines(tripId);
             updateMarkers(tripId);
             keepsAcceptingTrips = false;
+            acceptedTripId = tripId;
+            startTripButton.setVisibility(Button.VISIBLE);
         }
 
         private void updatePolylines(String tripId){
@@ -144,6 +148,46 @@ public class DriverActivity extends AppCompatActivity {
         }
     }
 
+    private class TripStartedCallback implements Callback<TripIdResponseData>{
+
+        @Override
+        public void onResponse(Call<TripIdResponseData> call, Response<TripIdResponseData> response) {
+            startTripButton.setVisibility(Button.GONE);
+        }
+
+        private void updatePolylines(String tripId){
+            ArrayList<Polyline> newTripsPolyline = new ArrayList();
+            for(Polyline polyline: tripsPolyline){
+                String polyId = (String) polyline.getTag();
+                if(!polyId.equals(tripId)){
+                    polyline.remove();
+                }else{
+                    newTripsPolyline.add(polyline);
+                }
+            }
+            tripsPolyline = newTripsPolyline;
+        }
+
+        private void updateMarkers(String tripId){
+
+            ArrayList<Marker> newTripsMarkers = new ArrayList();
+            for(Marker marker: tripsMarkers){
+                String markerId = (String) marker.getTag();
+                if(!markerId.equals(tripId)){
+                    marker.remove();
+                }else{
+                    newTripsMarkers.add(marker);
+                }
+            }
+            tripsMarkers = newTripsMarkers;
+            setMapMarkerInfoLayoutAccepted(googleMap);
+        }
+
+        @Override
+        public void onFailure(Call<TripIdResponseData> call, Throwable t) {
+
+        }
+    }
 
     private class MapReadyCallback implements OnMapReadyCallback{
 
@@ -169,6 +213,17 @@ public class DriverActivity extends AppCompatActivity {
             String bearerToken = AppServerSession.getCurrentSession().getBearerToken();
             service.patchTripStatus(tripId, bearerToken,status).
                     enqueue(new TripAcceptedCallback());
+        }
+    }
+
+    private class StartTripButtonListener implements Button.OnClickListener{
+        @Override
+        public void onClick(View v) {
+            DriverServices service = ApiUtils.getDriverServices();
+            StatusData status = new StatusData(STARTED);
+            String bearerToken = AppServerSession.getCurrentSession().getBearerToken();
+            service.patchTripStatus(acceptedTripId, bearerToken,status).
+                    enqueue(new TripStartedCallback());
         }
     }
 
@@ -215,6 +270,8 @@ public class DriverActivity extends AppCompatActivity {
         }
         mMapView.getMapAsync(new MapReadyCallback());
         mMapView.onResume();
+        startTripButton = findViewById(R.id.button_start_trip);
+        startTripButton.setOnClickListener(new StartTripButtonListener());
     }
 
     private void onNewTrip(String tripId) {
