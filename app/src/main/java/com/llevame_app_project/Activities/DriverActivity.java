@@ -39,6 +39,7 @@ import com.llevame_app_project.Data.UserData.LocationData.TripIdResponseData;
 import com.llevame_app_project.Data.UserData.LocationData.TripResponseData;
 import com.llevame_app_project.FirebaseService;
 import com.llevame_app_project.R;
+import com.llevame_app_project.UserManagement.LocationService.LocationOnServerUpdater;
 import com.llevame_app_project.UserManagement.LoggedUser.AppServerSession;
 
 import java.util.ArrayList;
@@ -153,6 +154,7 @@ public class DriverActivity extends AppCompatActivity {
         @Override
         public void onResponse(Call<TripIdResponseData> call, Response<TripIdResponseData> response) {
             startTripButton.setVisibility(Button.GONE);
+            LocationOnServerUpdater.getInstance().tripStarted(acceptedTripId);
         }
 
         private void updatePolylines(String tripId){

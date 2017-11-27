@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.llevame_app_project.Data.UserData.LocationData.LocationData;
 import com.llevame_app_project.Data.UserData.LocationData.LocationForServerData;
+import com.llevame_app_project.Data.UserData.LocationData.TripIdResponseData;
 import com.llevame_app_project.Data.UserData.ResponseData;
 import com.llevame_app_project.Data.Remote.ApiUtils;
 import com.llevame_app_project.Data.Remote.UserPatchServices;
@@ -80,6 +81,18 @@ public class LocationOnServerUpdater extends Thread {
 
     private void patchTripLocation(String bearerPlusToken,
                                    LocationForServerData locationData, UserPatchServices service){
+        TripIdResponseData response;
+        try {
+            response = service.notifyTripLocation(tripId,bearerPlusToken,locationData)
+                    .execute().body();
+            if(response.getSuccess() != true){
+                String statusCode = response.getStatusCode().toString();
+                Log.e("LocationUpdater:", "connection failed, error: " +
+                        statusCode);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void updateLocation(Location location){
