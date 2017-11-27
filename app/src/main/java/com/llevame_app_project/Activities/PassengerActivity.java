@@ -49,8 +49,6 @@ public class PassengerActivity extends AppCompatActivity{
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
-
-
     private class PageChangeListener implements OnPageChangeListener{
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
