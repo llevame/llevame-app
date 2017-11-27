@@ -46,17 +46,16 @@ public class TravelFragment extends Fragment {
     private MapView mMapView;
     private GoogleMap currentGoogleMap;
     private TextView textTripSelect;
-    private ImageButton previousTripButton;
-    private ImageButton nextTripButton;
     private int currentTrip;
     private Polyline currentTripPolyline;
     private TextView costText;
-    private ImageButton deleteTripButton;
     ArrayList<PolylineOptions> trips = new ArrayList<PolylineOptions>();
+    List<List<LocationData>> tripsLocationData;
     private boolean originPlaced = false;
     private boolean destinyPlaced = false;
     private LatLng originLatLng;
     private LatLng destinyLatLng;
+    private AppObserver observer;
 
     private class MapClickListener implements GoogleMap.OnMapClickListener{
         @Override
@@ -128,6 +127,13 @@ public class TravelFragment extends Fragment {
         }
     }
 
+    private class StartTripButtonListener implements Button.OnClickListener{
+        @Override
+        public void onClick(View v) {
+            observer.notifyObserver();
+        }
+    }
+
     private void updateMapWithTrip(){
         PassengerServices service = ApiUtils.getPassengerServices();
         TentativeTripStartEndData startEnd = new TentativeTripStartEndData(originLatLng,
@@ -166,6 +172,7 @@ public class TravelFragment extends Fragment {
     private void updateFragmentWith(TentativeTripData response){
         costText.setText(String.valueOf(response.getCost()));
         trips.clear();
+        tripsLocationData = response.getTravels();
         for(List<LocationData> trip: response.getTravels()){
             trips.add(createPolyLineFrom(trip));
         }
@@ -179,12 +186,14 @@ public class TravelFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_travel, container, false);
         textTripSelect = rootView.findViewById(R.id.trip_selection_label);
-        previousTripButton = rootView.findViewById(R.id.button_previous_trip);
-        nextTripButton = rootView.findViewById(R.id.button_next_trip);
+        ImageButton previousTripButton = rootView.findViewById(R.id.button_previous_trip);
+        ImageButton nextTripButton = rootView.findViewById(R.id.button_next_trip);
         previousTripButton.setOnClickListener(new PreviousTripButtonClickListener());
         nextTripButton.setOnClickListener(new NextTripButtonClickListener());
-        deleteTripButton = rootView.findViewById(R.id.button_delete_travels);
+        ImageButton deleteTripButton = rootView.findViewById(R.id.button_delete_travels);
         deleteTripButton.setOnClickListener(new DeleteTripButtonListener());
+        Button startTrip = rootView.findViewById(R.id.button_start_trip);
+        startTrip.setOnClickListener(new StartTripButtonListener());
         costText = rootView.findViewById(R.id.trip_cost_label);
         mMapView = rootView.findViewById(R.id.mapViewTravel);
         mMapView.onCreate(savedInstanceState);
@@ -254,4 +263,13 @@ public class TravelFragment extends Fragment {
             mMapView.onStop();
         }
     }
+
+    public void setObserver(AppObserver observer){
+        this.observer = observer;
+    }
+
+    public List<LocationData> getTripSelected(){
+        return tripsLocationData.get(currentTrip-1);
+    }
+
 }

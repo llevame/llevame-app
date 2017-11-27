@@ -3,6 +3,9 @@ package com.llevame_app_project.Data.Remote;
 import com.llevame_app_project.Data.UserData.DriverData.NearbyDriversResponseData;
 import com.llevame_app_project.Data.UserData.LocationData.TentativeTripDataResponse;
 import com.llevame_app_project.Data.UserData.LocationData.TentativeTripStartEndData;
+import com.llevame_app_project.Data.UserData.LocationData.TripIdData;
+import com.llevame_app_project.Data.UserData.LocationData.TripIdResponseData;
+import com.llevame_app_project.Data.UserData.LocationData.TripToCreateData;
 import com.llevame_app_project.Data.UserData.PassengerData.PassengerResponseData;
 
 import retrofit2.Call;
@@ -24,4 +27,9 @@ public interface PassengerServices {
     Call<TentativeTripDataResponse> getTentativeTrips(
             @Header("Authorization") String BearerPlusToken,
             @Body TentativeTripStartEndData startEnd);
+
+    @POST("api/v1/trips")
+    Call<TripIdResponseData> requestToStartATrip(
+            @Header("Authorization") String BearerPlusToken,
+            @Body TripToCreateData trip);
 }

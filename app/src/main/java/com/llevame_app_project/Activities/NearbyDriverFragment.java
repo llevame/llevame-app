@@ -73,9 +73,9 @@ public class NearbyDriverFragment extends Fragment {
 
     View rootView;
     private String selectedDriverUsername;
-    private AppListenerInterface observer;
+    private AppObserver observer;
     private GoogleMap currentGoogleMap;
-    public void setObserver(AppListenerInterface observer){
+    public void setObserver(AppObserver observer){
         this.observer = observer;
     }
 
@@ -91,18 +91,20 @@ public class NearbyDriverFragment extends Fragment {
                         );
                 for (DriverData driver : nearbyDrivers) {
 
-                    Log.i("UpdatingMap:", "Driver:" + driver.getLastName());
+                    if(driver.getLocation() != null) {
+                        Log.i("UpdatingMap:", "Driver:" + driver.getLastName());
 
-                    LatLng position = new LatLng(driver.getLocation().getLatitude(),
-                            driver.getLocation().getLongitude());
+                        LatLng position = new LatLng(driver.getLocation().getLatitude(),
+                                driver.getLocation().getLongitude());
 
-                    Marker marker = googleMap.addMarker(new MarkerOptions()
-                            .position(position)
-                            .title(driver.getFirstName() + " " + driver.getLastName())
-                            .snippet(makeDriverSnippet(driver))
-                            .icon(icon)
-                    );
-                    marker.setTag(driver.getEmail());
+                        Marker marker = googleMap.addMarker(new MarkerOptions()
+                                .position(position)
+                                .title(driver.getFirstName() + " " + driver.getLastName())
+                                .snippet(makeDriverSnippet(driver))
+                                .icon(icon)
+                        );
+                        marker.setTag(driver.getEmail());
+                    }
                 }
             }
 
@@ -128,7 +130,6 @@ public class NearbyDriverFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_nearby_driver, container, false);
         mMapView = rootView.findViewById(R.id.mapView);
-
         mMapView.onCreate(savedInstanceState);
         try {
             MapsInitializer.initialize(getActivity().getApplicationContext());

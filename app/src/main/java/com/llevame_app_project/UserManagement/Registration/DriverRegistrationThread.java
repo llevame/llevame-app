@@ -8,9 +8,6 @@ import java.io.IOException;
 
 import retrofit2.Response;
 
-/**
- * Created by mauro on 11/11/17.
- */
 
 public class DriverRegistrationThread extends Thread{
     private DriverData driverToBeRegistered;
