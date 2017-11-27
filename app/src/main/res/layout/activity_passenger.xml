@@ -44,7 +44,8 @@
             android:id="@+id/open_chat"
             android:src="@drawable/ic_chat_black_24dp"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"/>
+            android:layout_alignParentEnd="true"
+            android:visibility="gone"/>
 
     </RelativeLayout>
 

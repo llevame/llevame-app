@@ -104,4 +104,14 @@ public class ChatActivity extends AppCompatActivity {
                 messageList);
         messageListView.setAdapter(adapter);
     }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+    }
 }

@@ -116,14 +116,17 @@ public class PassengerActivity extends AppCompatActivity{
     private StartTripObserver startTripListener = new StartTripObserver(this);
     private String selectedDriver;
     private String tripId;
+    private ImageButton startChatButton;
 
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if(intent.getStringExtra("type").equals("2"))
+            if(intent.getStringExtra("type").equals("2")) {
                 Toast.makeText(getApplicationContext(),
                         "The driver has accepted to make the trip",
                         Toast.LENGTH_LONG).show();
+
+            }
         }
     };
 
@@ -147,8 +150,8 @@ public class PassengerActivity extends AppCompatActivity{
         nearbyDriverFragment.setObserver(driverSelectedListener);
         LocalBroadcastManager.getInstance(this).registerReceiver((mMessageReceiver),
                 new IntentFilter("Trip"));
-        ImageButton openChatButton = findViewById(R.id.open_chat);
-        openChatButton.setOnClickListener(new StartChatButtonListener());
+        startChatButton = findViewById(R.id.open_chat);
+        startChatButton.setOnClickListener(new StartChatButtonListener());
     }
 
 
