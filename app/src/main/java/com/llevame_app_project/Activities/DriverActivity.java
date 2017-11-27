@@ -18,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -229,6 +230,16 @@ public class DriverActivity extends AppCompatActivity {
         }
     }
 
+    private class StartChatButtonListener implements ImageButton.OnClickListener{
+
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(DriverActivity.this,
+                    ChatActivity.class);
+            startActivity(intent);
+        }
+    }
+
     private int getColorNumber(int i){
         switch (i){
             case 1:  return(Color.GREEN);
@@ -265,6 +276,8 @@ public class DriverActivity extends AppCompatActivity {
         setSupportActionBar(myToolbar);
         MapView mMapView = findViewById(R.id.driverMapView);
         mMapView.onCreate(savedInstanceState);
+        ImageButton openChatButton = findViewById(R.id.open_chat);
+        openChatButton.setOnClickListener(new StartChatButtonListener());
         try {
             MapsInitializer.initialize(getApplicationContext());
         } catch (Exception e) {
