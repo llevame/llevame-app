@@ -15,6 +15,8 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.model.CameraPosition;
@@ -38,6 +40,17 @@ import retrofit2.Response;
 
 public class PassengerActivity extends AppCompatActivity{
 
+    private class StartChatButtonListener implements ImageButton.OnClickListener{
+
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(PassengerActivity.this,
+                    ChatActivity.class);
+            intent.putExtra("tripId", tripId);
+            startActivity(intent);
+        }
+    }
+
     static final int  NUM_PAGE_NEARBY_DRIVER = 0;
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -48,8 +61,6 @@ public class PassengerActivity extends AppCompatActivity{
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
-
-
 
     private class PageChangeListener implements OnPageChangeListener{
         @Override
@@ -106,14 +117,17 @@ public class PassengerActivity extends AppCompatActivity{
     private StartTripObserver startTripListener = new StartTripObserver(this);
     private String selectedDriver;
     private String tripId;
+    private ImageButton startChatButton;
 
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if(intent.getStringExtra("type").equals("2"))
+            if(intent.getStringExtra("type").equals("2")) {
                 Toast.makeText(getApplicationContext(),
                         "The driver has accepted to make the trip",
                         Toast.LENGTH_LONG).show();
+                startChatButton.setVisibility(View.VISIBLE);
+            }
         }
     };
 
@@ -122,21 +136,28 @@ public class PassengerActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_passenger);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
+        mViewPager = findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.addOnPageChangeListener(new PageChangeListener());
+
         getSupportActionBar().setTitle("Llevame");
+
         travelFragment = new TravelFragment();
         travelFragment.setObserver(startTripListener);
+
         nearbyDriverFragment = new NearbyDriverFragment();
         nearbyDriverFragment.setObserver(driverSelectedListener);
+
         LocalBroadcastManager.getInstance(this).registerReceiver((mMessageReceiver),
                 new IntentFilter("Trip"));
+
+        startChatButton = findViewById(R.id.open_chat);
+        startChatButton.setOnClickListener(new StartChatButtonListener());
     }
 
 

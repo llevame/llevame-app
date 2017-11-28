@@ -63,7 +63,7 @@ public class DriverActivity extends AppCompatActivity {
     private boolean keepsAcceptingTrips = true;
     private String acceptedTripId;
     private Button startTripButton;
-
+    private ImageButton openChatButton;
 
     private class TripStatusCallback implements Callback<TripResponseData> {
 
@@ -114,6 +114,7 @@ public class DriverActivity extends AppCompatActivity {
             keepsAcceptingTrips = false;
             acceptedTripId = tripId;
             startTripButton.setVisibility(Button.VISIBLE);
+            openChatButton.setVisibility(Button.VISIBLE);
         }
 
         private void updatePolylines(String tripId){
@@ -236,6 +237,7 @@ public class DriverActivity extends AppCompatActivity {
         public void onClick(View v) {
             Intent intent = new Intent(DriverActivity.this,
                     ChatActivity.class);
+            intent.putExtra("tripId", acceptedTripId);
             startActivity(intent);
         }
     }
@@ -276,8 +278,10 @@ public class DriverActivity extends AppCompatActivity {
         setSupportActionBar(myToolbar);
         MapView mMapView = findViewById(R.id.driverMapView);
         mMapView.onCreate(savedInstanceState);
-        ImageButton openChatButton = findViewById(R.id.open_chat);
+
+        openChatButton = findViewById(R.id.open_chat);
         openChatButton.setOnClickListener(new StartChatButtonListener());
+
         try {
             MapsInitializer.initialize(getApplicationContext());
         } catch (Exception e) {
@@ -287,6 +291,7 @@ public class DriverActivity extends AppCompatActivity {
         mMapView.onResume();
         startTripButton = findViewById(R.id.button_start_trip);
         startTripButton.setOnClickListener(new StartTripButtonListener());
+        openChatButton = findViewById(R.id.open_chat);
     }
 
     private void onNewTrip(String tripId) {
@@ -324,8 +329,8 @@ public class DriverActivity extends AppCompatActivity {
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (intent.getStringExtra("type").equals("1") && keepsAcceptingTrips)
-                onNewTrip(intent.getStringExtra("tripId"));
+        if (intent.getStringExtra("type").equals("1") && keepsAcceptingTrips)
+            onNewTrip(intent.getStringExtra("tripId"));
         }
     };
 

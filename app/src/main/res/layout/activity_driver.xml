@@ -39,6 +39,16 @@
             tools:ignore="RtlHardcoded,RtlSymmetry"
         />
 
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/open_chat"
+            android:src="@drawable/ic_chat_black_24dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:visibility="gone"
+            android:paddingBottom="50dp"/>
         <Button
             android:id="@+id/button_start_trip"
             android:layout_width="match_parent"
@@ -48,12 +58,5 @@
             android:textSize="24sp"
             android:text="Start trip"
             android:visibility="gone"/>
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/open_chat"
-            android:src="@drawable/ic_chat_black_24dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"/>
     </RelativeLayout>
 </LinearLayout>
