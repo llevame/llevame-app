@@ -46,6 +46,7 @@ public class PassengerActivity extends AppCompatActivity{
         public void onClick(View v) {
             Intent intent = new Intent(PassengerActivity.this,
                     ChatActivity.class);
+            intent.putExtra("tripId", tripId);
             startActivity(intent);
         }
     }

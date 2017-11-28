@@ -69,10 +69,9 @@ public class ChatActivity extends AppCompatActivity {
                     lastPassengerMessage = newPassengerMessage;
                 }
             }
-
-
             adapter.notifyDataSetChanged();
             messageListView.setSelection(messageList.size()-1);
+
         }
 
         @Override
@@ -96,7 +95,7 @@ public class ChatActivity extends AppCompatActivity {
                 (FloatingActionButton)findViewById(R.id.send_message_button);
         sendMessageButton.setOnClickListener(new SendMessageListener());
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        dbRef = database.getReference("aTripId");
+        dbRef = database.getReference(getIntent().getExtras().getString("tripId"));
         dbRef.addValueEventListener(new ReceiveMessageListener());
         messageListView = findViewById(R.id.list_of_messages);
         adapter=new ArrayAdapter<String>(this,

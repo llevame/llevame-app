@@ -237,6 +237,7 @@ public class DriverActivity extends AppCompatActivity {
         public void onClick(View v) {
             Intent intent = new Intent(DriverActivity.this,
                     ChatActivity.class);
+            intent.putExtra("tripId", acceptedTripId);
             startActivity(intent);
         }
     }
