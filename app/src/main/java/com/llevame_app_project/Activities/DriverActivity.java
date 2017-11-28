@@ -277,8 +277,8 @@ public class DriverActivity extends AppCompatActivity {
         setSupportActionBar(myToolbar);
         MapView mMapView = findViewById(R.id.driverMapView);
         mMapView.onCreate(savedInstanceState);
-        openChatButton = findViewById(R.id.open_chat);
 
+        openChatButton = findViewById(R.id.open_chat);
         openChatButton.setOnClickListener(new StartChatButtonListener());
 
         try {

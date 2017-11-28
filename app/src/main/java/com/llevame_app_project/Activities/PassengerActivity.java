@@ -125,7 +125,7 @@ public class PassengerActivity extends AppCompatActivity{
                 Toast.makeText(getApplicationContext(),
                         "The driver has accepted to make the trip",
                         Toast.LENGTH_LONG).show();
-
+                startChatButton.setVisibility(View.VISIBLE);
             }
         }
     };
@@ -135,21 +135,26 @@ public class PassengerActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_passenger);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
+        mViewPager = findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.addOnPageChangeListener(new PageChangeListener());
+
         getSupportActionBar().setTitle("Llevame");
+
         travelFragment = new TravelFragment();
         travelFragment.setObserver(startTripListener);
+
         nearbyDriverFragment = new NearbyDriverFragment();
         nearbyDriverFragment.setObserver(driverSelectedListener);
+
         LocalBroadcastManager.getInstance(this).registerReceiver((mMessageReceiver),
                 new IntentFilter("Trip"));
+
         startChatButton = findViewById(R.id.open_chat);
         startChatButton.setOnClickListener(new StartChatButtonListener());
     }

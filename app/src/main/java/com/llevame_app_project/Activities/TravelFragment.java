@@ -192,8 +192,10 @@ public class TravelFragment extends Fragment {
         nextTripButton.setOnClickListener(new NextTripButtonClickListener());
         ImageButton deleteTripButton = rootView.findViewById(R.id.button_delete_travels);
         deleteTripButton.setOnClickListener(new DeleteTripButtonListener());
+
         Button startTrip = rootView.findViewById(R.id.button_start_trip);
         startTrip.setOnClickListener(new StartTripButtonListener());
+
         costText = rootView.findViewById(R.id.trip_cost_label);
         mMapView = rootView.findViewById(R.id.mapViewTravel);
         mMapView.onCreate(savedInstanceState);
