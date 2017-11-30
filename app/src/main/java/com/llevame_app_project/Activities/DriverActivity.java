@@ -64,6 +64,7 @@ public class DriverActivity extends AppCompatActivity {
     private String acceptedTripId;
     private Button startTripButton;
     private ImageButton openChatButton;
+    private Button tripEndedBUtton;
 
     private class TripStatusCallback implements Callback<TripResponseData> {
 
@@ -156,6 +157,7 @@ public class DriverActivity extends AppCompatActivity {
         @Override
         public void onResponse(Call<TripIdResponseData> call, Response<TripIdResponseData> response) {
             startTripButton.setVisibility(Button.GONE);
+            tripEndedBUtton.setVisibility(Button.VISIBLE);
             LocationOnServerUpdater.getInstance().tripStarted(acceptedTripId);
         }
 
@@ -242,6 +244,36 @@ public class DriverActivity extends AppCompatActivity {
         }
     }
 
+    private class EndTripButtonListener implements Button.OnClickListener{
+
+        @Override
+        public void onClick(View v) {
+            DriverServices service = ApiUtils.getDriverServices();
+            StatusData status = new StatusData(StatusData.ENDED);
+            String bearerToken = AppServerSession.getCurrentSession().getBearerToken();
+            service.patchTripStatus(acceptedTripId, bearerToken,status).
+                    enqueue(new TripFinishedCallback());
+        }
+    }
+
+    private class TripFinishedCallback implements Callback<TripIdResponseData>{
+
+        @Override
+        public void onResponse(Call<TripIdResponseData> call, Response<TripIdResponseData> response) {
+            tripEndedBUtton.setVisibility(View.GONE);
+            openChatButton.setVisibility(View.GONE);
+            Toast.makeText(getBaseContext(),"Trip has ended successfully",
+                    Toast.LENGTH_LONG)
+            .show();
+            keepsAcceptingTrips = true;
+        }
+
+        @Override
+        public void onFailure(Call<TripIdResponseData> call, Throwable t) {
+
+        }
+    }
+
     private int getColorNumber(int i){
         switch (i){
             case 1:  return(Color.GREEN);
@@ -292,6 +324,9 @@ public class DriverActivity extends AppCompatActivity {
         startTripButton = findViewById(R.id.button_start_trip);
         startTripButton.setOnClickListener(new StartTripButtonListener());
         openChatButton = findViewById(R.id.open_chat);
+
+        tripEndedBUtton = findViewById(R.id.button_end_trip);
+        tripEndedBUtton.setOnClickListener(new EndTripButtonListener());
     }
 
     private void onNewTrip(String tripId) {
