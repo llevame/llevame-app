@@ -127,6 +127,11 @@ public class PassengerActivity extends AppCompatActivity{
                         "The driver has accepted to make the trip",
                         Toast.LENGTH_LONG).show();
                 startChatButton.setVisibility(View.VISIBLE);
+            }else if(intent.getStringExtra("type").equals("3")){
+                Toast.makeText(getApplicationContext(),
+                        "Trip has finished",
+                        Toast.LENGTH_LONG).show();
+                startChatButton.setVisibility(View.GONE);
             }
         }
     };

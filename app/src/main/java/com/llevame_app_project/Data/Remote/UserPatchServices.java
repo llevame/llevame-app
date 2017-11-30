@@ -26,5 +26,4 @@ public interface UserPatchServices {
             @Path("tripId") String tripId,
             @Header("Authorization") String BearerPlusToken,
             @Body LocationForServerData location);
-
 }
