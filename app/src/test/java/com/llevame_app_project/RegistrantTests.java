@@ -1,9 +1,9 @@
 package com.llevame_app_project;
 
-import com.llevame_app_project.Data.LoginResponseData;
-import com.llevame_app_project.Data.PassengerData;
+import com.llevame_app_project.Data.UserData.SessionData.LoginResponseData;
 import com.llevame_app_project.Forms.FirstRegistrationForm;
 import com.llevame_app_project.Forms.SecondRegistrationForm;
+import com.llevame_app_project.UserManagement.Registration.Registrant;
 
 import org.junit.Test;
 

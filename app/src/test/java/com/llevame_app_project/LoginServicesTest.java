@@ -2,8 +2,10 @@ package com.llevame_app_project;
 
 import com.llevame_app_project.Data.Remote.ApiUtils;
 import org.junit.Test;
-import com.llevame_app_project.Data.*;
+
 import com.llevame_app_project.Data.Remote.LoginServices;
+import com.llevame_app_project.Data.UserData.SessionData.LoginResponseData;
+import com.llevame_app_project.Data.UserData.SessionData.PasswordData;
 
 import retrofit2.Response;
 import retrofit2.Call;
