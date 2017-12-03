@@ -70,16 +70,22 @@ public class NearbyDriverFragment extends Fragment {
         }
     }
 
-    private class DriverMarkerListener implements GoogleMap.OnInfoWindowClickListener{
+    private class DriverMarkerListener implements GoogleMap.OnInfoWindowClickListener,
+                                                    GoogleMap.OnMarkerClickListener{
 
         @Override
         public void onInfoWindowClick(Marker marker) {
-            selectedDriverUsername =(String) marker.getTag();
-            Log.i("Marker:", "Selected: " + selectedDriverUsername);
             if(observer != null)
                 observer.notifyObserver();
         }
 
+
+        @Override
+        public boolean onMarkerClick(Marker marker) {
+            selectedDriverUsername =(String) marker.getTag();
+            Log.i("Marker:", "Selected: " + selectedDriverUsername);
+            return true;
+        }
     }
 
     View rootView;
@@ -113,6 +119,10 @@ public class NearbyDriverFragment extends Fragment {
                         .icon(icon)
                 );
                 marker.setTag(driver.getEmail());
+                if(selectedDriverUsername != null
+                    && selectedDriverUsername.equals(driver.getEmail())){
+                    marker.showInfoWindow();
+                }
             }
         }
     }
@@ -154,6 +164,7 @@ public class NearbyDriverFragment extends Fragment {
                 }
                 setMapMarkerInfoLayout(googleMap);
                 googleMap.setOnInfoWindowClickListener(new DriverMarkerListener());
+                googleMap.setOnMarkerClickListener(new DriverMarkerListener());
                 currentGoogleMap = googleMap;
             }
         });
