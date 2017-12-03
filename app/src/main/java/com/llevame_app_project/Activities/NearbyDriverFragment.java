@@ -36,12 +36,23 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
+import bolts.Task;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class NearbyDriverFragment extends Fragment {
+
+    private class MapUpdateTask extends TimerTask {
+
+        @Override
+        public void run() {
+            updateMap();
+        }
+    }
 
     private class RetrofitListener implements Callback<NearbyDriversResponseData> {
 
@@ -59,70 +70,75 @@ public class NearbyDriverFragment extends Fragment {
         }
     }
 
-    private class DriverMarkerListener implements GoogleMap.OnInfoWindowClickListener{
+    private class DriverMarkerListener implements GoogleMap.OnInfoWindowClickListener,
+                                                    GoogleMap.OnMarkerClickListener{
 
         @Override
         public void onInfoWindowClick(Marker marker) {
-            selectedDriverUsername =(String) marker.getTag();
-            Log.i("Marker:", "Selected: " + selectedDriverUsername);
             if(observer != null)
                 observer.notifyObserver();
         }
 
+
+        @Override
+        public boolean onMarkerClick(Marker marker) {
+            selectedDriverUsername =(String) marker.getTag();
+            Log.i("Marker:", "Selected: " + selectedDriverUsername);
+            return true;
+        }
     }
 
     View rootView;
     private String selectedDriverUsername;
     private AppObserver observer;
     private GoogleMap currentGoogleMap;
+    Timer timer = new Timer();
     public void setObserver(AppObserver observer){
         this.observer = observer;
     }
 
     public void updateMapWith(final List<DriverData> nearbyDrivers){
 
-        mMapView.getMapAsync(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(GoogleMap googleMap) {
-                currentGoogleMap = googleMap;
-                BitmapDescriptor icon =
-                        BitmapDescriptorFactory.fromResource(
-                                R.drawable.motorcycle
-                        );
-                for (DriverData driver : nearbyDrivers) {
+        currentGoogleMap.clear();
+        BitmapDescriptor icon =
+                BitmapDescriptorFactory.fromResource(
+                        R.drawable.motorcycle
+                );
+        for (DriverData driver : nearbyDrivers) {
 
-                    if(driver.getLocation() != null) {
-                        Log.i("UpdatingMap:", "Driver:" + driver.getLastName());
+            if(driver.getLocation() != null) {
+                Log.i("UpdatingMap:", "Driver:" + driver.getLastName());
 
-                        LatLng position = new LatLng(driver.getLocation().getLatitude(),
-                                driver.getLocation().getLongitude());
+                LatLng position = new LatLng(driver.getLocation().getLatitude(),
+                        driver.getLocation().getLongitude());
 
-                        Marker marker = googleMap.addMarker(new MarkerOptions()
-                                .position(position)
-                                .title(driver.getFirstName() + " " + driver.getLastName())
-                                .snippet(makeDriverSnippet(driver))
-                                .icon(icon)
-                        );
-                        marker.setTag(driver.getEmail());
-                    }
+                Marker marker = currentGoogleMap.addMarker(new MarkerOptions()
+                        .position(position)
+                        .title(driver.getFirstName() + " " + driver.getLastName())
+                        .snippet(makeDriverSnippet(driver))
+                        .icon(icon)
+                );
+                marker.setTag(driver.getEmail());
+                if(selectedDriverUsername != null
+                    && selectedDriverUsername.equals(driver.getEmail())){
+                    marker.showInfoWindow();
                 }
             }
-
-            String makeDriverSnippet(DriverData driver){
-                return(
-                    driver.getCar().getModel() + "\n" +
-                    driver.getCar().getPatent() + "\n" +
-                    driver.getCar().getYear() + "\n" +
-                    driver.getCar().getColor()
-                    );
-            }
-        });
+        }
     }
 
+    String makeDriverSnippet(DriverData driver){
+        return(
+                driver.getCar().getModel() + "\n" +
+                        driver.getCar().getPatent() + "\n" +
+                        driver.getCar().getYear() + "\n" +
+                        driver.getCar().getColor()
+        );
+    }
     public void updateMap(){
         PassengerServices services = ApiUtils.getPassengerServices();
         services.getNearbyDrivers(AppServerSession.getCurrentSession().getBearerToken())
-        .enqueue(new RetrofitListener());
+                .enqueue(new RetrofitListener());
     }
 
     MapView mMapView;
@@ -148,9 +164,12 @@ public class NearbyDriverFragment extends Fragment {
                 }
                 setMapMarkerInfoLayout(googleMap);
                 googleMap.setOnInfoWindowClickListener(new DriverMarkerListener());
+                googleMap.setOnMarkerClickListener(new DriverMarkerListener());
+                currentGoogleMap = googleMap;
             }
         });
-        updateMap();
+
+        timer.scheduleAtFixedRate(new MapUpdateTask(), 0, 5000);
         mMapView.onResume();
         return rootView;
     }
