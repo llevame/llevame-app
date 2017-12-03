@@ -13,7 +13,7 @@ public class TentativeTripData {
 
     @SerializedName("cost")
     @Expose
-    private int cost;
+    private float cost;
 
     public List<List<LocationData>> getTravels() {
         return travels;
@@ -23,11 +23,11 @@ public class TentativeTripData {
         this.travels = travels;
     }
 
-    public int getCost() {
+    public float getCost() {
         return cost;
     }
 
-    public void setCost(int cost) {
+    public void setCost(float cost) {
         this.cost = cost;
     }
 }
