@@ -36,12 +36,23 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
+import bolts.Task;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class NearbyDriverFragment extends Fragment {
+
+    private class MapUpdateTask extends TimerTask {
+
+        @Override
+        public void run() {
+            updateMap();
+        }
+    }
 
     private class RetrofitListener implements Callback<NearbyDriversResponseData> {
 
@@ -75,6 +86,7 @@ public class NearbyDriverFragment extends Fragment {
     private String selectedDriverUsername;
     private AppObserver observer;
     private GoogleMap currentGoogleMap;
+    Timer timer = new Timer();
     public void setObserver(AppObserver observer){
         this.observer = observer;
     }
@@ -85,6 +97,7 @@ public class NearbyDriverFragment extends Fragment {
             @Override
             public void onMapReady(GoogleMap googleMap) {
                 currentGoogleMap = googleMap;
+                currentGoogleMap.clear();
                 BitmapDescriptor icon =
                         BitmapDescriptorFactory.fromResource(
                                 R.drawable.motorcycle
@@ -122,7 +135,7 @@ public class NearbyDriverFragment extends Fragment {
     public void updateMap(){
         PassengerServices services = ApiUtils.getPassengerServices();
         services.getNearbyDrivers(AppServerSession.getCurrentSession().getBearerToken())
-        .enqueue(new RetrofitListener());
+                .enqueue(new RetrofitListener());
     }
 
     MapView mMapView;
@@ -148,9 +161,11 @@ public class NearbyDriverFragment extends Fragment {
                 }
                 setMapMarkerInfoLayout(googleMap);
                 googleMap.setOnInfoWindowClickListener(new DriverMarkerListener());
+                currentGoogleMap = googleMap;
             }
         });
-        updateMap();
+
+        timer.scheduleAtFixedRate(new MapUpdateTask(), 0, 5000);
         mMapView.onResume();
         return rootView;
     }
