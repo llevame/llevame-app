@@ -93,45 +93,38 @@ public class NearbyDriverFragment extends Fragment {
 
     public void updateMapWith(final List<DriverData> nearbyDrivers){
 
-        mMapView.getMapAsync(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(GoogleMap googleMap) {
-                currentGoogleMap = googleMap;
-                currentGoogleMap.clear();
-                BitmapDescriptor icon =
-                        BitmapDescriptorFactory.fromResource(
-                                R.drawable.motorcycle
-                        );
-                for (DriverData driver : nearbyDrivers) {
+        currentGoogleMap.clear();
+        BitmapDescriptor icon =
+                BitmapDescriptorFactory.fromResource(
+                        R.drawable.motorcycle
+                );
+        for (DriverData driver : nearbyDrivers) {
 
-                    if(driver.getLocation() != null) {
-                        Log.i("UpdatingMap:", "Driver:" + driver.getLastName());
+            if(driver.getLocation() != null) {
+                Log.i("UpdatingMap:", "Driver:" + driver.getLastName());
 
-                        LatLng position = new LatLng(driver.getLocation().getLatitude(),
-                                driver.getLocation().getLongitude());
+                LatLng position = new LatLng(driver.getLocation().getLatitude(),
+                        driver.getLocation().getLongitude());
 
-                        Marker marker = googleMap.addMarker(new MarkerOptions()
-                                .position(position)
-                                .title(driver.getFirstName() + " " + driver.getLastName())
-                                .snippet(makeDriverSnippet(driver))
-                                .icon(icon)
-                        );
-                        marker.setTag(driver.getEmail());
-                    }
-                }
+                Marker marker = currentGoogleMap.addMarker(new MarkerOptions()
+                        .position(position)
+                        .title(driver.getFirstName() + " " + driver.getLastName())
+                        .snippet(makeDriverSnippet(driver))
+                        .icon(icon)
+                );
+                marker.setTag(driver.getEmail());
             }
-
-            String makeDriverSnippet(DriverData driver){
-                return(
-                    driver.getCar().getModel() + "\n" +
-                    driver.getCar().getPatent() + "\n" +
-                    driver.getCar().getYear() + "\n" +
-                    driver.getCar().getColor()
-                    );
-            }
-        });
+        }
     }
 
+    String makeDriverSnippet(DriverData driver){
+        return(
+                driver.getCar().getModel() + "\n" +
+                        driver.getCar().getPatent() + "\n" +
+                        driver.getCar().getYear() + "\n" +
+                        driver.getCar().getColor()
+        );
+    }
     public void updateMap(){
         PassengerServices services = ApiUtils.getPassengerServices();
         services.getNearbyDrivers(AppServerSession.getCurrentSession().getBearerToken())
