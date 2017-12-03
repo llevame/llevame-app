@@ -266,6 +266,7 @@ public class DriverActivity extends AppCompatActivity {
                     Toast.LENGTH_LONG)
             .show();
             keepsAcceptingTrips = true;
+            googleMap.clear();
         }
 
         @Override
