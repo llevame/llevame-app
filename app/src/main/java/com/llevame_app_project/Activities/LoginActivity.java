@@ -91,6 +91,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         fbId,response.body().getLoginData().getToken());
                 startNotifyFirebaseTokenTask();
                 startActivity(new Intent(LoginActivity.this, PassengerActivity.class));
+            }else{
+                showProgress(false);
             }
         }
 
@@ -104,6 +106,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         @Override
         public void onSuccess(LoginResult loginResult) {
             Log.i("FB_LOGIN", "Successfully logged in FB ");
+            showProgress(true);
             String token = loginResult.getAccessToken().getToken();
             fbId = loginResult.getAccessToken().getUserId();
             ApiUtils.getLoginServices().loginFacebookUser(new FacebookLoginData(token))
