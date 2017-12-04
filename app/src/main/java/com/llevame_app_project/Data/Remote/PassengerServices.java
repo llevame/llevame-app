@@ -7,6 +7,8 @@ import com.llevame_app_project.Data.UserData.LocationData.TripIdData;
 import com.llevame_app_project.Data.UserData.LocationData.TripIdResponseData;
 import com.llevame_app_project.Data.UserData.LocationData.TripToCreateData;
 import com.llevame_app_project.Data.UserData.PassengerData.PassengerResponseData;
+import com.llevame_app_project.Data.UserData.ResponseData;
+import com.llevame_app_project.Data.UserData.SessionData.FacebookLoginData;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
