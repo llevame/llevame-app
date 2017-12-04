@@ -75,8 +75,10 @@ public class DriverActivity extends AppCompatActivity {
                 List<LocationData> trip = response.body().getTripStatus().getTrip();
                 Polyline thisTripPolyline;
                 String userName = response.body().getTripStatus().getPassenger();
-                String tripId = response.body().getTripStatus().getId();
+                if(isFacebookUserName(userName))
+                    userName = makePretty(userName);
 
+                String tripId = response.body().getTripStatus().getId();
                 thisTripPolyline = googleMap.addPolyline(createPolyLineFrom(trip));
                 thisTripPolyline.setTag(tripId);
                 tripsPolyline.add(thisTripPolyline);
@@ -89,10 +91,10 @@ public class DriverActivity extends AppCompatActivity {
         }
 
         private MarkerOptions createTripOriginMarker(List<LocationData> trip,
-                                                     String pasenger){
+                                                     String passenger){
             MarkerOptions origin = new MarkerOptions();
             origin.title("Starting point");
-            origin.snippet("Passenger: \n " + pasenger);
+            origin.snippet("Passenger: \n " + passenger);
             LatLng originPosition = new LatLng(trip.get(0).getLatitude(),
                     trip.get(0).getLongitude());
             origin.position(originPosition);
@@ -102,6 +104,14 @@ public class DriverActivity extends AppCompatActivity {
         @Override
         public void onFailure(Call<TripResponseData> call, Throwable t) {
 
+        }
+
+        boolean isFacebookUserName(String userName){
+            return(!userName.contains("@"));
+        }
+
+        String makePretty(String username){
+            return username.replaceAll("[^A-Za-z]","");
         }
     }
 

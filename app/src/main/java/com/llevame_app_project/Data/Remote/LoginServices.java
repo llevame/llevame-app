@@ -9,6 +9,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.PATCH;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 public interface LoginServices {
@@ -17,6 +18,6 @@ public interface LoginServices {
     Call<LoginResponseData> loginUser(@Path("userName") String userName,
                                       @Body PasswordData password);
 
-    @GET("api/v1/facebookUsers")
-    Call<ResponseData> loginFacebookUser(@Body FacebookLoginData loginData);
+    @POST("api/v1/facebookUsers")
+    Call<LoginResponseData> loginFacebookUser(@Body FacebookLoginData loginData);
 }

@@ -24,7 +24,4 @@ public interface RegistrationServices {
     @POST("api/v1/account/{userName}")
     Call<LoginResponseData> registerUser(@Path("userName") String userName,
                                          @Body DriverData driverData);
-
-    @POST("api/v1/facebookUsers")
-    Call<ResponseData> registerFacebookUser(@Body FacebookLoginData loginData);
 }
