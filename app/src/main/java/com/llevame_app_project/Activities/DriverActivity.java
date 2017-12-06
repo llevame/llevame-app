@@ -394,8 +394,9 @@ public class DriverActivity extends AppCompatActivity {
             startActivity(new Intent(DriverActivity.this, ProfileActivity.class));
         }else if(id == R.id.car_settings){
             startActivity(new Intent(DriverActivity.this, CarSettingsActivity.class));
+        }else if(id == R.id.balance_settings){
+            startActivity(new Intent(DriverActivity.this, BalanceActivity.class));
         }
-
         return super.onOptionsItemSelected(item);
     }
 

@@ -210,6 +210,8 @@ public class PassengerActivity extends AppCompatActivity{
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             startActivity(new Intent(PassengerActivity.this, ProfileActivity.class));
+        }else if (id == R.id.balance_settings){
+            startActivity(new Intent(PassengerActivity.this, BalanceActivity.class));
         }
 
         return super.onOptionsItemSelected(item);

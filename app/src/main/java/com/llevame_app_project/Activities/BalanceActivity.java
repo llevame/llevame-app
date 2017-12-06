@@ -53,7 +53,7 @@ public class BalanceActivity extends AppCompatActivity {
             asyncSetPassengerBalance();
         }
 
-        if(bundle.containsKey("tripCost")){
+        if(bundle != null && bundle.containsKey("tripCost")){
             setLastTripStatus(bundle.getFloat("tripCost"));
         }else{
             hideLastTripStatus();
