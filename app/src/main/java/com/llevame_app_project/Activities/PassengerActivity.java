@@ -58,9 +58,6 @@ public class PassengerActivity extends AppCompatActivity{
         @Override
         public void onResponse(Call<TripResponseData> call, Response<TripResponseData> response) {
             tripCost = response.body().getTripStatus().getCost();
-            Toast.makeText(getApplicationContext(),
-                    "Trip cost: " + String.valueOf(tripCost),
-                    Toast.LENGTH_LONG).show();
             startBalanceActivity();
         }
 

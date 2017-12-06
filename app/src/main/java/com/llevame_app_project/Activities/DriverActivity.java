@@ -266,22 +266,49 @@ public class DriverActivity extends AppCompatActivity {
         }
     }
 
+    private class TripStatusAtEndCallback implements Callback<TripResponseData>{
+
+        @Override
+        public void onResponse(Call<TripResponseData> call, Response<TripResponseData> response) {
+            startBalanceActivity(response.body().getTripStatus().getCost());
+        }
+
+        @Override
+        public void onFailure(Call<TripResponseData> call, Throwable t) {
+
+        }
+    }
+
+    private void startBalanceActivity(float cost) {
+        Intent intent = new Intent(this, BalanceActivity.class);
+        intent.putExtra("tripCost", cost);
+        startActivity(intent);
+    }
+
     private class TripFinishedCallback implements Callback<TripPatchResponseData>{
 
         @Override
         public void onResponse(Call<TripPatchResponseData> call, Response<TripPatchResponseData> response) {
-            tripEndedBUtton.setVisibility(View.GONE);
-            openChatButton.setVisibility(View.GONE);
-            Toast.makeText(getBaseContext(),"Trip has ended successfully",
-                    Toast.LENGTH_LONG)
-            .show();
-            keepsAcceptingTrips = true;
-            googleMap.clear();
+            resetActivity();
+            ApiUtils.getDriverServices().getTripStatus(acceptedTripId,
+                    AppServerSession.getCurrentSession().getBearerToken())
+                    .enqueue(new TripStatusAtEndCallback());
         }
 
         @Override
         public void onFailure(Call<TripPatchResponseData> call, Throwable t) {
 
+        }
+
+        private void resetActivity(){
+            tripEndedBUtton.setVisibility(View.GONE);
+            openChatButton.setVisibility(View.GONE);
+            Toast.makeText(getBaseContext(),"Trip has ended successfully",
+                    Toast.LENGTH_LONG)
+                    .show();
+            keepsAcceptingTrips = true;
+            googleMap.clear();
+            setMapMarkerInfoLayout(googleMap);
         }
     }
 

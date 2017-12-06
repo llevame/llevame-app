@@ -13,6 +13,7 @@ import com.llevame_app_project.Data.Remote.ApiUtils;
 import com.llevame_app_project.Data.Remote.DriverServices;
 import com.llevame_app_project.Data.Remote.PassengerServices;
 import com.llevame_app_project.Data.UserData.BalanceData;
+import com.llevame_app_project.Data.UserData.DriverData.DriverResponseData;
 import com.llevame_app_project.Data.UserData.PassengerData.PassengerResponseData;
 import com.llevame_app_project.R;
 import com.llevame_app_project.UserManagement.LoggedUser.AppServerSession;
@@ -31,7 +32,7 @@ public class BalanceActivity extends AppCompatActivity {
 
         if(AppServerSession.getCurrentSession().isDriver()){
             setDriverScreen();
-            //asyncSetDriverBalance();
+            asyncSetDriverBalance();
         }else{
             setPassengerScreen();
             asyncSetPassengerBalance();
@@ -69,7 +70,8 @@ public class BalanceActivity extends AppCompatActivity {
 
     private void setLastTripStatus(float cost){
         TextView lastTripCost = findViewById(R.id.lastTripCostText);
-        lastTripCost.setText(String.valueOf(cost));
+        String text = String.valueOf(cost).concat(" ").concat("ARS");
+        lastTripCost.setText(text);
     }
 
 
@@ -78,7 +80,7 @@ public class BalanceActivity extends AppCompatActivity {
 
         @Override
         public void onResponse(Call<PassengerResponseData> call, Response<PassengerResponseData> response) {
-            setPassengerBalance(response.body().getPassengerData().getBalance());
+            setBalance(response.body().getPassengerData().getBalance());
         }
 
 
@@ -94,11 +96,31 @@ public class BalanceActivity extends AppCompatActivity {
         service.getMyUser(bearerToken).enqueue(new PassengerBalanceCallback());
     }
 
-    private void setPassengerBalance(BalanceData balanceData) {
+    private void setBalance(BalanceData balanceData) {
         TextView balanceView = findViewById(R.id.balanceText);
         float balance = balanceData.getBalance();
         String currency = balanceData.getCurrency();
-        String textToShow = String.valueOf(balance) + " " + currency;
+        String textToShow = String.valueOf(balance).concat(" ").concat(currency);
         balanceView.setText(textToShow);
+    }
+
+    private class DriverBalanceCallback implements Callback<DriverResponseData> {
+
+        @Override
+        public void onResponse(Call<DriverResponseData> call, Response<DriverResponseData> response) {
+            setBalance(response.body().getDriverData().getBalance());
+        }
+
+
+        @Override
+        public void onFailure(Call<DriverResponseData> call, Throwable t) {
+
+        }
+    }
+
+    private void asyncSetDriverBalance(){
+        DriverServices service = ApiUtils.getDriverServices();
+        String bearerToken = AppServerSession.getCurrentSession().getBearerToken();
+        service.getMyUser(bearerToken).enqueue(new DriverBalanceCallback());
     }
 }
