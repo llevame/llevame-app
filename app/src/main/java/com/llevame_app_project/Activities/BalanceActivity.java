@@ -3,10 +3,12 @@ package com.llevame_app_project.Activities;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.llevame_app_project.Data.Remote.ApiUtils;
@@ -24,11 +26,24 @@ import retrofit2.Response;
 
 public class BalanceActivity extends AppCompatActivity {
 
+    Intent backToMainActivityIntent;
+
+    private class BackButtonListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            startActivity(backToMainActivityIntent);
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_balance);
         Bundle bundle = getIntent().getExtras();
+
+        Button backToMainActivityButton = findViewById(R.id.backToMainActivityButton);
+        backToMainActivityButton.setOnClickListener(new BackButtonListener());
 
         if(AppServerSession.getCurrentSession().isDriver()){
             setDriverScreen();
@@ -42,6 +57,7 @@ public class BalanceActivity extends AppCompatActivity {
             setLastTripStatus(bundle.getFloat("tripCost"));
         }else{
             hideLastTripStatus();
+            hideBackToMainActivityButton();
         }
     }
 
@@ -58,6 +74,10 @@ public class BalanceActivity extends AppCompatActivity {
 
         TextView lastTripTag = findViewById(R.id.lastTripTagText);
         lastTripTag.setText("Revenue of last trip:");
+
+        Button backToMainActivityButton = findViewById(R.id.backToMainActivityButton);
+        backToMainActivityButton.setText("Find new passengers");
+        backToMainActivityIntent = new Intent(this, DriverActivity.class);
     }
 
     private void setPassengerScreen(){
@@ -66,6 +86,10 @@ public class BalanceActivity extends AppCompatActivity {
 
         TextView lastTripTag = findViewById(R.id.lastTripTagText);
         lastTripTag.setText("Cost of the last trip:");
+
+        Button backToMainActivityButton = findViewById(R.id.backToMainActivityButton);
+        backToMainActivityButton.setText("Make a new trip");
+        backToMainActivityIntent = new Intent(this, PassengerActivity.class);
     }
 
     private void setLastTripStatus(float cost){
@@ -122,5 +146,10 @@ public class BalanceActivity extends AppCompatActivity {
         DriverServices service = ApiUtils.getDriverServices();
         String bearerToken = AppServerSession.getCurrentSession().getBearerToken();
         service.getMyUser(bearerToken).enqueue(new DriverBalanceCallback());
+    }
+
+    void hideBackToMainActivityButton(){
+        Button backToMainActivityButton = findViewById(R.id.backToMainActivityButton);
+        backToMainActivityButton.setVisibility(View.GONE);
     }
 }

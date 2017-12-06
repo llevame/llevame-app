@@ -53,4 +53,12 @@
         android:textSize="28dp"
         app:layout_constraintStart_toStartOf="@+id/balanceText"
         app:layout_constraintTop_toBottomOf="@+id/lastTripTagText" />
+
+    <Button
+        android:id="@+id/backToMainActivityButton"
+        android:layout_width="135dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="188dp"
+        app:layout_constraintStart_toStartOf="@+id/lastTripTagText"
+        app:layout_constraintTop_toBottomOf="@+id/lastTripTagText" />
 </android.support.constraint.ConstraintLayout>
