@@ -23,7 +23,9 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.llevame_app_project.Data.Remote.ApiUtils;
 import com.llevame_app_project.Data.Remote.PassengerServices;
 import com.llevame_app_project.Data.UserData.LocationData.LocationData;
-import com.llevame_app_project.Data.UserData.LocationData.TripIdResponseData;
+import com.llevame_app_project.Data.UserData.LocationData.TripPatchResponseData;
+import com.llevame_app_project.Data.UserData.LocationData.TripResponseData;
+import com.llevame_app_project.Data.UserData.LocationData.TripStatusData;
 import com.llevame_app_project.Data.UserData.LocationData.TripToCreateData;
 import com.llevame_app_project.R;
 import com.llevame_app_project.UserManagement.LoggedUser.AppServerSession;
@@ -48,6 +50,23 @@ public class PassengerActivity extends AppCompatActivity{
                     ChatActivity.class);
             intent.putExtra("tripId", tripId);
             startActivity(intent);
+        }
+    }
+
+    private class TripStatusAtEndCallback implements Callback<TripResponseData>{
+
+        @Override
+        public void onResponse(Call<TripResponseData> call, Response<TripResponseData> response) {
+            float cost = response.body().getTripStatus().getCost();
+            Toast.makeText(getApplicationContext(),
+                    "Trip cost: " + String.valueOf(cost),
+                    Toast.LENGTH_LONG).show();
+
+        }
+
+        @Override
+        public void onFailure(Call<TripResponseData> call, Throwable t) {
+
         }
     }
 
@@ -93,16 +112,16 @@ public class PassengerActivity extends AppCompatActivity{
         }
     }
 
-    private class StartTripCallback implements Callback<TripIdResponseData> {
+    private class StartTripCallback implements Callback<TripPatchResponseData> {
         @Override
-        public void onResponse(Call<TripIdResponseData> call, Response<TripIdResponseData> response) {
+        public void onResponse(Call<TripPatchResponseData> call, Response<TripPatchResponseData> response) {
             Toast.makeText(PassengerActivity.this,
                     "Now waiting for the driver!", Toast.LENGTH_LONG).show();
             tripId = response.body().getTripCreationData().getTripId();
         }
 
         @Override
-        public void onFailure(Call<TripIdResponseData> call, Throwable t) {
+        public void onFailure(Call<TripPatchResponseData> call, Throwable t) {
 
         }
     }
@@ -133,6 +152,9 @@ public class PassengerActivity extends AppCompatActivity{
                         "Trip has finished",
                         Toast.LENGTH_LONG).show();
                 startChatButton.setVisibility(View.GONE);
+                ApiUtils.getDriverServices().getTripStatus(tripId,
+                        AppServerSession.getCurrentSession().getBearerToken())
+                        .enqueue(new TripStatusAtEndCallback());
             }
         }
     };

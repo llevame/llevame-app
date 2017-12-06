@@ -36,7 +36,7 @@ import com.llevame_app_project.Data.Remote.ApiUtils;
 import com.llevame_app_project.Data.Remote.DriverServices;
 import com.llevame_app_project.Data.UserData.LocationData.LocationData;
 import com.llevame_app_project.Data.UserData.LocationData.StatusData;
-import com.llevame_app_project.Data.UserData.LocationData.TripIdResponseData;
+import com.llevame_app_project.Data.UserData.LocationData.TripPatchResponseData;
 import com.llevame_app_project.Data.UserData.LocationData.TripResponseData;
 import com.llevame_app_project.FirebaseService;
 import com.llevame_app_project.R;
@@ -115,10 +115,10 @@ public class DriverActivity extends AppCompatActivity {
         }
     }
 
-    private class TripAcceptedCallback implements Callback<TripIdResponseData>{
+    private class TripAcceptedCallback implements Callback<TripPatchResponseData>{
 
         @Override
-        public void onResponse(Call<TripIdResponseData> call, Response<TripIdResponseData> response) {
+        public void onResponse(Call<TripPatchResponseData> call, Response<TripPatchResponseData> response) {
             String tripId = response.body().getTripCreationData().getTripId();
             updatePolylines(tripId);
             updateMarkers(tripId);
@@ -157,15 +157,15 @@ public class DriverActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onFailure(Call<TripIdResponseData> call, Throwable t) {
+        public void onFailure(Call<TripPatchResponseData> call, Throwable t) {
 
         }
     }
 
-    private class TripStartedCallback implements Callback<TripIdResponseData>{
+    private class TripStartedCallback implements Callback<TripPatchResponseData>{
 
         @Override
-        public void onResponse(Call<TripIdResponseData> call, Response<TripIdResponseData> response) {
+        public void onResponse(Call<TripPatchResponseData> call, Response<TripPatchResponseData> response) {
             startTripButton.setVisibility(Button.GONE);
             tripEndedBUtton.setVisibility(Button.VISIBLE);
             LocationOnServerUpdater.getInstance().tripStarted(acceptedTripId);
@@ -200,7 +200,7 @@ public class DriverActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onFailure(Call<TripIdResponseData> call, Throwable t) {
+        public void onFailure(Call<TripPatchResponseData> call, Throwable t) {
 
         }
     }
@@ -266,10 +266,10 @@ public class DriverActivity extends AppCompatActivity {
         }
     }
 
-    private class TripFinishedCallback implements Callback<TripIdResponseData>{
+    private class TripFinishedCallback implements Callback<TripPatchResponseData>{
 
         @Override
-        public void onResponse(Call<TripIdResponseData> call, Response<TripIdResponseData> response) {
+        public void onResponse(Call<TripPatchResponseData> call, Response<TripPatchResponseData> response) {
             tripEndedBUtton.setVisibility(View.GONE);
             openChatButton.setVisibility(View.GONE);
             Toast.makeText(getBaseContext(),"Trip has ended successfully",
@@ -280,7 +280,7 @@ public class DriverActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onFailure(Call<TripIdResponseData> call, Throwable t) {
+        public void onFailure(Call<TripPatchResponseData> call, Throwable t) {
 
         }
     }

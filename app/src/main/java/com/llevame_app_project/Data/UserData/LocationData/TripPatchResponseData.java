@@ -5,7 +5,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.llevame_app_project.Data.UserData.ResponseData;
 
-public class TripIdResponseData extends ResponseData{
+public class TripPatchResponseData extends ResponseData{
     @SerializedName("result")
     @Expose
     private TripIdData tripCreationData;

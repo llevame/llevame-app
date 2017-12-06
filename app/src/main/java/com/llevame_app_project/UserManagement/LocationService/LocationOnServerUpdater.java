@@ -3,9 +3,8 @@ import android.annotation.SuppressLint;
 import android.location.Location;
 import android.util.Log;
 
-import com.llevame_app_project.Data.UserData.LocationData.LocationData;
 import com.llevame_app_project.Data.UserData.LocationData.LocationForServerData;
-import com.llevame_app_project.Data.UserData.LocationData.TripIdResponseData;
+import com.llevame_app_project.Data.UserData.LocationData.TripPatchResponseData;
 import com.llevame_app_project.Data.UserData.ResponseData;
 import com.llevame_app_project.Data.Remote.ApiUtils;
 import com.llevame_app_project.Data.Remote.UserPatchServices;
@@ -81,7 +80,7 @@ public class LocationOnServerUpdater extends Thread {
 
     private void patchTripLocation(String bearerPlusToken,
                                    LocationForServerData locationData, UserPatchServices service){
-        TripIdResponseData response;
+        TripPatchResponseData response;
         try {
             response = service.notifyTripLocation(tripId,bearerPlusToken,locationData)
                     .execute().body();
