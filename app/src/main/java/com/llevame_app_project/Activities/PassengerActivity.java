@@ -23,7 +23,9 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.llevame_app_project.Data.Remote.ApiUtils;
 import com.llevame_app_project.Data.Remote.PassengerServices;
 import com.llevame_app_project.Data.UserData.LocationData.LocationData;
-import com.llevame_app_project.Data.UserData.LocationData.TripIdResponseData;
+import com.llevame_app_project.Data.UserData.LocationData.TripPatchResponseData;
+import com.llevame_app_project.Data.UserData.LocationData.TripResponseData;
+import com.llevame_app_project.Data.UserData.LocationData.TripStatusData;
 import com.llevame_app_project.Data.UserData.LocationData.TripToCreateData;
 import com.llevame_app_project.R;
 import com.llevame_app_project.UserManagement.LoggedUser.AppServerSession;
@@ -48,6 +50,20 @@ public class PassengerActivity extends AppCompatActivity{
                     ChatActivity.class);
             intent.putExtra("tripId", tripId);
             startActivity(intent);
+        }
+    }
+
+    private class TripStatusAtEndCallback implements Callback<TripResponseData>{
+
+        @Override
+        public void onResponse(Call<TripResponseData> call, Response<TripResponseData> response) {
+            tripCost = response.body().getTripStatus().getCost();
+            startBalanceActivity();
+        }
+
+        @Override
+        public void onFailure(Call<TripResponseData> call, Throwable t) {
+
         }
     }
 
@@ -93,16 +109,16 @@ public class PassengerActivity extends AppCompatActivity{
         }
     }
 
-    private class StartTripCallback implements Callback<TripIdResponseData> {
+    private class StartTripCallback implements Callback<TripPatchResponseData> {
         @Override
-        public void onResponse(Call<TripIdResponseData> call, Response<TripIdResponseData> response) {
+        public void onResponse(Call<TripPatchResponseData> call, Response<TripPatchResponseData> response) {
             Toast.makeText(PassengerActivity.this,
                     "Now waiting for the driver!", Toast.LENGTH_LONG).show();
             tripId = response.body().getTripCreationData().getTripId();
         }
 
         @Override
-        public void onFailure(Call<TripIdResponseData> call, Throwable t) {
+        public void onFailure(Call<TripPatchResponseData> call, Throwable t) {
 
         }
     }
@@ -118,6 +134,7 @@ public class PassengerActivity extends AppCompatActivity{
     private String selectedDriver;
     private String tripId;
     private ImageButton startChatButton;
+    float tripCost;
 
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
@@ -133,9 +150,18 @@ public class PassengerActivity extends AppCompatActivity{
                         "Trip has finished",
                         Toast.LENGTH_LONG).show();
                 startChatButton.setVisibility(View.GONE);
+                ApiUtils.getDriverServices().getTripStatus(tripId,
+                        AppServerSession.getCurrentSession().getBearerToken())
+                        .enqueue(new TripStatusAtEndCallback());
             }
         }
     };
+
+    void startBalanceActivity(){
+        Intent intent = new Intent(this, BalanceActivity.class);
+        intent.putExtra("tripCost", tripCost);
+        startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -184,6 +210,8 @@ public class PassengerActivity extends AppCompatActivity{
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             startActivity(new Intent(PassengerActivity.this, ProfileActivity.class));
+        }else if (id == R.id.balance_settings){
+            startActivity(new Intent(PassengerActivity.this, BalanceActivity.class));
         }
 
         return super.onOptionsItemSelected(item);

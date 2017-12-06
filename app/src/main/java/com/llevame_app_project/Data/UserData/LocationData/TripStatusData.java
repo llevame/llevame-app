@@ -20,6 +20,10 @@ public class TripStatusData extends TripToCreateData {
     @Expose
     private int status;
 
+    @SerializedName("cost")
+    @Expose
+    private float cost;
+
     public String getId() {
         return id;
     }
@@ -42,5 +46,13 @@ public class TripStatusData extends TripToCreateData {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public float getCost() {
+        return cost;
+    }
+
+    public void setCost(float cost) {
+        this.cost = cost;
     }
 }

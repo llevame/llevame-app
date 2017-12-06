@@ -7,4 +7,11 @@
         android:orderInCategory="100"
         android:title="@string/action_settings"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/balance_settings"
+        android:orderInCategory="100"
+        android:title="Balance"
+        app:showAsAction="never" />
+
 </menu>

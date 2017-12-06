@@ -3,7 +3,7 @@ package com.llevame_app_project.Data.Remote;
 
 import com.llevame_app_project.Data.UserData.FirebaseData.FirebaseTokenData;
 import com.llevame_app_project.Data.UserData.LocationData.LocationForServerData;
-import com.llevame_app_project.Data.UserData.LocationData.TripIdResponseData;
+import com.llevame_app_project.Data.UserData.LocationData.TripPatchResponseData;
 import com.llevame_app_project.Data.UserData.ResponseData;
 
 import retrofit2.Call;
@@ -22,7 +22,7 @@ public interface UserPatchServices {
                                            @Body FirebaseTokenData deviceId);
 
     @PATCH("api/v1/trips/{tripId}")
-    Call<TripIdResponseData> notifyTripLocation(
+    Call<TripPatchResponseData> notifyTripLocation(
             @Path("tripId") String tripId,
             @Header("Authorization") String BearerPlusToken,
             @Body LocationForServerData location);

@@ -170,7 +170,7 @@ public class TravelFragment extends Fragment {
     }
 
     private void updateFragmentWith(TentativeTripData response){
-        costText.setText(String.valueOf(response.getCost()));
+        costText.setText(String.valueOf(Math.abs(response.getCost())));
         trips.clear();
         tripsLocationData = response.getTravels();
         for(List<LocationData> trip: response.getTravels()){
