@@ -57,11 +57,11 @@ public class PassengerActivity extends AppCompatActivity{
 
         @Override
         public void onResponse(Call<TripResponseData> call, Response<TripResponseData> response) {
-            float cost = response.body().getTripStatus().getCost();
+            tripCost = response.body().getTripStatus().getCost();
             Toast.makeText(getApplicationContext(),
-                    "Trip cost: " + String.valueOf(cost),
+                    "Trip cost: " + String.valueOf(tripCost),
                     Toast.LENGTH_LONG).show();
-
+            startBalanceActivity();
         }
 
         @Override
@@ -137,6 +137,7 @@ public class PassengerActivity extends AppCompatActivity{
     private String selectedDriver;
     private String tripId;
     private ImageButton startChatButton;
+    float tripCost;
 
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
@@ -158,6 +159,12 @@ public class PassengerActivity extends AppCompatActivity{
             }
         }
     };
+
+    void startBalanceActivity(){
+        Intent intent = new Intent(this, BalanceActivity.class);
+        intent.putExtra("tripCost", tripCost);
+        startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

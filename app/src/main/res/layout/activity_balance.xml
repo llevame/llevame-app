@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/holo_blue_dark"
+    tools:context="com.llevame_app_project.Activities.BalanceActivity"
+    >
+
+    <TextView
+        android:id="@+id/balanceTagText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="52dp"
+        android:ems="10"
+        android:text="Balance"
+        android:textSize="28dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/balanceText"
+        android:layout_width="161dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:text="92"
+        android:textSize="28dp"
+        app:layout_constraintStart_toStartOf="@+id/balanceTagText"
+        app:layout_constraintTop_toBottomOf="@+id/balanceTagText" />
+
+    <TextView
+        android:id="@+id/lastTripTagText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:ems="10"
+        android:text="Last trip balance"
+        android:textSize="28dp"
+        app:layout_constraintStart_toStartOf="@+id/balanceTagText"
+        app:layout_constraintTop_toBottomOf="@+id/balanceText" />
+
+    <TextView
+        android:id="@+id/lastTripCostText"
+        android:layout_width="156dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="12dp"
+        android:ems="10"
+        android:text="32"
+        android:textSize="28dp"
+        app:layout_constraintStart_toStartOf="@+id/lastTripTagText"
+        app:layout_constraintTop_toBottomOf="@+id/lastTripTagText" />
+</android.support.constraint.ConstraintLayout>

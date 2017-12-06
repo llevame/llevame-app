@@ -8,9 +8,25 @@ public class BalanceData {
 
     @Expose
     @SerializedName("currency")
-    String currency;
+    private String currency;
 
     @Expose
-    @SerializedName("balance")
-    float balance;
+    @SerializedName("value")
+    private float balance;
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
+    public float getBalance() {
+        return balance;
+    }
+
+    public void setBalance(float balance) {
+        this.balance = balance;
+    }
 }

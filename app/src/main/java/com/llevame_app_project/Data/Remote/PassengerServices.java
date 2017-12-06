@@ -19,7 +19,7 @@ public interface PassengerServices {
     Call<PassengerResponseData> getUser(@Path("id") String user,
                                         @Header("Authorization") String BearerPlusToken);
 
-    @GET("api/v1/users/account/me")
+    @GET("api/v1/account/me")
     Call<PassengerResponseData> getMyUser(@Header("Authorization") String BearerPlusToken);
 
     @GET("api/v1/drivers")
