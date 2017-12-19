@@ -40,6 +40,10 @@ import com.facebook.FacebookSdk;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.llevame_app_project.Data.Remote.ApiUtils;
+import com.llevame_app_project.Data.UserData.SessionData.FacebookLoginData;
+import com.llevame_app_project.Data.UserData.SessionData.LoginData;
+import com.llevame_app_project.Data.UserData.SessionData.LoginResponseData;
 import com.llevame_app_project.UserManagement.LocationService.LocationUpdaterService;
 import com.llevame_app_project.UserManagement.LoggedUser.AppServerSession;
 import com.llevame_app_project.R;
@@ -49,6 +53,10 @@ import com.llevame_app_project.UserManagement.NotifyFirebaseTokenThread;
 
 import android.util.Log;
 import android.widget.Toast;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static android.Manifest.permission.READ_CONTACTS;
 import static java.lang.Thread.sleep;
@@ -71,6 +79,51 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mProgressView;
     private View mLoginFormView;
     private CallbackManager callbackManager;
+    private String fbId;
+
+
+    private class FacebookLoginResponse implements Callback<LoginResponseData>{
+
+        @Override
+        public void onResponse(Call<LoginResponseData> call, Response<LoginResponseData> response) {
+            if(response.body().getSuccess()) {
+                AppServerSession.createSession(false,
+                        fbId,response.body().getLoginData().getToken());
+                startNotifyFirebaseTokenTask();
+                startActivity(new Intent(LoginActivity.this, PassengerActivity.class));
+            }else{
+                showProgress(false);
+            }
+        }
+
+        @Override
+        public void onFailure(Call<LoginResponseData> call, Throwable t) {
+
+        }
+    }
+    private class FacebookLoginCallback implements FacebookCallback<LoginResult>{
+
+        @Override
+        public void onSuccess(LoginResult loginResult) {
+            Log.i("FB_LOGIN", "Successfully logged in FB ");
+            showProgress(true);
+            String token = loginResult.getAccessToken().getToken();
+            fbId = loginResult.getAccessToken().getUserId();
+            ApiUtils.getLoginServices().loginFacebookUser(new FacebookLoginData(token))
+                .enqueue(new FacebookLoginResponse());
+
+        }
+
+        @Override
+        public void onCancel() {
+            Log.i("FB_LOGIN", "Cancelled login FB ");
+        }
+
+        @Override
+        public void onError(FacebookException exception) {
+            Log.i("FB_LOGIN", "Error login FB");
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,23 +174,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         });
 
         callbackManager = CallbackManager.Factory.create();
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                Log.i("FB_LOGIN", "Successfully logged in FB ");
-                startActivity(new Intent(LoginActivity.this, PassengerActivity.class));
-            }
-
-            @Override
-            public void onCancel() {
-                Log.i("FB_LOGIN", "Cancelled login FB ");
-            }
-
-            @Override
-            public void onError(FacebookException exception) {
-                Log.i("FB_LOGIN", "Error login FB");
-            }
-        });
+        loginButton.registerCallback(callbackManager, new FacebookLoginCallback());
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);

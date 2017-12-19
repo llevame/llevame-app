@@ -21,9 +21,8 @@ public class PassengerProfileUpdateThread extends Thread {
         String bearer = "Bearer ";
         String bearerPlusToken =  bearer.concat(session.getToken());
         try {
-            response = ApiUtils.getPassengerServices().getUser(
-                    session.getId(), bearerPlusToken
-            ).execute();
+            response = ApiUtils.getPassengerServices().getMyUser(bearerPlusToken)
+            .execute();
         } catch (IOException e) {
             e.printStackTrace();
         }

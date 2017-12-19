@@ -42,6 +42,10 @@ public class UserData {
     @Expose
     private LocationData location;
 
+    @SerializedName("balance")
+    @Expose
+    private BalanceData balance;
+
     public String getEmail() {
         return email;
     }
@@ -88,5 +92,13 @@ public class UserData {
 
     public void setLocation(LocationData location) {
         this.location = location;
+    }
+
+    public BalanceData getBalance() {
+        return balance;
+    }
+
+    public void setBalance(BalanceData balance) {
+        this.balance = balance;
     }
 }

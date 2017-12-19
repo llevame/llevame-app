@@ -36,7 +36,7 @@ import com.llevame_app_project.Data.Remote.ApiUtils;
 import com.llevame_app_project.Data.Remote.DriverServices;
 import com.llevame_app_project.Data.UserData.LocationData.LocationData;
 import com.llevame_app_project.Data.UserData.LocationData.StatusData;
-import com.llevame_app_project.Data.UserData.LocationData.TripIdResponseData;
+import com.llevame_app_project.Data.UserData.LocationData.TripPatchResponseData;
 import com.llevame_app_project.Data.UserData.LocationData.TripResponseData;
 import com.llevame_app_project.FirebaseService;
 import com.llevame_app_project.R;
@@ -75,8 +75,10 @@ public class DriverActivity extends AppCompatActivity {
                 List<LocationData> trip = response.body().getTripStatus().getTrip();
                 Polyline thisTripPolyline;
                 String userName = response.body().getTripStatus().getPassenger();
-                String tripId = response.body().getTripStatus().getId();
+                if(isFacebookUserName(userName))
+                    userName = makePretty(userName);
 
+                String tripId = response.body().getTripStatus().getId();
                 thisTripPolyline = googleMap.addPolyline(createPolyLineFrom(trip));
                 thisTripPolyline.setTag(tripId);
                 tripsPolyline.add(thisTripPolyline);
@@ -89,10 +91,10 @@ public class DriverActivity extends AppCompatActivity {
         }
 
         private MarkerOptions createTripOriginMarker(List<LocationData> trip,
-                                                     String pasenger){
+                                                     String passenger){
             MarkerOptions origin = new MarkerOptions();
             origin.title("Starting point");
-            origin.snippet("Passenger: \n " + pasenger);
+            origin.snippet("Passenger: \n " + passenger);
             LatLng originPosition = new LatLng(trip.get(0).getLatitude(),
                     trip.get(0).getLongitude());
             origin.position(originPosition);
@@ -103,12 +105,20 @@ public class DriverActivity extends AppCompatActivity {
         public void onFailure(Call<TripResponseData> call, Throwable t) {
 
         }
+
+        boolean isFacebookUserName(String userName){
+            return(!userName.contains("@"));
+        }
+
+        String makePretty(String username){
+            return username.replaceAll("[^A-Za-z]","");
+        }
     }
 
-    private class TripAcceptedCallback implements Callback<TripIdResponseData>{
+    private class TripAcceptedCallback implements Callback<TripPatchResponseData>{
 
         @Override
-        public void onResponse(Call<TripIdResponseData> call, Response<TripIdResponseData> response) {
+        public void onResponse(Call<TripPatchResponseData> call, Response<TripPatchResponseData> response) {
             String tripId = response.body().getTripCreationData().getTripId();
             updatePolylines(tripId);
             updateMarkers(tripId);
@@ -147,15 +157,15 @@ public class DriverActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onFailure(Call<TripIdResponseData> call, Throwable t) {
+        public void onFailure(Call<TripPatchResponseData> call, Throwable t) {
 
         }
     }
 
-    private class TripStartedCallback implements Callback<TripIdResponseData>{
+    private class TripStartedCallback implements Callback<TripPatchResponseData>{
 
         @Override
-        public void onResponse(Call<TripIdResponseData> call, Response<TripIdResponseData> response) {
+        public void onResponse(Call<TripPatchResponseData> call, Response<TripPatchResponseData> response) {
             startTripButton.setVisibility(Button.GONE);
             tripEndedBUtton.setVisibility(Button.VISIBLE);
             LocationOnServerUpdater.getInstance().tripStarted(acceptedTripId);
@@ -190,7 +200,7 @@ public class DriverActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onFailure(Call<TripIdResponseData> call, Throwable t) {
+        public void onFailure(Call<TripPatchResponseData> call, Throwable t) {
 
         }
     }
@@ -256,21 +266,49 @@ public class DriverActivity extends AppCompatActivity {
         }
     }
 
-    private class TripFinishedCallback implements Callback<TripIdResponseData>{
+    private class TripStatusAtEndCallback implements Callback<TripResponseData>{
 
         @Override
-        public void onResponse(Call<TripIdResponseData> call, Response<TripIdResponseData> response) {
+        public void onResponse(Call<TripResponseData> call, Response<TripResponseData> response) {
+            startBalanceActivity(response.body().getTripStatus().getCost());
+        }
+
+        @Override
+        public void onFailure(Call<TripResponseData> call, Throwable t) {
+
+        }
+    }
+
+    private void startBalanceActivity(float cost) {
+        Intent intent = new Intent(this, BalanceActivity.class);
+        intent.putExtra("tripCost", cost);
+        startActivity(intent);
+    }
+
+    private class TripFinishedCallback implements Callback<TripPatchResponseData>{
+
+        @Override
+        public void onResponse(Call<TripPatchResponseData> call, Response<TripPatchResponseData> response) {
+            resetActivity();
+            ApiUtils.getDriverServices().getTripStatus(acceptedTripId,
+                    AppServerSession.getCurrentSession().getBearerToken())
+                    .enqueue(new TripStatusAtEndCallback());
+        }
+
+        @Override
+        public void onFailure(Call<TripPatchResponseData> call, Throwable t) {
+
+        }
+
+        private void resetActivity(){
             tripEndedBUtton.setVisibility(View.GONE);
             openChatButton.setVisibility(View.GONE);
             Toast.makeText(getBaseContext(),"Trip has ended successfully",
                     Toast.LENGTH_LONG)
-            .show();
+                    .show();
             keepsAcceptingTrips = true;
-        }
-
-        @Override
-        public void onFailure(Call<TripIdResponseData> call, Throwable t) {
-
+            googleMap.clear();
+            setMapMarkerInfoLayout(googleMap);
         }
     }
 
@@ -356,8 +394,9 @@ public class DriverActivity extends AppCompatActivity {
             startActivity(new Intent(DriverActivity.this, ProfileActivity.class));
         }else if(id == R.id.car_settings){
             startActivity(new Intent(DriverActivity.this, CarSettingsActivity.class));
+        }else if(id == R.id.balance_settings){
+            startActivity(new Intent(DriverActivity.this, BalanceActivity.class));
         }
-
         return super.onOptionsItemSelected(item);
     }
 
