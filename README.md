@@ -6,8 +6,8 @@ It includes a chat built using firebase, login with Facebook to create accounts,
 
 ## Preview
 
-![alt text](https://i.imgur.com/50kpgpJ.png =250x250)
-![alt text](https://i.imgur.com/vKdXW9z.png =250x250)
-![alt text](https://i.imgur.com/hbXmOBV.png =250x250)
+<img src="https://i.imgur.com/50kpgpJ.png =250x250" width = "50">
+<img src="https://i.imgur.com/vKdXW9z.png =250x250" width = "50">
+<img src="https://i.imgur.com/hbXmOBV.png =250x250" width = "50">
 
  
