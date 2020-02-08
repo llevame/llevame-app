@@ -2,7 +2,7 @@
 
 Android application for "Llevame", a ride sharing service, developed in Java.
 
-It includes a chat built using firebase, login with Facebook to create accounts, and interactions through RESTful APIs with google maps and the servers the developed for this project.
+It includes a chat built using firebase, login with Facebook or email, and interactions through RESTful APIs with google maps and the servers the developed for this project.
 
 ## Preview
 
